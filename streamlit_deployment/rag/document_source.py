@@ -9,10 +9,13 @@ import json
 # Add parent directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent))
 
-from ingestion_api.database import db
+from ingestion_api.database import EmailDatabase
 from ingestion_api.models import EmailMetadata
 from .config import settings
 from ingestion_api.parser import clean_email_address
+
+# Create database instance
+db = EmailDatabase()
 
 class Document:
     """Simple document class for RAG processing."""
