@@ -11,6 +11,7 @@ class RAGSettings:
     
     # API Keys
     COHERE_API_KEY: str = os.getenv("COHERE_API_KEY", "")
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     OPENAI_API_KEY: Optional[str] = os.getenv("OPENAI_API_KEY")
     
     # RAG Settings
@@ -42,8 +43,8 @@ class RAGSettings:
     
     def validate_api_keys(self) -> bool:
         """Validate that required API keys are present."""
-        if not self.COHERE_API_KEY:
-            print("Warning: COHERE_API_KEY not set. RAG functionality will be limited.")
+        if not self.COHERE_API_KEY and not self.GEMINI_API_KEY:
+            print("Warning: Neither COHERE_API_KEY nor GEMINI_API_KEY set. RAG functionality will be limited.")
             return False
         return True
 
