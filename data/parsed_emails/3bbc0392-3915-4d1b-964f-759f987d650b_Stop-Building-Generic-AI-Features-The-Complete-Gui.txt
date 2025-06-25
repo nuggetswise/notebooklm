@@ -1,0 +1,377 @@
+Subject: Stop Building Generic AI Features: The Complete Guide to Custom AI That Actually Works
+From: Aakash Gupta from Product Growth <aakashgupta@substack.com>
+Date: 2025-06-21T22:14:38+00:00
+Label: AI
+ID: 3bbc0392-3915-4d1b-964f-759f987d650b
+--------------------------------------------------------------------------------
+
+View this post on the web at https://www.news.aakashg.com/p/rag-vs-fine-tuning-vs-prompt-engineering
+
+We can all come up with great ideas for LLMs to enhance our products, but the devil is in the details:
+How do we get our AI to adopt a very specific writing style?
+How do we get our AI to use our latest product documentation?
+What's the fastest way to test an AI concept and get it into users' hands for feedback?
+These aren't just technical questions. They're strategic product decisions.
+Everyone can access powerful foundation models like GPT-4.5 or Claude [ https://substack.com/redirect/49f31918-62b2-4180-845f-b143d1cb5af8?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] Opus 4. So, what's going to make your AI feature stand out? 
+Hint: It's not just about having 'AI'. 
+It's about making that AI uniquely yours and genuinely useful.
+The 3 Approaches to Optimizing AI
+Base LLMs are like brilliant interns: incredibly capable, but they don't know your company's specific jargon, your proprietary data, or the nuanced style your customers expect. 
+Leaving them "off-the-shelf" often leads to:
+Hallucinations & Generic Answers
+Lack of Domain Expertise
+Inconsistent Brand Voice
+You have three major ways to address these problems:
+RAG (Retrieval Augmented Generation)
+Have a model do a search to enhance its results with information not in its training data set, then incorporate those findings into its answer
+Fine-tuning
+Specializing a model based on information
+Prompt engineering
+Better specifying what you’re looking for from the model
+The question is: when should you use each, and why?
+Today, we’re breaking down the definitive framework for choosing between prompt engineering, RAG, and fine-tuning.
+Introducing Your Co-Author
+To make sure it’s definitive, I've partnered with Miqdad Jaffer, Director of PM at OpenAI.  
+Miqdad teaches the AI PM Certification course [ https://substack.com/redirect/7b2adc54-a0f4-47f1-bb1c-1630b7500ecb?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] where he’s helped 100s of students master these exact techniques through hands-on projects. 
+Use my code AAKASH25 for $500 off. The next cohort starts July 13th:
+Today’s Post
+We’re going to give you the context, decision frameworks, and a practical step-by-step walkthrough to help you build the intuition. Once you build each on your own, you’ll have that AI engineer level knowledge to speak with them confidently:
+Mistakes
+Pros and Cons
+Decision Framework
+Step-by-Step: Building Each
+How Much Each Actually Costs
+Think of this post more like a course-lesson where you have to follow along than an article.
+TL;DR: Start with prompt engineering (hours/days), escalate to RAG when you need real-time data ($70-1000/month), and only use fine-tuning when you need deep specialization (months + 6x inference costs).
+1. The 3 Major Mistakes We See
+Let's start by understanding what not to do, then build up to the right approach.
+Too often, teams jump to:
+Over-engineering: "Let's fine-tune a massive model!" 
+(Costly, time-consuming, maybe overkill)
+Under-powering: "We'll just tweak the prompt a bit more." 
+(Hits a ceiling, can't handle complex needs or new data)
+The "Black Box" Hope: "We'll plug in an API and hope for the best." 
+(Lacks control, struggles with proprietary knowledge)
+The truth is, there's a strategic choice to be made between Prompt Engineering, Retrieval Augmented Generation (RAG), and Fine-Tuning. 
+Choosing wrong means wasted cycles, blown budgets, and features that underwhelm. 
+Choosing right? That's your path to AI-driven product growth. 
+This article is your map.
+2. Pros and Cons: RAG vs. Fine-tuning vs. Prompt Engineering
+Let’s start by understanding each of the three techniques at a deep conceptual level and discuss their pros and cons. 
+Prompt Engineering
+As upcoming podcast guest Hamel Husain says:
+Prompt engineering is just prompting these days.
+We all have to prompt, but when it comes to building the right prompt for your product feature, prompt engineering is critical. 
+It goes beyond simple clarification. It’s about transforming the model’s output with additional training or data retrieval. It’s about better activating a model’s existing capabilities.
+Pros:
+You don’t need to change backend infrastructure
+You get to see immediate responses and results to what you do - no new training data or data processing required
+Cons:
+Trial and error - it’s as much an art as a science
+You’re limited to the model’s existing knowledge, unable to add new or proprietary data
+Fine-tuning
+Fine-tuning takes an existing foundation model and gives it specialized 'graduate-level' training on a focused dataset relevant to your specific needs. 
+You're subtly adjusting the model's internal 'weights' (its understanding of relationships in data) to make it an expert in a particular domain, style, or task. 
+This typically involves providing hundreds or thousands of high-quality input-output examples.
+Pros:
+Great when you need deep domain expertise or consistent tone/style
+Faster at inference time than RAG because it doesn’t need to search through external data and don’t need to maintain a separate vector database
+Cons:
+Issues with the training complexity - need 1000s of examples
+There are significant computational and maintenance costs involved
+You risk "catastrophic forgetting," where the model loses some general capabilities as it becomes more specialized
+RAG
+Retrieval Augmented Generation is like giving your LLM real-time access to a specific, curated library of information – your product docs, a knowledge base, recent news, etc. 
+When a user asks a question, the RAG system first retrieves relevant snippets from this external library and then feeds that context to the LLM along with the original query. 
+The LLM then uses this fresh, targeted information to generate its answer.
+Pros:
+Good for up-to-date information
+Good for adding domain-specific information
+Cons:
+Performance impact - retrieval adds latency to each prompt (typically 100-500ms)
+Processing costs - eg for the vector database
+Ready to add more context to this? We highly recommend staying around for section 4  - where we walk you step-by-step through all 3 so you can have a great addition to your PM portfolio [ https://substack.com/redirect/fcf296a5-6ee6-47e4-a18e-80a3fb0d1a0b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] and learn the intuition behind this. 
+3. Decision Framework
+Now comes the million-dollar question: how do you actually decide which one to use, and when?
+This is our battle-tested framework after learning from building AI features at Shopify, Google, Apollo, and OpenAI:
+The Million-Dollar Mistake Most Teams Make
+Here's the uncomfortable truth, the one that burns through budgets and timelines faster than a poorly optimized LLM: Teams reflexively jump to the most complex solution.
+Fine-tuning sounds sophisticated, like you're truly 'building AI.' 
+RAG systems feel robust, like you're tackling data head-on. 
+So, engineers get excited, data scientists propose intricate architectures, and suddenly, you’re six months deep into a project that could have delivered value in six weeks.
+Worst of all? They try to do everything at once.
+At Shopify, Miqdad’s team saw this play out firsthand with 'Auto Write,' their AI content generation feature. 
+The initial internal buzz was all about fine-tuning GPT-3. Data science was already sketching out a sophisticated RAG system. Everyone had a strong opinion, usually leaning towards the most technically challenging path.
+What actually worked? What shipped and delivered value?
+They started with disciplined prompt engineering. Simple, direct, and focused.
+The result? 
+They shipped a high-accuracy feature in 10 weeks. 
+The fancy, more complex approaches like RAG and fine-tuning came later – much later – only after they had validated the core user problem and proven the initial value with the simplest effective method.
+The lesson is: don't let the allure of complexity derail your path to impact.
+Our Practical Decision Framework: Your Step-by-Step Guide
+How do you avoid the 'Million-Dollar Mistake' and make the right call? Here’s the battle-tested decision framework Miqdad and I use:
+Let's walk through the logic.
+Step 1: Nail Your Use Case
+Before you write a single line of code or craft a prompt, ask yourself: Is the user problem you're aiming to solve with AI crystal clear? Do you know precisely who this is for and what a "win" looks like from their perspective? 
+Vague goals breed vague AI – features that meander, require endless tweaks, and ultimately, satisfy no one. 
+"AI for sales" isn't a strategy; "AI to draft personalized follow-up emails for SMB sales reps based on CRM interaction history" is getting warmer.
+If your use case is fuzzy, stop. Seriously. Hammer out the problem definition, user stories, and key success metrics. 
+This isn't just a nice-to-have; it's the non-negotiable foundation. Only once your target is sharp should you proceed.
+Step 2: The Prompt Engineering Gauntlet
+With a clear use case, your first port of call is always prompt engineering. Can you get to roughly 80% of your desired outcome with well-crafted prompts alone? 
+This is where you test your MVP or prototype ideas. It's your fastest, cheapest way to see what the base model is capable of.
+Don't underestimate what good prompting can achieve. 
+But also, don't fall into the trap of spending months trying to coax magic out of prompts for a task that fundamentally needs more. 
+Give yourself a tight timebox – say, one to two weeks max of dedicated effort – to explore this. If you hit that 80% mark, fantastic! Ship it. Get it in front of users, gather feedback, and iterate. 
+Step 3: The Data Question – Does Your AI Need a Live Feed?
+If prompts alone aren't cutting it, the next question is about data. 
+Does your AI feature absolutely depend on information the base model couldn't possibly know? Think: data that changes by the minute, your company's latest internal product documentation, or user-specific context. 
+Trying to "teach" an LLM constantly shifting facts through fine-tuning is like trying to fill a leaky bucket – slow and inefficient. 
+And while prompts can handle small bits of context, they can't effectively inject vast, ever-changing datasets. 
+If your AI needs to be current and deeply aware of your specific, evolving world, then RAG (Retrieval Augmented Generation) is your answer. 
+It gives your LLM a live connection to the knowledge it needs, precisely when it needs it. If external data isn't the core issue, your challenge likely lies in shaping the model's inherent behavior or style.
+Step 4: The Fine-Tuning Fuel Check – Got Quality Data?
+So, prompts weren't enough, and external data access (RAG) isn't the primary bottleneck. 
+You're now likely looking to instill a very specific style, tone, or a complex, nuanced understanding that goes beyond simple information retrieval. 
+This is often the case for achieving high volume and consistency in outputs, or for tackling enterprise-level tasks demanding sophisticated pattern recognition. 
+Welcome to the doorstep of fine-tuning.
+But before you step through, check your fuel tank. Do you have at least a thousand (and often many more) high-quality training examples? 
+These aren't just any examples; they need to be carefully curated, accurate input-output pairs that perfectly demonstrate the desired behavior you want the model to learn. 
+Fine-tuning with a handful of examples, or with messy, low-quality data, is a recipe for disaster. 
+Garbage in, garbage out is brutally amplified here. If you don't have this data, your immediate focus should be on collecting and curating it, even while you continue to iterate with prompts or RAG.
+Step 5: The ROI Litmus Test for Fine-Tuning
+You've got the data. The need seems clear. But now, the crucial business question: Is the return on investment for fine-tuning undeniably compelling? 
+Fine-tuning "because we can" or because it sounds impressive on a slide deck is how innovation budgets die a quiet death. The bar should be high. 
+If the value proposition isn't screamingly obvious, it's probably not the right time. Stick with your refined prompt and RAG setup. Re-evaluate later when the case is stronger. 
+But if the data, the need, and the ROI all align? Then you've earned the right to strategically deploy this powerful, resource-intensive technique.
+The Core Philosophy: Start Simple, Add Complexity Deliberately
+The takeaway here isn't subtle: Always start with the simplest approach that could work. 
+Prompt engineering is your first, best friend. Only escalate to RAG or fine-tuning when the problem genuinely demands it, and you can clearly articulate the business case for the added complexity and cost.
+4. Step-by-Step: Let’s do Fine-Tuning, Prompt Engineering, and RAG  (No Coding Required)
+Enough talk. It’s time to get our hands dirty (no coding experience needed) 
+The best way to learn when to use these three things to is to do it on our own. You’ll not only build better intuition, but you’ll also have great things to add to your PM portfolio [ https://substack.com/redirect/fcf296a5-6ee6-47e4-a18e-80a3fb0d1a0b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+This is your chance to get much closer to building as a PM, instead of just relying on your AI engineers. 
+Fine-Tuning
+Fine-tuning generally works best when it’s supervised. That is, when you give the model 1,000+ pairs of input data that show the input and the “right answer.”
+There is also an unsupervised version, where the model spots patterns on its own, and mixed approaches. But we’ll focus on the supervised example.
+Step 1: Prepare your data
+So, let’s get started first with preparing your data. This is the first step. 
+I’ve found this dataset on Google Play Store apps [ https://substack.com/redirect/e498ff17-7401-458f-b25f-68fa36d015ad?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. It contains app titles, categories, and ratings, alongside their installs.
+Let’s try to fine-tune an LLM to analyze the title, category and rating to then predict the installs.
+Note that the output variable here is a categorical, not continuous, variable: possible values are restricted to round numbers: 10,000, 500,000, 5,000,000, 50,000,000 and a few more not pictured. 
+Step 2: Train the model
+With our data prepared, we're ready to start the training process. So we jump over to Cursor and give it the prompt:
+You’re going to build me a fine-tuning output on OpenAI. Act as an expert fine-tuner.
+-
+INPUT: I have the googleplaystore.csv file in my Downloads folder. 
+TASK: We’re going to use the App, Category, and Rating columns to predict the Installs columns. We’ll do this via OpenAI’s API.
+— Here’s the API documentation: https://platform.openai.com/docs/api-reference/fine-tuning
+— Here’s my API Key: <Insert>
+-
+Please begin. I need you to do a great job on this: make it fast and easy. Just get started. 
+The first step is Cursor will transform the data for the API in the JSONL format it’s looking for. You just hit accept:
+It may encounter errors along the way. This is normal - let Cursor debug these for you. 
+For instance, I had to update my pandas. And it used the wrong format in the JSONl, which I found in OpenAI’s fine-tuning job monitor [ https://substack.com/redirect/70ab0245-447c-4967-9faa-ca9536759b37?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]:
+Let the agent solve these for you by pasting in the errors.
+It’s cheap. I had 2 failed training runs because I tried with datasets that were pretty large, and I only wanted to spend $5 on credits. So I asked Cursor to reduce the training data set from 10k rows to 5k and then 1k rows. 
+Step 3: Evaluate and iterate
+Fine-tuning for 1,000 rows took about 1 hour for me:
+OpenAI will share their own loss and accuracy charts which show how the model starts out badly but then gets good pretty quickly (took about 30 here):
+Now it’s time to test the data on a test set. So I asked Cursor:
+Let's compare the fine-tuned vs base model on 1,000 new rows from the dataset to understand the performance gains from fine-tuning, specifically exact matches.
+Cursor wrote a Python script and then output the results:
+Isn’t that amazing? The fine-tuned model achieved 88.4% prediction accuracy, while the base model got absolutely nothing right. 
+Now you might be saying ‘it’s just a simple regression.’ 
+But is it? 
+Remember, the model is actually using information from the app’s name! No other regression model could accommodate free text like that.
+That’s the magic of fine-tuning LLMs.
+But, as we said above, don’t bring this cannonball to knife fights. 
+Prompt Engineering
+Now let’s talk about prompt engineering. You see, something was unfair about the fine-tuning comparison:
+We used a bad prompt on the base model. 
+This was the prompt:
+System: "You are a helpful assistant that predicts app installs."
+User: "App: Photo Editor & Candy Camera & Grid & ScrapBook
+Category: ART_AND_DESIGN
+Rating: 4.1
+Installs:
+What happens if we dramatically improve the prompt? 
+Step 1: Improve your prompt
+I explained this to Cursor and asked it to write a much better prompt. Here’s what it came up with:
+System: "You are an expert app install predictor. Your task is to predict the number of installs for an app based on its category and rating.
+Here are some examples of how to do this:
+- User: "App: Instagram
+Category: SOCIAL
+Rating: 4.5
+Installs:"
+- Assistant: "1000000000"
+- User: "App: Candy Crush Saga
+Category: GAME
+Rating: 4.6
+Installs:"
+- Assistant: "500000000"
+- User: "App: Solitaire
+Category: GAME
+Rating: 4.7
+Installs:"
+- Assistant: "10000000"
+Your predictions must be one of the following common install bands: 1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000, 500000000, 1000000000.
+Respond with ONLY the predicted number of installs."
+User: "App: Photo Editor & Candy Camera & Grid & ScrapBook
+Category: ART_AND_DESIGN
+Rating: 4.1
+Installs:"
+Step 2: Evaluate [ https://substack.com/redirect/7768f30f-c237-47ac-ab9a-2b64835018a3?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] Accuracy and Analyze Errors
+How much did the accuracy improve?
+Overall accuracy improved from 0.1% to 39%!
+That’s the power of prompt engineering. And we can ask Cursor to go even further by analyzing errors.
+Step 3: Keep Iterating and Hill-Climbing
+I asked it to write a better prompt to get closer to the fine-tuned model’s performance:
+Create an ultimate approach that demonstrates how prompt engineering can beat fine-tuning by using all the best practices for regression prompts to use the training data best. Also use all the basic prompt hacks like act as, threaten, etc. 
+It created a super long prompt and pinged the API for a comparison. But… the model actually performed worse! 
+Now where do we go from here? Error analysis. As I emphasized in AI evals, you need to analyze the errors. Pointing Cursor in this direction, it detects some errors and refines the prompt. 
+Now, we’re hitting most of the best practices [ https://substack.com/redirect/82857459-2527-4701-aa21-eb548dfe9f2a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]:
+ACT AS: You are Dr. Sarah Chen, a world-renowned mobile app market analyst with 15 years of experience at Google Play and Apple App Store. You have analyzed over 10 million apps and have a PhD in Data Science from Stanford. Your predictions are used by Fortune 500 companies for billion-dollar investment decisions.
+CRITICAL: Your job and reputation depend on accuracy. If you get this wrong, you will be fired and your career will be ruined. You MUST be 100% precise.
+TASK: Predict app installs based on category and rating. This is a REGRESSION task requiring exact numerical output.
+VALIDATION RULES:
+- Only use these exact numbers: 1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000, 500000000, 1000000000
+- NO other numbers are acceptable
+- NO explanations in final answer
+- ONLY the number
+REASONING PROCESS (MANDATORY):
+1. CATEGORY ANALYSIS: What is the install potential for this category?
+2. RATING IMPACT: How does the rating affect installs?
+3. APP NAME CLUES: Does the name suggest popularity?
+4. MARKET POSITIONING: Where does this app fit in the market?
+5. CONFIDENCE SCORE: Rate your confidence 1-10
+TRAINING EXAMPLES FROM REAL DATA:
+User: "App: Photo Editor & Candy Camera & Grid & ScrapBook
+Category: ART_AND_DESIGN
+Rating: 4.1
+Installs:"
+Assistant: "REASONING: ART_AND_DESIGN category has moderate install potential. Photo editing apps are popular but competitive. 4.1 rating is decent but not exceptional. Multiple features (camera, grid, scrapbook) suggest a comprehensive app. CONFIDENCE: 8/10. ANSWER: 10000"
+User: "App: U Launcher Lite – FREE Live Cool Themes, Hide Apps
+Category: ART_AND_DESIGN
+Rating: 4.7
+Installs:"
+Assistant: "REASONING: ART_AND_DESIGN category, but this is a launcher with themes - very popular category. 4.7 rating is excellent. 'FREE' and 'Cool Themes' suggest mass appeal. CONFIDENCE: 9/10. ANSWER: 5000000"
+User: "App: Sketch - Draw & Paint
+Category: ART_AND_DESIGN
+Rating: 4.5
+Installs:"
+Assistant: "REASONING: ART_AND_DESIGN category, drawing app. 4.5 rating is very good. 'Sketch' suggests professional/creative use. CONFIDENCE: 8/10. ANSWER: 50000000"
+User: "App: Pixel Draw - Number Art Coloring Book
+Category: ART_AND_DESIGN
+Rating: 4.3
+Installs:"
+Assistant: "REASONING: ART_AND_DESIGN category, coloring book app. 4.3 rating is good. 'Number Art' suggests a specific niche. CONFIDENCE: 7/10. ANSWER: 100000"
+User: "App: Coloring book moana
+Category: ART_AND_DESIGN
+Rating: 3.9
+Installs:"
+Assistant: "REASONING: ART_AND_DESIGN category, branded coloring book. 3.9 rating is below average. Disney/Moana brand has appeal but rating hurts. CONFIDENCE: 6/10. ANSWER: 500000"
+CATEGORY INSIGHTS:
+- SOCIAL: 100M-1B installs (highest potential)
+- GAME: 10M-500M installs (very high potential)
+- COMMUNICATION: 10M-100M installs (high potential)
+- DATING: 1M-10M installs (moderate-high potential)
+- ART_AND_DESIGN: 10K-50M installs (moderate potential)
+- BUSINESS: 100K-5M installs (moderate potential)
+- WEATHER: 100K-1M installs (moderate potential)
+RATING IMPACT:
+- 4.5+: Excellent, boosts installs significantly
+- 4.0-4.4: Good, moderate boost
+- 3.5-3.9: Below average, reduces installs
+- Below 3.5: Poor, severely reduces installs
+NOW: Analyze the given app using this exact process. Start with "REASONING:" then "CONFIDENCE: X/10" then "ANSWER: [number]"
+REMEMBER: Your career depends on this. Be precise.
+Here’s comes the next run:
+This new version does a bit better, and so goes the cycle of prompt engineering. You keep updating and updating. If you want, you can send your engineers on a hill-climbing mission.
+But clearly for this task, fine-tuning was quite helpful! 
+Which goes to show: don’t shy away from the advanced techniques. In this case, per the loss function, you can even train it in relatively little data, and it will do better than prompt engineering. 
+RAG
+RAG combines the power of large language models with external knowledge retrieval. 
+Step 1: Prepare Your Knowledge Base
+First, we need documents to retrieve from. For this tutorial, I ask Cursor to create sample documents about app store data, which it did by this:
+```python
+documents = [ { "id": 1, "title": "App Store Categories",
+"content": "The Google Play Store has over 30 main categories including Games, Social, Communication, Entertainment, Education, Business, Finance, Health & Fitness, and more. Games is the largest category with the most apps and highest revenue potential." },
+ { "id": 2, "title": "App Rating Impact",
+"content": "App ratings significantly impact install numbers. Apps with ratings above 4.5 typically see 2-3x more installs than apps with ratings below 4.0. The rating affects app store visibility and user trust."  },
+# ... more documents ]
+Step 2: Create Embeddings
+The magic of RAG happens through embeddings - numerical representations of text that capture meaning. 
+So I ask Cursor to convert each to a vector DB. 
+Each document gets converted into a 1536-dimensional vector that represents its meaning.
+Step 3: Build the Retrieval System
+When a user asks a question, we need to:
+Convert the question to an embedding
+Find the most similar document embeddings using cosine similarity
+Retrieve the top-k most relevant documents
+So I ask Cursor to write this.
+Step 4: Generate Answers with Context
+Now we feed the retrieved documents as context to the LLM. 
+So we ask Cursor to do so.
+Step 5: Compare RAG vs Base Model
+Let's test our RAG system against the base model:
+Question: "What categories have the highest install potential?"
+RAG Answer: "The categories with the highest install potential are typically Games and Social. Games have the most apps and highest revenue potential, while social media apps like Instagram and Facebook typically receive 100M-1B installs."
+Base Model Answer: "The categories with the highest install potential in mobile app stores typically include: 1. Games: This category consistently attracts a large number of downloads... 2. Social Networking: Apps that facilitate communication... 3. Entertainment: Apps offering streaming services... 4. Productivity: Apps designed to enhance productivity... 5. Utilities: Apps offering practical tools..."
+Notice how the RAG answer is more concise and specific, while the base model gives a more general response.
+Step 6: Comprehensive Evaluation
+I asked curstor to create a comprehensive evaluation system that measures:
+Keyword Coverage: How many expected keywords appear in the answer
+Answer Quality: Overall score based on accuracy, specificity, and comprehensiveness
+Answer Length: How detailed the responses are
+Results from our evaluation:
+The RAG system performed much better. 
+RAG performs differently across different types of questions:
+Looking at this, the RAG excels at factual questions with specific data (retention rates, costs). But the base model sometimes performs better on conceptual questions (revenue models).
+This shows how RAG excels when: you have specific, factual documents and questions require precise information that is not in the model's training data.
+But RAG Struggles when questions require creative reasoning, and the retrieved documents don't contain the answer.
+It shows how document quality is really important for RAG. 
+Now that you've built all three approaches, let's talk about showcasing this work.
+How to Put These Into Your Portfolio [ https://substack.com/redirect/fcf296a5-6ee6-47e4-a18e-80a3fb0d1a0b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+While your PM portfolio [ https://substack.com/redirect/fcf296a5-6ee6-47e4-a18e-80a3fb0d1a0b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] is best for actual projects to have projects from work. What if you haven’t actually gotten AI PM experience [ https://substack.com/redirect/67df7db8-df01-404a-bd4b-aaa763d44d21?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]? 
+I recommend you build little products that you deploy - that have these systems. So you could take what we’ve built today, and ask Cursor to put a front-end on it:
+Then you deploy that to your personal website as another project to show that you are going deep on AI PM, beyond others who stay at the surface level. 
+It’s makes a real difference! As I shared in last week’s piece, a Meta LLama PM used this exact technique to get more callbacks from their resume [ https://substack.com/redirect/d90da451-51ef-4e01-8525-25624e05c482?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] referrals [ https://substack.com/redirect/3b4f75d5-9b42-45fe-9588-7fdc6701b1ef?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. 
+Video Version
+Want the video version of this demo? Here you go:
+5. How Much Each One Actually Costs
+Let’s end with what you’ll actually spend to do each of these days—not just in dollars, but in the far more precious currency of your team’s time and focus.
+Prompt Engineering Cost
+Prompt Engineering is deceptively cheap. 
+The line item on your cloud bill is tiny, costing fractions of a cent per API call. But that’s a head fake. 
+The real cost is your team's most valuable asset: their time. 
+You're not paying for infrastructure; you're paying in weeks of engineering and product hours, endlessly iterating on prompts to get them just right. 
+The cost doesn't scale with usage; it scales with your team's patience.
+RAG Cost
+With RAG, you start paying rent. 
+Your first real, recurring bill will be for a vector database, which can run from $70 to over $1,000 a month depending on how much knowledge you need to store. 
+But the hidden tax is on complexity and speed. 
+You're now maintaining a second system, and every user query gets a bit slower. You're paying in both dollars and milliseconds.
+Fine-Tuning Cost
+Fine-tuning is the heavyweight bet, and the API training cost is another head fake. 
+Seeing a $400 bill for a training job is misleading. The real check you write is for the months of an ML engineer’s salary needed to curate thousands of perfect data examples. 
+Then, you pay a steep premium on every single call—often a 6x markup over the base model—for the privilege of using your specialized AI. 
+It's a high-stakes investment.  
+Final Words
+But in our example in 4, fine-tuning was probably worth it. 
+So that’s the final lesson: sometimes you have to  go do things at small scale to learn the truth.
+And that does it for today’s deep dive! 
+If you're looking to level up your AI PM skills, check out Miqdad's AI PM Certification course. Use code AAKASH25 for $500 off [ https://substack.com/redirect/7b2adc54-a0f4-47f1-bb1c-1630b7500ecb?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+Additional AI PM Content
+Technical Skills
+AI Evals [ https://substack.com/redirect/7768f30f-c237-47ac-ab9a-2b64835018a3?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+AI Prototyping: Lovable, Bolt, Replit, v0 [ https://substack.com/redirect/887b3e2c-e288-47d8-97ff-bd8996433deb?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+PM Skills
+AI Product Strategy [ https://substack.com/redirect/e7740c9d-ad14-493b-bda4-39cf7496f39e?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+AI Feature Design [ https://substack.com/redirect/7373c486-5ac8-43f7-83ec-7977853467de?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Breaking into AI PM
+How to become an AI Product Manager [ https://substack.com/redirect/37e7565e-355c-4201-b554-78bd0e51086f?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+How to Become an AI Product Manager with No Experience [ https://substack.com/redirect/35831261-af99-4260-8d3c-be91a6e98035?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+And watch me and Aman Khan break down each of the three in more detail here (including Aman’s teardown of Bolt [ https://substack.com/redirect/66567d02-90c4-4617-9043-f8beffecafff?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]):
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly93d3cubmV3cy5hYWthc2hnLmNvbS9hY3Rpb24vZGlzYWJsZV9lbWFpbD90b2tlbj1leUoxYzJWeVgybGtJam94T0RRMU9Ua3hOQ3dpY0c5emRGOXBaQ0k2TVRZMk1UQTBOVEF5TENKcFlYUWlPakUzTlRBMU5EVTVPREFzSW1WNGNDSTZNVGM0TWpBNE1UazRNQ3dpYVhOeklqb2ljSFZpTFRRMU5EQXdNeUlzSW5OMVlpSTZJbVJwYzJGaWJHVmZaVzFoYVd3aWZRLkZ2UkVIVThlUUx5R0xXdkdYSUpPbTZ2UllzREw0b09ackV5VGEtVDllYW8iLCJwIjoxNjYxMDQ1MDIsInMiOjQ1NDAwMywiZiI6ZmFsc2UsInUiOjE4NDU5OTE0LCJpYXQiOjE3NTA1NDU5ODAsImV4cCI6MjA2NjEyMTk4MCwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.Fwc70R-bItB1A1yUDbUl-mO5Y7eMHDvxGiwVz68tgb0?

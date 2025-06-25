@@ -1,0 +1,34 @@
+Subject: Making progress on controversial problems
+From: Ami Vora from The Hard Parts of Growth <amivora@substack.com>
+Date: 2025-06-04T15:11:27+00:00
+Label: AI
+ID: c4a2e897-e0d8-4716-bc51-0f6096fbd68b
+--------------------------------------------------------------------------------
+
+View this post on the web at https://amivora.substack.com/p/making-progress-on-controversial
+
+Have you ever been pulled into a controversial strategy or team problem — one where every person involved has an opinion, no one agrees, and no one has an actual solution?  This could be “Should we shut down this big project that the CEO isn’t convinced about?” or “Should we expand into this new market right now?” or “Should we change our interview process?”  At some point at any company, these thorny problems become inevitable.
+When I first ran across these, I’d to try to convince the loudest stakeholders to agree with each other, so we could avoid conflict in our big decision meetings. Hint: that didn’t work! Each person was operating with different context and optimizing for different goals, so of course my attempt at persuasion was useless. And when senior leadership was involved, it felt even more high-stakes — I’d end up presenting a cautious middle-ground solution to my boss’s boss’s, while another exec chimed in with vocal disagreement. Fun, right? 🙂 
+But the more senior I became, the more of these I ran into. I needed a process that helped me stay calm, make progress, and get back to building.
+Here's what works for me:
+Understand where we are in the problem-solving process. Most problems are like a universe — they expand in size and complexity with every new piece of information I learn, and then contract as I winnow down potential solutions. That inflection point, when I suddenly can start seeing a path to an outcome, feels like magic. 
+Knowing the shape of the problem gives me a roadmap for what to do next. If I don’t have all the relevant information yet, it’s too early to name an answer. If I’m starting to hear repetitive info, I can stop searching for more context and shift to eliminating options and proposing solutions. 
+Knowing where I am also helps me stay calm.  I know it’s normal to keep hearing more new opinions and ideas while I’m still in info-gathering mode, and I can mentally hold off on evaluating people’s proposed solutions until we’ve established a baseline of common info.
+Use documents to get specific and share context. It’s often not until I write something down that I see the obvious questions. “What’s the main goal of this change? Is the primary problem here user experience, or is it perception?” It can feel remedial to write everything down — but that’s how I know everyone agrees on the core info and I’m not missing anything. It also means we can separate gathering information from jumping into solutions, rather than everything getting mixed up in real-time meetings. After all, if we can’t agree on the baseline facts, how could we agree on the solution?
+Over-communicate the process and status. When everyone knows there’s a problem, they also want to know how they can participate and what the plan is. A regular update solves that. (“This week I’m going to talk with X, Y, and Z; Monday I’ll share a recommendation here; Wednesday I’ll share with leaders A, B, and C; please add any feedback on Monday/Tuesday.”) It also saves me time — if I get inbound questions, I can always respond with the existing written process.
+Ask questions even if they're embarrassing. If I’m missing crucial info, like “actually, who is the most important audience for this?”, I find someone safe, ask directly, and write the answer in my list of facts. Usually someone else is missing that context too, and I’m doing them a service by sharing it.
+Write an opinionated recommendation. I’m usually not the most important person in these discussions. But as the person who’s gathered the info and talked to everyone firsthand, I have unique context. The best service I can do is synthesize the info, understand options, and recommend one, complete with the tradeoffs and decision criteria, in a simple document. 
+My core proposal generally includes:
+Summary: outline of the problem statement & the recommendation
+Information learned: facts v. assumptions (both are important)
+Goals and decision criteria
+Options & pros / cons for each
+Why this recommendation was chosen
+Next steps if the recommendation is agreed on, including mitigating risks
+Discussion / time to discuss other options
+With that short outline, real-time discussions become much more effective because everyone is starting from the same complete base of information and has a skeleton of pros / cons to guide the discussion.
+Don’t hold out for a perfect solution. By definition, if a problem is controversial, there’s no clear solution. That gives me permission to propose my imperfect solution [ https://substack.com/redirect/4b92c3ab-ec93-46eb-96ba-1ed206948e42?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ], alongside the context and principles of why we’d make this decision.
+I can’t remember the last time I came up with a perfect solution. But this process, simple as it is, has helped me tackle even the hardest problems. And it’s helped me figure out how to diagnose and manage disagreements rationally, so even when everyone disagrees, we can figure out what it takes to make progress together.
+Thanks for reading The Hard Parts of Growth! Subscribe for free to receive new posts and support my work.
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9hbWl2b3JhLnN1YnN0YWNrLmNvbS9hY3Rpb24vZGlzYWJsZV9lbWFpbD90b2tlbj1leUoxYzJWeVgybGtJam94T0RRMU9Ua3hOQ3dpY0c5emRGOXBaQ0k2TVRZMU1UUXpNREkwTENKcFlYUWlPakUzTkRrd05EazVNVFFzSW1WNGNDSTZNVGM0TURVNE5Ua3hOQ3dpYVhOeklqb2ljSFZpTFRZNE5EYzNPU0lzSW5OMVlpSTZJbVJwYzJGaWJHVmZaVzFoYVd3aWZRLmRsSm5wRFRWdEY3dmJJdm1WT29BVEk0RWt5N3Z6THVKcElTYV92aWFrMjQiLCJwIjoxNjUxNDMwMjQsInMiOjY4NDc3OSwiZiI6dHJ1ZSwidSI6MTg0NTk5MTQsImlhdCI6MTc0OTA0OTkxNCwiZXhwIjoxNzUxNjQxOTE0LCJpc3MiOiJwdWItMCIsInN1YiI6ImxpbmstcmVkaXJlY3QifQ.ESH7Q4RXaXSi5cDh33vcQ3Qobx3ylc77oz1JYP_vpK0?

@@ -1,0 +1,8 @@
+# Version constraints to avoid conflicts
+langchain==0.3.26
+langchain-core==0.3.66
+langchain-community==0.3.26
+langchain-openai==0.3.25
+openai==1.91.0
+pydantic==2.9.2
+streamlit==1.46.0

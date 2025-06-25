@@ -1,0 +1,105 @@
+Subject: Evaluating AI Products: How to Find The Right Metrics
+From: Paweł from The Product Compass <huryn+ai-product-management@substack.com>
+Date: 2025-06-07T11:06:03+00:00
+Label: AI
+ID: c1bfb2e6-ef06-4193-842f-5142d4779d44
+--------------------------------------------------------------------------------
+
+View this post on the web at https://www.productcompass.pm/p/evaluating-ai-products-error-analysis
+
+Hey, Paweł here. Welcome to the premium edition of The Product Compass Newsletter.
+With 114,360+ PMs from companies like Meta, Amazon, Google, and Apple, this newsletter is the #1 most practical resource to learn and grow as an AI PM.
+Here’s what you might have recently missed:
+WTF is an AI Product Manager? [ https://substack.com/redirect/0ebcdad6-35b3-4937-a350-df6e6a7f4023?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+The Ultimate AI PM Learning Roadmap [ https://substack.com/redirect/2910ca2b-5eb0-44b1-9de9-1e5b9035a5b7?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+AI Agent Architectures: The Ultimate Guide With n8n Examples [ https://substack.com/redirect/187b8827-a2cb-4e5e-ab06-3a38d683716c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Beyond Vibe Coding: No-Code B2C SaaS Template With Stripe Payments [ https://substack.com/redirect/3d9b295c-d56e-49af-a4a4-639ed44e6ed2?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Consider subscribing and upgrading your account for the full experience:
+85% of AI initiatives fail (Gartner, 2024). I've been researching the topic for 3+ months, trying to understand how we can prevent that.
+Experts like Hamel Husain  , Shreya Shankar, Andrew Ng, and teams from Google’s PAIR emphasize that the teams that succeed obsess over analyzing, measuring, improving in quick cycles.
+While the experimentation mindset is core to product management, when working with Gen AI, it becomes even more critical than in traditional software:
+But there is a problem. 
+Metrics promoted by eval vendors, like "hallucination," “helpfulness,” or "toxicity," are ineffective and too often miss domain-specific issues.
+It turns out that the AI teams that succeed take a completely different approach. Rather than starting from the top (“let’s think about the metrics”), they:
+Look at actual data (LLM traces)
+Identify failure modes
+Let app-specific metrics emerge bottom-up
+And as we discussed in WTF is an AI Product Manager [ https://substack.com/redirect/0ebcdad6-35b3-4937-a350-df6e6a7f4023?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ], evaluating AI is one of the AI PM’s core responsibilities.
+So, in this issue, we discuss:
+How to Perform Error Analysis
+How to Turn Failure Modes Into App-Specific AI Metrics
+🔒How to Evaluate the Evaluators: TPR/Recall, TNR, Precision, F1-Score
+🔒LLM Prompts That Support Error Analysis
+Let’s dive in.
+1. How to Perform Error Analysis
+Error analysis is the highest ROI AI product development activity. 
+The process is straightforward. You look at the data, label LLM logs, and classify the errors into failure modes. We repeat it until no new significant failure modes emerge:
+In case you wonder, LLM traces are just full records of the LLM pipeline execution: user query, reasoning, tool calls, and the output. 
+For example (simplified):
+As a rule of thumb, before going further, you need ~100 high-quality, diverse traces. Those can be real data, synthetic data, or both coded with failure modes.
+Now, let’s discuss four steps of the Error Analysis Cycle in detail.
+Step 1: (Optional) Generate Synthetic Traces
+If you have data from production, that’s great. But often, when starting AI product development, there is no data you can rely on.
+Here comes synthetic data generation.
+Warning: Don't generate synthetic data without hypotheses about where AI might fail. You can build intuition by using the product. Involve domain experts, especially in complex domains. 
+Very complex domains aside, as an AI PM, you should become a domain expert too. What’s key, it’s not an engineering task.
+Next:
+Prerequisite: Start with defining at least 3 dimensions that represent where the app is likely to fail (your hypotheses)
+Generate Tuples: You need 10-20 random combinations of those dimensions
+Human Review: Remove duplicates and unrealistic combinations
+Generate Queries: Generate a natural language query for each tuple
+Human Review: Discard awkward or unrealistic queries
+An example for a finance chatbot:
+Finally, we run these synthetic queries through our LLM pipeline to generate traces.
+In Chapter 4, I’ve shared LLM prompts to:
+Prompt 1: Generate Synthetic Tuples
+Prompt 2: Generate Synthetic Queries
+Before we continue, I recommend "AI Evals For Engineers & PMs." It's a cohort-based course by Hamel Hussain and Shreya Shankar. 
+I'm participating in the first edition alongside ~700 other students and getting a ton out of it so far. They go deep into AI evals without unnecessary jargon and engage in community discussions. Our homework assignments are challenging, but achievable. 
+The next and the last live cohort starts on July 21. A special $800 discount for my community:
+Step 2: Read and Open Code Traces
+The next step is using the Open Coding [ https://substack.com/redirect/01c8830c-d9eb-40fa-a85c-836033b39fde?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] technique known from qualitative research. 
+For every LLM trace, write brief, descriptive notes with problems, surprises, and incorrect behaviors. At this stage, this data is messy and unstructured. 
+For example:
+Step 3: Axial Coding, Refine Failure Modes
+Next, we want to identify patterns. Cluster similar notes and let failure modes (error categories) naturally emerge. 
+For example:
+As Shraya Shankar and Hamel Husain  notices in their upcoming book, Application-Centric AI Evals for Engineers and Technical PMs:
+“Axial coding requires careful judgment. When in doubt, consult a domain expert. The goal is to define a small, coherent, non-overlapping set of binary failure types, each easy to recognize and apply consistently during trace annotation”
+You can automate the process with an LLM. In that case, always review its output.
+In Chapter 4, I’ve shared an LLM prompt that will help you Refine Failure Taxonomy.
+Step 4: Re-Code Traces With Failure Modes
+Go back and re-code LLM traces with new failure modes. For example:
+Next, quantify failure modes. For example:
+With each new iteration and more traces, you'll refine definitions and merge or split categories.
+Repeat the process (Steps 1-4) until no new failure modes & no changes in re-coding appear. We call this state theoretical saturation.
+2. How to Turn Failure Modes Into App-Specific AI Metrics
+Once you perform initial error analysis, you can define automated evaluators. 
+A good practice is that each evaluator tackles a single failure mode, evaluating a single metric.
+Step 1: Start With Analyzing Failure Type
+There are two types of failure types we need to consider:
+Specification Failure:
+Condition: Your instructions were unclear or incomplete.
+Action: Fix the prompt first. Don't build an evaluator yet.
+Generalization Failure:
+Condition: LLM fails to apply clear, precise instructions correctly.
+Action: These are prime candidates for automated evaluators.
+For example:
+Step 2: Consider Two Types of App-Specific Evaluators
+There are two types of automatic evaluators to consider:
+Code-Based Evals
+They are based on the logic AI engineers write (e.g., Python script)
+They evaluate objective, rule-based checks such as XML, SQL, Regex
+They are fast, cheap, objective, and deterministic
+LLM-as-Judge Evals
+This type of evaluator uses another LLM as a judge
+They are perfect for complex or subjective checks
+A single, narrow failure mode
+Start with binary checks (fail/pass) - this radically simplifies the setup and eliminates problems with building alignment between human experts
+Importantly, using LLM-as-Judge evals might involve significant cost. What to track and what to ignore is a product, not just engineering decision. Use common sense (#errors, impact) and consider tradeoffs.
+Each automatic evaluator targets a single failure mode. And that's how you get app-specific AI metrics you were looking for.
+But that’s not all. 
+How do we know we can trust our Judges?
+🔒 3. How to Evaluate the Evaluators: TPR/Recall, TNR, Precision, F1-Score...
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly93d3cucHJvZHVjdGNvbXBhc3MucG0vYWN0aW9uL2Rpc2FibGVfZW1haWw_dG9rZW49ZXlKMWMyVnlYMmxrSWpveE9EUTFPVGt4TkN3aWNHOXpkRjlwWkNJNk1UWTFNemswTmpjeExDSnBZWFFpT2pFM05Ea3lPVFExT1RJc0ltVjRjQ0k2TVRjNE1EZ3pNRFU1TWl3aWFYTnpJam9pY0hWaUxUazBNekUxTnlJc0luTjFZaUk2SW1ScGMyRmliR1ZmWlcxaGFXd2lmUS5HRjBweWp1LWhUOHZFdWJrNTRLTmdvS0M0MmdWNjNncVh6VkpwLThwVEMwIiwicCI6MTY1Mzk0NjcxLCJzIjo5NDMxNTcsImYiOnRydWUsInUiOjE4NDU5OTE0LCJpYXQiOjE3NDkyOTQ1OTIsImV4cCI6MTc1MTg4NjU5MiwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.Kq9fNDj_gmoq3_x8T5nuiOE2Cg7ILLH_-QDj9rrFzb8?

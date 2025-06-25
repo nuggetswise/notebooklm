@@ -1,0 +1,4 @@
+# smtp2http configuration for Email RAG System
+listen_addr: ":2525"
+forward_url: "http://localhost:8001/inbound-email"
+log_level: "info" 

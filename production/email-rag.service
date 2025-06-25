@@ -1,0 +1,17 @@
+
+[Unit]
+Description=Email RAG API Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/email-rag
+Environment=PATH=/var/www/email-rag/.venv/bin
+ExecStart=/var/www/email-rag/.venv/bin/uvicorn ingestion_api.main:app --host 0.0.0.0 --port 8001 --workers 4
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

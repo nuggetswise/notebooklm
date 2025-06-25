@@ -1,0 +1,31 @@
+Subject: Sunday AI Reads & Key Updates
+From: Nate from Nate’s Substack <natesnewsletter@substack.com>
+Date: 2025-06-22T21:42:53+00:00
+Label: AI
+ID: 9f21edec-fc56-48e7-ae56-3c8e6f6b49d2
+--------------------------------------------------------------------------------
+
+View this post on the web at https://natesnewsletter.substack.com/p/sunday-ai-reads-and-key-updates
+
+Hey all!
+I usually leave the weekends pretty quiet, but I’m jumping in with a couple of reads I thought were significant this week, and a few housekeeping announcements.
+Useful stuff to know
+Maven Discount
+TODAY ONLY you can get a discount off my Maven course on AI Career Acceleration. Use code MAVEN100 at maven.com/nate-b-jones/ai-career-accelerator?promoCode=MAVEN100 [ https://substack.com/redirect/2bd438d6-0655-46ff-abca-17bb8ae0cbb7?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. This is a course aimed at AI builders, and students say it feels dense but approachable—I include lessons in AI fundamentals, agents, and how to think about AI prompting. The time limit isn’t me clickbaiting—Maven sets that, and it’s worth checking out all of the Maven 100 [ https://substack.com/redirect/eeff5466-d366-49ab-925a-899790c23f8c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]—I’m not the only one doing good work out there!
+New Founding Tier Benefit
+I’m adding a new benefit for members on the Founding Tier (renamed Executive Circle). Starting next week, you’ll receive a concise but very substantive AI executive brief that’s relevant for the boardroom. Topics will include AI and markets, AI and organizational change, and AI investment theses. If you’re interested in signing up, Substack makes it easy to change your membership tier here [ https://substack.com/redirect/f765b5d7-46ee-4f04-9004-92189f165874?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+I’m starting an AI Slack / Discord Community
+I’ve heard you! I will be launching a community for paid subscribers on either Slack or Discord in the coming couple weeks. We’ll have space for AI questions, AI resources, and AI jobs. Which do you prefer? Let me know with a 10 second survey here [ https://substack.com/redirect/907ad7d5-d756-4de6-a8f7-187f2a3b3aec?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+Update on my new prompting tool PromptKit
+I know many of you have been excited to hear more on PromptKit [ https://substack.com/redirect/2302fadf-da0e-4f3c-80c9-43ccc9c97116?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. We’ve been busy getting it ready, and I will be reaching out to some of our first alpha testers next week, with more onboarded every week. I’m excited to bring more of a prompt creation and sharing community into the product in response to your feedback so far! If you haven’t signed up yet, folks on the early access list will all be onboarded before we go out to the world, so go ahead and hop in at the link [ https://substack.com/redirect/2302fadf-da0e-4f3c-80c9-43ccc9c97116?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+Links I’m reading
+I’ll be writing about one of these tomorrow! Which is it? 
+Andrej Karpathy’s Software 3.0 talk [ https://substack.com/redirect/e7b2c0bb-9cd4-445a-a988-889a36b9dce2?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+The Scale AI acquisition [ https://substack.com/redirect/5cb26b8d-0fa2-4029-80df-2d8ef5111e0b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] by Meta
+Cluely raises $15M [ https://substack.com/redirect/d00eb074-649c-4a02-a314-4c70aa6169a3?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Dwarkesh’s AI Lab Review  [ https://substack.com/redirect/6c575fe2-526e-46d6-8651-fb16c0f97a8f?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Cheers!
+Nate
+For more on AI, subscribe and share!
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9uYXRlc25ld3NsZXR0ZXIuc3Vic3RhY2suY29tL2FjdGlvbi9kaXNhYmxlX2VtYWlsP3Rva2VuPWV5SjFjMlZ5WDJsa0lqb3hPRFExT1RreE5Dd2ljRzl6ZEY5cFpDSTZNVFkyTlRVeE1EUXpMQ0pwWVhRaU9qRTNOVEEyTWpnMU9URXNJbVY0Y0NJNk1UYzRNakUyTkRVNU1Td2lhWE56SWpvaWNIVmlMVEV6TnpNeU16RWlMQ0p6ZFdJaU9pSmthWE5oWW14bFgyVnRZV2xzSW4wLm9yZk5Md1VaNnFZS0pjeEJ6bFJiOVlUTDh5OHpXTURHSTJZMFpCcEZhTzQiLCJwIjoxNjY1NTEwNDMsInMiOjEzNzMyMzEsImYiOnRydWUsInUiOjE4NDU5OTE0LCJpYXQiOjE3NTA2Mjg1OTEsImV4cCI6MjA2NjIwNDU5MSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.sJS6E9OV9KJRUekBdk1WmvUs18ESkLC4Ham9X8eol9k?

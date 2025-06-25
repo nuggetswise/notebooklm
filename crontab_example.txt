@@ -1,0 +1,17 @@
+# Crontab example for Gmail IMAP polling
+# Add this to your crontab with: crontab -e
+
+# Run every 5 minutes
+*/5 * * * * cd /Users/singhm/emailragnew && /Users/singhm/emailragnew/.venv/bin/python poll_and_forward.py once >> /Users/singhm/emailragnew/cron.log 2>&1
+
+# Alternative: Run every 10 minutes
+# */10 * * * * cd /Users/singhm/emailragnew && /Users/singhm/emailragnew/.venv/bin/python poll_and_forward.py once >> /Users/singhm/emailragnew/cron.log 2>&1
+
+# Alternative: Run every hour
+# 0 * * * * cd /Users/singhm/emailragnew && /Users/singhm/emailragnew/.venv/bin/python poll_and_forward.py once >> /Users/singhm/emailragnew/cron.log 2>&1
+
+# Notes:
+# - Replace /Users/singhm/emailragnew with your actual project path
+# - Replace .venv/bin/python with your Python virtual environment path
+# - The script will log to both stdout and poll_and_forward.log
+# - Cron output will be appended to cron.log 
