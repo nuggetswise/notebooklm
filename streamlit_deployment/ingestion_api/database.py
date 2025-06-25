@@ -6,6 +6,11 @@ from pathlib import Path
 from .models import EmailMetadata
 from .config import settings
 
+def get_db():
+    """Get a database connection for the Streamlit app."""
+    db_path = str(Path("data") / "email_index.db")
+    return sqlite3.connect(db_path)
+
 class EmailDatabase:
     """SQLite database operations for email metadata."""
     
@@ -23,6 +28,7 @@ class EmailDatabase:
                     sender TEXT NOT NULL,
                     date TEXT NOT NULL,
                     label TEXT NOT NULL,
+                    content TEXT,
                     timestamp TEXT NOT NULL,
                     parsed_path TEXT NOT NULL,
                     has_attachments BOOLEAN DEFAULT FALSE,
