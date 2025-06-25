@@ -1,0 +1,90 @@
+Subject: Nate Post Organizer: All my top posts in one place
+From: Nate from Nate’s Substack <natesnewsletter@substack.com>
+Date: 2025-06-09T22:30:19+00:00
+Label: AI
+ID: 05efd90c-fabd-45bd-a878-fc4bbdd40f3e
+--------------------------------------------------------------------------------
+
+View this post on the web at https://natesnewsletter.substack.com/p/nate-post-organizer-all-my-top-posts
+
+I write a lot, and I get that people sometimes lose track of my posts. So here’s a handy set of 31 of my top posts organized by category. Dive in where it suits you!
+LLM for Beginners: 
+These are some of my favorite posts I wrote for people starting out in AI.
+Learn AI the Easy Way: a flash card set for AI models plus classroom resources
+https://natesnewsletter.substack.com/p/learn-ai-the-easy-way-a-complete?r=1z4sm5 [ https://substack.com/redirect/f049d991-cbf8-4a5e-86eb-0e5ba7ee450b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Top 10 tools: My personal current top ten AI tools
+https://natesnewsletter.substack.com/p/beyond-the-listicle-ten-ai-tools?r=1z4sm5 [ https://substack.com/redirect/4acc78cd-1fda-46ef-b077-b771d2d0b9bf?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+What I tell my Mom about AI: A letter to someone I love who isn’t in AI at all
+https://natesnewsletter.substack.com/p/what-i-tell-my-mom-about-ai?r=1z4sm5 [ https://substack.com/redirect/9f2eb448-3478-4df5-802a-de9330be3404?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+0-5K with AI: A complete guide to getting started from scratch with AI
+https://natesnewsletter.substack.com/p/from-0-to-5k-the-complete-simplified?r=1z4sm5 [ https://substack.com/redirect/cc4cd326-ba86-41ae-86b5-5cf92239240f?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+The AI Productivity Stack: 27 tools in my overall AI productivity stack
+https://natesnewsletter.substack.com/p/the-ai-productivity-stack-27-tools?r=1z4sm5 [ https://substack.com/redirect/772ba360-267c-49fc-986a-0330f9b5a2ea?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+LLM Prompting:
+I write these to help people master prompts, and I write a lot of them! These are my favorites, and they should apply well to current models.
+How to prompt with wake words: Using variables to prompt with AI
+https://natesnewsletter.substack.com/p/how-to-prompt-with-wake-words-in?r=1z4sm5 [ https://substack.com/redirect/6e33b1fd-dddd-4a00-83e0-11dfec2c3c6f?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+AI System prompts: What to put in those system prompt boxes
+https://natesnewsletter.substack.com/p/write-once-save-100-prompts-mastering?r=1z4sm5 [ https://substack.com/redirect/dc54a8d1-2083-42f9-ab29-3d7ea994b762?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Anatomy of the Prompt: How to think about prompts structurally
+https://natesnewsletter.substack.com/p/the-universal-anatomy-of-the-prompthow?r=1z4sm5 [ https://substack.com/redirect/4331cd76-a37b-4482-a05d-f32ab23686ed?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Prompts for Automated Workflows: Build automated workflows with prompts
+https://natesnewsletter.substack.com/p/turn-chatgpt-into-a-sushi-conveyor?r=1z4sm5 [ https://substack.com/redirect/0d523092-fbb3-48fc-90d0-9622568993a0?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Prompting o3 and o4-mini: How to build a prompt carefully, like a good product
+https://natesnewsletter.substack.com/p/your-prompt-is-the-product-working?r=1z4sm5 [ https://substack.com/redirect/0b88ffa4-ab1c-462a-9b91-ab387bf25ee5?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+My prompt stack for work: My favorite 16 prompts
+https://natesnewsletter.substack.com/p/my-prompt-stack-for-work-16-prompts?r=1z4sm5 [ https://substack.com/redirect/16fa592c-1b4b-424c-b107-c5259dae51b7?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+The Vibe Coding Bible: A complete guide to getting started with Vibe Coding
+https://natesnewsletter.substack.com/p/the-vibe-coding-bible-how-to-build?r=1z4sm5 [ https://substack.com/redirect/749cfb1e-68ed-48b4-a144-083dcf2bb61c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+12 Advanced Prompting Techniques: When you’ve mastered the basics, try these!
+https://natesnewsletter.substack.com/p/the-prompt-spellbook-12-advanced?r=1z4sm5 [ https://substack.com/redirect/e8de4d98-b201-4d38-8f2c-b57c1a6b1b17?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+7 Production Grade Prompt Patterns from Claude 4’s System Prompt:
+https://natesnewsletter.substack.com/p/surfing-the-guardrails-7-production?r=1z4sm5 [ https://substack.com/redirect/102c9491-29ae-45de-b42b-64a942a68429?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+LLM Policy and Strategy
+I write pieces pretty regularly on how to think strategically about the changes AI is pushing across the startup and policy landscapes.
+NYT and ChatGPT case: The NYT forces OpenAI to break its own policies:
+https://natesnewsletter.substack.com/p/the-gray-ladys-data-dragnet-how-one [ https://substack.com/redirect/89424230-c9a1-46b1-90fc-5b0f269e3329?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+We killed your startup lol: A note on startup strategy in the age of AI
+https://natesnewsletter.substack.com/p/we-killed-your-startup-lolwhat-to?r=1z4sm5 [ https://substack.com/redirect/b0eed938-6395-4c65-8a97-deec623f31e0?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+2010’s Software Laws are Dead, Here’s what’s Next: How 2020’s startups are different
+https://natesnewsletter.substack.com/p/dead-as-a-dinosaur-2010s-software?r=1z4sm5 [ https://substack.com/redirect/84a0e838-3149-4caf-bea7-155e1fe4ca77?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+A strategy framework for AI: This guide helps you pick a strategy in the age of AI
+https://natesnewsletter.substack.com/p/why-the-pipes-suddenly-matter [ https://substack.com/redirect/1776a7ff-80e4-4a76-bdd1-8fa39fd9bf1c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+LLM Integrations and Models:
+Models age quickly these days, so I made sure these were up to date posts!
+OpenAI Data Connectors: How to use OpenAI’s new Data Connectors.
+https://natesnewsletter.substack.com/p/a-quick-guide-to-openais-new-data?r=1z4sm5 [ https://substack.com/redirect/9dbf023b-ba7f-4379-a370-5d35ce66ec9e?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+MCPs: What are MCPs and how should you think about them?
+https://natesnewsletter.substack.com/p/how-i-think-about-mcp-a-practical?r=1z4sm5 [ https://substack.com/redirect/8084fe19-89ee-43f4-a2c0-12e07eb47b92?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Guide to picking a model: A handy guide to picking the right model for you
+https://natesnewsletter.substack.com/p/you-will-choose-wisely-the-definitive?r=1z4sm5 [ https://substack.com/redirect/08148e4c-5c4b-4047-b34f-93b027faaf22?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Guide to o3 and Gemini 2.5 Pro: Specifically testing both models on common prompts
+https://natesnewsletter.substack.com/p/the-complete-guide-to-chatgpt-o3?r=1z4sm5 [ https://substack.com/redirect/cb199570-3089-45a9-b5ae-34964af8a7aa?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Introducing Claude 4: A deep dive on the new Claude models
+https://natesnewsletter.substack.com/p/introducing-claude-4heres-where-it?r=1z4sm5 [ https://substack.com/redirect/4145928b-5395-47d4-bacc-224a3d1d388e?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+LLM Futures
+How should we think about our collective future in the age of AI?
+Rethinking the path to AGI: What does it actually take to reach workable AGI?
+https://natesnewsletter.substack.com/p/scaling-isnt-destiny-rethinking-the?r=1z4sm5 [ https://substack.com/redirect/56a10f16-fd00-4300-a9d3-8306289babb6?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+2025 AI Trends: A teardown of Mary Meeker’s epic 340 slide 2025 deck
+https://natesnewsletter.substack.com/p/i-summarized-mary-meekers-incredible?r=1z4sm5 [ https://substack.com/redirect/633a3df1-2e67-4f07-b647-9b2786827273?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+2025 AI Trends Deep Dive: A deeper dive on the 2025 trend deck
+https://natesnewsletter.substack.com/p/mary-meeker-ai-trends-2025-deep-dive?r=1z4sm5 [ https://substack.com/redirect/51c3a1fe-9fde-48d8-b0e4-19b550b191aa?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+LLMs and Jobs
+I wrote posts pretty regularly on AI and the jobs situation.
+The Kids will be OK: How to think about AI with kids.
+https://natesnewsletter.substack.com/p/the-kids-will-be-ok-how-to-skip-the?r=1z4sm5 [ https://substack.com/redirect/c58f8199-a712-4699-8417-81e0076dbe7c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+The irreducible Human: What we bring as people in the age of AI.
+https://natesnewsletter.substack.com/p/the-irreducible-human-six-things?r=1z4sm5 [ https://substack.com/redirect/d299d449-f988-4b3e-8229-589dbd28e915?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+AI Resume Survival Guide: How to think about resumes in the age of AI.
+https://natesnewsletter.substack.com/p/the-ai-resume-survival-guide-for?r=1z4sm5 [ https://substack.com/redirect/58a89aab-a5ea-4e93-86e7-19e6a6f948fd?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+AI and jobs: A guide if you’re worried about AI and jobs.
+https://natesnewsletter.substack.com/p/if-youre-worried-ai-will-replace?r=1z4sm5 [ https://substack.com/redirect/ebea632c-808e-4ccb-9186-a95e909c056b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+AI and high performing teams: How high-performing teams are using AI.
+https://natesnewsletter.substack.com/p/your-team-is-using-ai-wrong-the-hidden?r=1z4sm5 [ https://substack.com/redirect/73108635-845c-45f0-946c-2e5b8df9aaf9?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+New Jobs in the AI age: What new jobs are opening up in the age of AI?
+https://natesnewsletter.substack.com/p/finishing-what-ai-starts-the-new?r=1z4sm5 [ https://substack.com/redirect/1b2a897e-38f5-4637-a92f-15fd1af9927d?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+That’s it for now! One post for each day of the month (if it’s a long month). I’ve intentionally cherry-picked the posts I think go well as a group. 
+For more on AI, subscribe and share!
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9uYXRlc25ld3NsZXR0ZXIuc3Vic3RhY2suY29tL2FjdGlvbi9kaXNhYmxlX2VtYWlsP3Rva2VuPWV5SjFjMlZ5WDJsa0lqb3hPRFExT1RreE5Dd2ljRzl6ZEY5cFpDSTZNVFkxTkRreU5qa3dMQ0pwWVhRaU9qRTNORGsxTURneU5Ua3NJbVY0Y0NJNk1UYzRNVEEwTkRJMU9Td2lhWE56SWpvaWNIVmlMVEV6TnpNeU16RWlMQ0p6ZFdJaU9pSmthWE5oWW14bFgyVnRZV2xzSW4wLlh4ZkhvejZZWFpJbTJCR0U1YzZWd1pTeXdmaHA1dE4tNmIxemV5eDdRUzQiLCJwIjoxNjU0OTI2OTAsInMiOjEzNzMyMzEsImYiOnRydWUsInUiOjE4NDU5OTE0LCJpYXQiOjE3NDk1MDgyNTksImV4cCI6MTc1MjEwMDI1OSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.0cph0EATu5nb42UMq1yRxfLTmwwQmjBQuAYtV5XmF8Q?

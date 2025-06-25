@@ -1,0 +1,28 @@
+Subject: No Subject
+From: unknown@example.com
+Date: 2025-06-24T04:10:44.774705
+Label: AI
+ID: f9aca677-4762-4f3a-b8d0-f0121c05f550
+--------------------------------------------------------------------------------
+
+--------------------------Hr3u8N6lRhveXqK7FOcEGj
+Content-Disposition: form-data; name="email"; filename="test_substack_email.eml"
+Content-Type: application/octet-stream
+
+From: newsletter@substack.com
+To: test@localhost
+Subject: Label: Substack - Weekly AI Newsletter
+Date: Mon, 24 Jun 2024 10:00:00 +0000
+Content-Type: text/plain; charset=UTF-8
+
+This is a test Substack newsletter about AI developments.
+
+Key topics covered:
+- Latest GPT model updates
+- AI safety research
+- Machine learning breakthroughs
+- Industry applications
+
+Best regards,
+The AI Newsletter Team 
+--------------------------Hr3u8N6lRhveXqK7FOcEGj--

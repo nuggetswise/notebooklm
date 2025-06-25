@@ -1,0 +1,31 @@
+Subject: New: AI Product Community
+From: Colin Matthews from Tech For Product <colinmatthews@substack.com>
+Date: 2025-06-11T14:10:59+00:00
+Label: AI
+ID: fa9ac3c1-1b84-4a94-812b-f5a17f9b95b0
+--------------------------------------------------------------------------------
+
+View this post on the web at https://blog.techforproduct.com/p/new-ai-product-community
+
+Today, I’m excited to launch a new AI product community with Peter Yang, current Product Lead at Roblox, author of Creator Economy (100k+ subs), and instructor of “Become an AI Powered Product Leader” on Maven.
+We kept hearing the same thing from our readers and students:
+“I want to meet other people who are tinkering with AI.”
+“Where can I find real AI workflows that actually work?”
+“I want to see what AI apps people have built and how they did it.”
+So Peter and I are starting this Slack community to help you use AI to save time, get more done, and build great products.
+Here's what you get as a community member:
+Our best AI resources for free including Colin’s Technical Foundations for PMs course [ https://substack.com/redirect/b78b2c39-cad3-49f4-be29-7f73f6a35ca5?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] (4.7 stars, 84 lessons), Peter’s AI prompt library [ https://substack.com/redirect/6ec2ec09-d245-4eea-b348-4742b80b34a7?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] (24+ go-to prompts), and a new prompt library for AI apps (see below).
+Live workshops with AI experts, starting with an AMA with Peter and me this Friday at 3:30 pm pst.
+Meet other product leaders and founders from Google, Meta, Netflix, and more who have taken our courses and are AI enthusiasts.
+Upgrade to paid to get a link to join the community right away.
+What's included: Full course and prompt libraries
+Here's what we're making available to community members at launch:
+1. Colin’s Tech Foundations for PMs course [ https://substack.com/redirect/b78b2c39-cad3-49f4-be29-7f73f6a35ca5?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] (84 lessons)
+Colin has taught this course to 900 PMs with a 4.7 rating and he’s generously making it available to community members for free. Above is a snapshot of what the course covers (modules include video and text walkthroughs).
+2. Peter’s battle-tested AI prompt library
+This library includes 24+ prompts that I use every week for product, creator, and personal tasks. Peter updates this library regularly — no fluff, just prompts that work.
+3. New AI prototyping prompt library
+This library includes one-shot prompts to build our favorite apps with AI. It’s still a work in progress but we’re looking forward to improve it with your help.
+Look forward to seeing you in the community!
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9ibG9nLnRlY2hmb3Jwcm9kdWN0LmNvbS9hY3Rpb24vZGlzYWJsZV9lbWFpbD90b2tlbj1leUoxYzJWeVgybGtJam94T0RRMU9Ua3hOQ3dpY0c5emRGOXBaQ0k2TVRZMU56QTJOVEF5TENKcFlYUWlPakUzTkRrMk5URXpOemdzSW1WNGNDSTZNVGM0TVRFNE56TTNPQ3dpYVhOeklqb2ljSFZpTFRJeU5UUXlORFVpTENKemRXSWlPaUprYVhOaFlteGxYMlZ0WVdsc0luMC5SNVJNeF9SVU1LOFF3WUF3UlhfWGZjU1NjTm9QalBLQlZqUjZ0R0lDRlBrIiwicCI6MTY1NzA2NTAyLCJzIjoyMjU0MjQ1LCJmIjp0cnVlLCJ1IjoxODQ1OTkxNCwiaWF0IjoxNzQ5NjUxMzc4LCJleHAiOjE3NTIyNDMzNzgsImlzcyI6InB1Yi0wIiwic3ViIjoibGluay1yZWRpcmVjdCJ9.fFU55m7AOKO0SOtimyfmGLcafoo8Xmpj75T9-ShXDBQ?

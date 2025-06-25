@@ -1,0 +1,99 @@
+Subject: Vibe Coding as a software engineer
+From: The Pragmatic Engineer <pragmaticengineer+deepdives@substack.com>
+Date: 2025-06-03T16:21:08+00:00
+Label: AI
+ID: b93a440c-22a4-4b98-b483-ff41805d569a
+--------------------------------------------------------------------------------
+
+View this post on the web at https://newsletter.pragmaticengineer.com/p/vibe-coding-as-a-software-engineer
+
+The term “vibe coding” is relatively new and has been gaining traction recently, since computer scientist Andrej Karpathy, OpenAI cofounder and Tesla’s former director of AI, used it in a now widely-referenced tweet [ https://substack.com/redirect/bc82ecdf-2d08-4852-bc70-73c92a43ba03?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] which helpfully provided a definition. There were a few earlier [ https://substack.com/redirect/cb330204-9e6c-465f-8af7-9714c7ed8371?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] references to “vibe coding”, but Andrej’s post seems to have propelled it into wider usage.
+Today, terms like “I vibe coded this app” can be found in developers’ lingo, especially frontend-focused devs. Last week, my colleague Elin [ https://substack.com/redirect/e90931cf-8b77-4de7-b9c8-039ada6764e7?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] attended the Local First [ https://substack.com/redirect/3f9e50cb-2336-4712-a988-5a27dac8fc85?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] conference in Berlin, and found that more than a few engineers mentioned “vibe coding” when discussing the development process. So, today, we’re all about the vibes:
+What is vibe coding? There’s a blurry line between “letting the AI rip” (vibe coding), versus paying attention and correcting it, which could be called AI-assisted coding. This is because as engineers, we can understand outputted code – if we choose.
+Vibe coding tools. A collection of tools frequently mentioned by developers. GitHub Copilot is often cited, while Claude Code is getting lots of love, and ChatGPT is still used a lot.
+Use cases. Prototyping is the most common, but brainstorming, and building better dev tools are also useful.
+Vibe coding examples. An experienced iOS dev “vibe coding” an app in 3 hours, and a product manager who got stuck on vibe coding, and became more hands-on in order to ship a neat app.
+Reminder: it’s not production ready! It’s a risk to push code from the AI to production, without careful review. Security issues, bugs, performance issues, cost spikes can all be easily shipped.
+What will vibe coding change? Agentic modes are making LLMs more capable at coding, and they will help us prototype faster. At the same time, software engineers who are hands-on architects, have deep technical knowledge, and product taste; well, they’ll likely be even more in demand.
+Before we start: I recently talked about AI coding with Yuzheng Sun, host of the Pragmatic Data Scientists YouTube channel [ https://substack.com/redirect/73a6bc80-e807-4e4a-b128-40d879c0a931?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. It’s a 35-minute conversation that you can watch here [ https://substack.com/redirect/3b508af8-9315-412f-99d7-0647ea86e6ae?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+The bottom of this article could be cut off in some email clients. Read the full article uninterrupted, online. [ https://substack.com/redirect/0c4d6946-f072-441a-9e07-f987a0ff1b54?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+1. What is vibe coding?
+Here’s how Andrej Karpathy defined [ https://substack.com/redirect/bc82ecdf-2d08-4852-bc70-73c92a43ba03?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] his understanding of it (emphasis mine):
+“There's a new kind of coding I call "vibe coding", where you fully give in to the vibes, embrace exponentials, and forget that the code even exists. It's possible because the LLMs (e.g. Cursor Composer w Sonnet) are getting too good.
+Also I just talk to Composer with SuperWhisper so I barely even touch the keyboard. I ask for the dumbest things like "decrease the padding on the sidebar by half" because I'm too lazy to find it. I "Accept All" always, I don't read the diffs anymore. When I get error messages I just copy paste them in with no comment, usually that fixes it.
+The code grows beyond my usual comprehension, I'd have to really read through it for a while. Sometimes the LLMs can't fix a bug so I just work around it or ask for random changes until it goes away.
+It's not too bad for throwaway weekend projects, but still quite amusing. I'm building a project or web app, but it's not really coding - I just see stuff, say stuff, run stuff, and copy paste stuff, and it mostly works.”
+Andrej explains talking to his Mac using SuperWhisper [ https://substack.com/redirect/aff427db-a560-4618-a6e7-d749b0a728dc?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ], and telling Cursor’s agent mode, Composer, what to add to the app he’s building. It sounds like being involved in coding but a bit disengaged from it at the same time; the focus is not on the code itself, but on the big idea. With AI coding tools and agents increasingly good at generating code, this mostly works.
+Letting AI generate code
+At least two books with “vibe coding” in their titles will be published this year:
+Beyond Vibe Coding [ https://substack.com/redirect/87272e0a-c527-43fb-a64e-de42970d5044?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] by Addy Osmani
+Vibe Coding [ https://substack.com/redirect/0268b5fb-3a99-4a51-b796-7a4cc3f9b2af?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] by Gene Kim and Steve Yegge
+In Beyond Vibe Coding, Addy Osmani defines it like this:
+“In vibe coding, you leverage powerful LLMs as coding partners, letting them handle the heavy lifting of code generation so you can focus on higher-level goals.”
+Steve Yegge, co-author of Vibe Coding, told me what the term means to him:
+“Vibe coding is when the AI writes the code and the human supervises.”
+My take on vibe coding is similar, in that you allow an LLM to “take the lead” in writing code, a bit like turning on a car’s self-driving mode and taking a metaphorical back seat.
+Vibe coding vs AI-assisted coding
+Software engineer and Django creator Simon Willison, points out how “vibe coding” gets meshed together with “AI assisted coding,” in his post Not all AI-assisted programming is vibe coding (but vibe coding rocks) [ https://substack.com/redirect/041173e1-8427-47bc-a491-65f6c1bbbe22?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]:
+“I’m seeing people apply the term “vibe coding” to all forms of code written with the assistance of AI. I think that both dilutes the term and gives a false impression of what’s possible with responsible AI-assisted programming.
+Vibe coding is not the same thing as writing code with the help of LLMs! (...)
+It’s fun to try out wild new ideas, and the speed at which an LLM can produce code is an order of magnitude faster than even the most skilled human programmers. For low stakes projects and prototypes, why not just let it rip?
+When I talk about vibe coding, I mean building software with an LLM without reviewing the code it writes.”
+What if we can’t separate “vibe coding” and “AI assisted coding”?
+A strict definition of vibe coding seems to involve not looking at the code, only at what it generates, and prompting an LLM. But can we really do this? I tried several times and failed at vibe coding by that definition; usually because the AI tool asked me to approve things, like creating a new database schema or picking an approach. Then, I took a glance at what it did and sometimes intervened.
+I knew what I wanted to build, and kind of knew how I wanted to do it. To repeat the driving analogy, I was mostly letting the car drive itself, and occasionally steered it to change lanes, or take an exit. So, was that “vibe coding” because I gave away most control, or was it “AI assisted coding” because I paid some attention? It felt like I was moving faster with less effort, so I’d say it was “vibe coding” to a good extent.
+Personally, I find it hard to pretend I don’t know anything about code, but I do sometimes hand over most control to an agent, then check what it does. I guess this combines “vibe coding” and letting the agent “rip”, with taking control back, as and when.
+In the book, Beyond Vibe Coding, Addy Onsmani differentiates between vibe coding and “AI-assisted engineering”:
+“On one end of the spectrum lies vibe coding. On the other end is what I’ll call AI-assisted engineering: a disciplined method of weaving AI into each phase of software development, from design through testing, under clear constraints.
+Both approaches leverage powerful AI, but their goals, audiences, and expectations differ markedly.”
+For the purposes of this article, “vibe coding” means handing over control to an AI tool to write all the code. The definition of “vibe coding” seems clear cut for non-developers who don’t understand code, but it’s murkier for us engineers who do understand – if we choose to, that is!
+2. Vibe coding tools
+There are lots of tools for vibe coding, and many are also useful for AI-assisted development. I asked [ https://substack.com/redirect/916e3a8a-1e9d-4adf-b945-43cc4002bcaf?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] devs for their most commonly-used tools:
+“Agent modes” within IDEs or IDE extensions
+Tools many of us likely use for autocomplete or AI-assisted coding, can also be used to let the AI rip with vibe coding. Popular ones include:
+GitHub Copilot [ https://substack.com/redirect/167dc9d9-2970-4fc6-8fd3-07b0398af0d2?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] and its Agent Mode [ https://substack.com/redirect/a44ea77a-d44a-4367-a121-e2ab1d2b84ed?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] within VS Code, Visual Studio and other IDEs (e.g. JetBrains IDEs, Eclipse, Xcode)
+Cursor Chat [ https://substack.com/redirect/51bee011-1f2d-4425-82c4-a32d54b9abf8?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] (previously: Compose) in Cursor
+Cascade [ https://substack.com/redirect/ff6073ba-24ca-4539-bf91-b9a26eff1cdf?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] by Windsurf, within Windsurf and JetBrains IDEs
+Cline [ https://substack.com/redirect/ba17d3aa-fcf6-45e3-9204-47a89d0a247d?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: the “collaborative AI coder” VS Code extension
+Junie [ https://substack.com/redirect/d2b0c7e2-8af6-4910-8027-7deec66e55a9?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] within JetBrains IDEs
+Others:
+Zed editor [ https://substack.com/redirect/f1321c34-6fdb-433b-a6b8-46ab8bee59fb?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] and its Agentic Editing mode [ https://substack.com/redirect/3c126439-8c4b-462c-9ef1-b8000b28e382?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Roo Code [ https://substack.com/redirect/8fe0ad1c-6582-4397-8d78-54f8b8eab768?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] for VS Code
+Goose [ https://substack.com/redirect/8c3f8cd8-808d-4796-8de3-a3fe428f0693?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] for Jetbrains
+Cody [ https://substack.com/redirect/08d1efba-25a3-40aa-a6fb-bfa5868f6f14?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] from Sourcegraph
+Tabnine [ https://substack.com/redirect/5bd950cb-2011-4bee-a3c7-a5e341ca555b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: the AI coding assistant that predates even GitHub Copilot
+Command line agentic tools
+I am hearing more devs rave about the power of using agents without an IDE, and just via a command line. For vibe coding, when not looking to “take over” from the AI and edit the code, an IDE could be unnecessary:
+Claude Code [ https://substack.com/redirect/604d069b-187c-4a67-acf4-eae6dc804fc3?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] by Anthropic, using the powerful Sonnet 4 [ https://substack.com/redirect/26e7bfa9-1bd6-4ba4-8ac6-f23d756408ef?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] model. Runs locally. I’m hearing a lot of praise from engineers, and some devs switching over fully even from tools like Copilot.
+Codex [ https://substack.com/redirect/85b4bba6-c4c1-4e0d-a0d7-fe61f82cc99e?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] by OpenAI: a software engineering agent that runs in a cloud-based virtual machine
+Aider [ https://substack.com/redirect/b050bbdf-f57b-49d5-8041-a4985a9d72d0?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: paid programming with an agent in the terminal. This tool was also popular a year ago. [ https://substack.com/redirect/e3e0a59f-ae46-48f4-9bf7-3124588b69a3?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Amp [ https://substack.com/redirect/78ec36d3-f39a-4790-996e-9a2212e54eb5?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] by Sourcegraph
+Other tools
+Tried and tested:
+ChatGPT [ https://substack.com/redirect/06761a5b-46f7-4ab1-8018-943cb5ea0656?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: the most commonly-mentioned LLM, and probably still the most popular among developers.
+Claude [ https://substack.com/redirect/b2faa6e3-186a-495b-af7f-69021f97c374?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: especially capable at code generation, and gets lots of mentions by engineers
+Gemini [ https://substack.com/redirect/1a9290fe-2ab7-4f61-a0d8-0c6922a7da3c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] and other LLMs. Plenty of devs just prompt an LLM, then copy+paste the code into their IDE to run.
+Claude Artifacts [ https://substack.com/redirect/65266f58-4380-4012-b671-e11ad8d33bd8?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. Great for small web apps and code snippets. We did a deepdive in How Anthropic built Claude Artifacts [ https://substack.com/redirect/3aadff47-6c7b-49a7-93a6-375cfd303556?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+Design-related tools:
+Google Stitch [ https://substack.com/redirect/2f076e1f-ed88-4f62-9533-d955ac4aae0d?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: turn prompts into UI designs for mobile and web
+Figma Make [ https://substack.com/redirect/8549704e-baa5-4e18-82bc-539bb61cb9cc?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: for creating prototypes from ideas. Start prototyping by sketching a design
+Anima [ https://substack.com/redirect/b1540843-f896-4ed5-b5a2-57a9a776b031?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: converts Figma designs to code
+Other:
+BMAD [ https://substack.com/redirect/4f7481e3-6d4e-4859-bdea-24d9e98a2c71?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: an agent that follows the “Breakthrough Method of Agile AI-driven Development”
+Gamma [ https://substack.com/redirect/a5673cee-05aa-40e6-ad9f-7eb1fed3a1c5?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: for generating slides
+n8n [ https://substack.com/redirect/afedffa4-6000-4ee4-a73a-4f556bfb0157?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] for workflow automation
+There’s an ever-growing list of tools that generate code with AI: here’s an additional 20+ [ https://substack.com/redirect/8d23068d-c62e-4133-8d9a-34c0f64a2c27?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+Fullstack web platforms
+Several startups have built products which can theoretically build and deploy a fullstack web app with database support, usually using Supabase. Some of the more popular ones:
+Lovable [ https://substack.com/redirect/97b60627-3359-492d-a602-1d53e94f6590?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: probably the most popular tool for quick prototyping for web apps
+Vercel v0 [ https://substack.com/redirect/ff8418b1-a161-47e1-8fde-18c4226fa134?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: good feedback from devs on creating visual prototypes
+Replit [ https://substack.com/redirect/617c3b2c-0edb-4cf3-9da1-150e883f9c5e?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. Former Googler Julian Harris shared [ https://substack.com/redirect/7eecbe84-fba8-4e70-8be7-69209b35d445?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] that he built VoteLogo.com [ https://substack.com/redirect/a15e72dd-2011-4f97-b82c-78c50f47453a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] in just one weekend
+Bolt.new [ https://substack.com/redirect/d7eb2caf-cb11-490a-b856-f07a4c90d88a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: this platform can generate mobile apps using React Native and Expo
+Others:
+Firebase Studio [ https://substack.com/redirect/00403424-06bd-4819-8955-231a31cf37fd?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: Google’s offering that uses Gemini and builds on top of Google’s Firebase backend
+Grok Studio [ https://substack.com/redirect/465f5dab-0413-4824-b3dd-428b49b97053?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: the fullstack workspace powered by X’s Grok model
+These products seem built for non-developers. Even so, devs are in a much better position to create something usable because these tools inevitably run into issues when you try to prompt anything even moderately complex, such as using a database for a website. Most engineers who mentioned these tools made it clear they use them for prototyping UIs, and showing off ideas.
+3. Use cases
+Vibe coding seems best suited for prototyping, and devs also mention a few other interesting use cases...
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9uZXdzbGV0dGVyLnByYWdtYXRpY2VuZ2luZWVyLmNvbS9hY3Rpb24vZGlzYWJsZV9lbWFpbD90b2tlbj1leUoxYzJWeVgybGtJam94T0RRMU9Ua3hOQ3dpY0c5emRGOXBaQ0k2TVRZMU1UQTROREF5TENKcFlYUWlPakUzTkRnNU5qZzBOaklzSW1WNGNDSTZNVGM0TURVd05EUTJNaXdpYVhOeklqb2ljSFZpTFRRMU9EY3dPU0lzSW5OMVlpSTZJbVJwYzJGaWJHVmZaVzFoYVd3aWZRLkFZVjBGdm51NjczMHhkRC1URkVEc25hQjFkR0RoQVpjVFBWSC1JWnNuNEEiLCJwIjoxNjUxMDg0MDIsInMiOjQ1ODcwOSwiZiI6dHJ1ZSwidSI6MTg0NTk5MTQsImlhdCI6MTc0ODk2ODQ2MiwiZXhwIjoxNzUxNTYwNDYyLCJpc3MiOiJwdWItMCIsInN1YiI6ImxpbmstcmVkaXJlY3QifQ.fDDytX1NtiselniYXA_bZhh6trwZxk2PXiR7JnmQMiM?

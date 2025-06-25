@@ -1,0 +1,74 @@
+Subject: Retention: The situationship of SaaS
+From: Elena's Growth Scoop <elenaverna@substack.com>
+Date: 2025-06-23T15:44:16+00:00
+Label: AI
+ID: 6c7a7a74-ba8b-400a-8047-735df4f78402
+--------------------------------------------------------------------------------
+
+View this post on the web at https://www.elenaverna.com/p/retention-the-situationship-of-saas
+
+Retention is the ultimate test of product-market fit. Except now it's more like a pop quiz... that you have to pass every damn quarter. 
+Because we're living in an era of product-market fit collapse [ https://substack.com/redirect/4679d3a4-cea2-4ea8-a3a2-c79f8a492b97?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. Companies that seemed untouchable just a couple of years ago are now watching their fit erode as AI reshapes entire categories overnight.
+Monitoring churn closely shows you whether your product is still meeting the market, and if your retention metrics hold up to benchmark expectations [ https://substack.com/redirect/a03abe2e-d7ad-4cae-832c-e08b7627fd4f?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+So if churn is high or creeping up, it’s time to act. Like yesterday.
+Here are the four levers every company should build to retain what they’ve worked so hard to earn.
+This post is sponsored by Churnkey [ https://substack.com/redirect/c68844b3-cdad-4758-99ae-5594b21aca85?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: Churnkey helps best-in-class companies like Superhuman reduce churn. Feedback AI [ https://substack.com/redirect/fae13c0c-1d69-450b-8274-4c48619c7ff2?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] maps churn feedback to MRR lost so you know exactly what to build next. Deploy the full Churnkey platform [ https://substack.com/redirect/c68844b3-cdad-4758-99ae-5594b21aca85?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] to save an additional 20%-40% of your churned revenue.
+Churn starts with poor activation
+Most often churn is not a disease, it’s a symptom of poor activation. I know I sound like a broken record on this one… but it’s TRUE!
+And activation starts going wrong the minute you incorrectly define [ https://substack.com/redirect/5195200b-44f9-485c-981a-1971fdce0938?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] your “aha” moment.
+I see many companies confusing activation with setup. They define it as uploading, importing, configuring, generating, creating, or connecting something.
+But do these steps always deliver value to users? Nope. So those are setup actions.
+Your “aha” happens when value is delivered, not when setup ends. So verbs should be: publish, send, receive, share, export, deploy. For example:
+SurveyMonkey [ https://substack.com/redirect/fd18361e-537f-45f2-97c6-9cc7b06cb2c0?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: “Aha” is not creating a survey, it’s getting responses on that survey.
+Miro [ https://substack.com/redirect/bc9336d9-eb0f-4e8e-be12-d3b7a8c66d29?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: It’s not opening a board and adding elements, it’s collaborating with somebody else on that board.
+Lovable [ https://substack.com/redirect/7e2ce66c-b2bb-4a10-bc42-aeab4a2f1ee8?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: It’s not building an app, it’s launching and getting traffic to it.
+Is reaching “aha” once enough to activate users? It depends.
+In some products, yes:
+Lovable [ https://substack.com/redirect/82cf0bc8-0213-4027-96de-ec0960c79675?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: Once users publish the app, they’ll iterate on it. No need for additional setups, such as publishing another app.
+Amplitude [ https://substack.com/redirect/128f85c5-58bc-4f3b-906e-ccc24ff0666a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]: When the data is connected, users keep getting value without having to go through setup again my monitoring a metric.
+These are the “easier” cases. Then, there are those products that require you to go through setup over, and over, and over again. For example:
+SurveyMonkey: Once the survey finishes collecting responses, customers have to return and create another one to continue receiving value.
+Miro: One white board can only last so long. That makes habit loop formation more important, so users keep coming back to create more boards.
+Cases like these are the reason why companies like Miro moved “aha” to the team level. Relying on a single user to trigger setup again and again is hard, but a team working across shared boards benefits from network effects. 
+It continues with failed feature adoption
+Even after successful activation, some users still churn.
+The culprit: they never discover the features that truly matter to them.
+Many “aha” moments are feature-dependent. If customers fail to use those features, they might technically be activated, but still not get the value they need.
+Say a Lovable user needs to publish their app to a custom domain but doesn’t see that option. They might still publish the app, but they’ll likely get frustrated and churn. Had they discovered that feature, they’d probably have stayed.
+Feature adoption is a powerful lever for retention. I usually come at it from two angles:
+Top-down: Identify the top 5–10 features you believe are critical to deliver product value. If adoption of those is low, you might have a discovery issue, most likely caused by feature bloat or lack of feature visibility.
+Bottom-up: Look at your most retentive users and identify the features they use consistently. Take the ones that correlate with long-term retention and try to increase feature adoption for relevant users.
+Combine these two approaches and you’ll end up with a list of features to focus your efforts on.
+At the same time, you’ll get clarity on the features you need to sunset. Every horizontal platform needs to implement ongoing cleanup. Consider setting a feature kill list to identify underused features and prioritize their deprecation - unless usage can be lifted. Without it, you’ll become the dreaded feature factory.
+But it can be prevented too
+Activation and feature adoption are solid. It’s time to ask: are we still losing users we could have saved?
+The answer lies in the difference between voluntary and involuntary churn.
+Voluntary churn happens when users cancel their subscriptions intentionally.
+A good offboarding flow can be a last line of defense: remind them what they’re losing, give the option to pause, or offer a timely discount (Canva does it best). 
+Involuntary churn is trickier and easier to miss. It usually comes down to payment failures, often caused by expired cards or tight fraud controls.
+If you’re not managing involuntary churn via retries and recovery flows, you’re leaving money on the table.
+You don’t need to figure this out on your own. Tools like Churnkey [ https://substack.com/redirect/4e80e5dc-4512-4842-94eb-25ac085451a2?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] integrate directly with your billing provider to recover revenue you’d otherwise miss. For larger companies, this adds up quickly.
+That said, don’t mistake payment recovery for a retention strategy. It’s ibuprofen for the symptom, not a fix for the root cause of your headache.
+Finally, try resurrecting the churned users
+Most companies give up on churned users way too quickly.
+But if your churned base is big enough, resurrection tactics should be a priority. Think of it this way: if you’re converting 5% of new users, reactivating even 1–2% of past ones can deliver similar (or better) results.
+But resurrection needs to be strategic.
+Generic “we miss you” emails don’t bring people back from the dead.
+What they do is ignoring a key point: your product is constantly evolving. Churned users likely have an outdated idea of what your product is and what it can do. That’s your opportunity to show them the value you’ve added in the meantime.
+Segment churned users into two groups:
+Churned but still active (free tier users): They’re the perfect candidates for a trial restarts. But do it on your timeline, not theirs. On your next big product launch, grant them access to the paid plan. Let the product do the talking.
+Truly inactive users: You still have one major advantage: their contact information. But approach it carefully. A well-timed drip campaign, trial restarts every few months, can highlight new capabilities without overwhelming them. The goal is to show them that the product has changed, and might finally solve what they originally needed.
+Resurrection isn’t a replacement for acquisition, but it’s a powerful complement, especially for mature companies with a large churn base and a steady stream of improvements.
+A note on team structure
+If you want a shot at fighting churn, you need the right teams in the right sequence [ https://substack.com/redirect/036019ad-7a92-4820-99da-07688d74cf13?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+Begin with a squad that owns activation. At the same time, the core Product team and Marketing should work on feature adoption and utilization.
+Sometimes this starts as a lifecycle marketing team focused on messaging and email touchpoints. But over time, product and engineering usually join, especially if you want to tackle payment recovery, off-boarding flows, and resurrection initiatives with real depth.
+In many cases, these efforts sit within the same pod. And they should. Churn isn't a single metric problem, it’s a cross-functional one. Your structure needs to reflect that.
+Churn is…feedback
+Churn isn’t just a retention problem. It shows you what users didn’t understand or didn’t value your product, despite your best efforts.
+You can ignore that signal, throw a few painkillers at it, and hope it gets better.
+Or you can treat churn like what it really is: your most honest feedback loop.
+Edited with the help of Diana Bernardo [ https://substack.com/redirect/4d2539fa-3918-4260-97e7-ac82466d165a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ].
+If you’re finding this newsletter valuable, share it with a friend, and consider subscribing if you haven’t already. There are group discounts [ https://substack.com/redirect/ff214797-c07c-4ff5-84fd-fe47cd59c1f4?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ], gift options [ https://substack.com/redirect/9afc16f4-7868-47d4-8096-3ec8836729ee?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ], and referral bonuses [ https://substack.com/redirect/4be13787-85ee-477a-81f6-9a104a62c487?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ] available.
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly93d3cuZWxlbmF2ZXJuYS5jb20vYWN0aW9uL2Rpc2FibGVfZW1haWw_dG9rZW49ZXlKMWMyVnlYMmxrSWpveE9EUTFPVGt4TkN3aWNHOXpkRjlwWkNJNk1UWTJOVEk1T0RZMExDSnBZWFFpT2pFM05UQTJPVE0wT1Rjc0ltVjRjQ0k2TVRjNE1qSXlPVFE1Tnl3aWFYTnpJam9pY0hWaUxURTBNelV5TkRraUxDSnpkV0lpT2lKa2FYTmhZbXhsWDJWdFlXbHNJbjAuaUZVd01NTjF4emF4RWhWREE1MDJEQ2xoYWlqVWVPWEJrajVCUExmaXRGMCIsInAiOjE2NjUyOTg2NCwicyI6MTQzNTI0OSwiZiI6dHJ1ZSwidSI6MTg0NTk5MTQsImlhdCI6MTc1MDY5MzQ5NywiZXhwIjoyMDY2MjY5NDk3LCJpc3MiOiJwdWItMCIsInN1YiI6ImxpbmstcmVkaXJlY3QifQ.WqFqkoAn2Jm1Wk1jrX4WVrHZtCN7clP8m7DtCdYdRIk?

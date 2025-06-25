@@ -1,0 +1,243 @@
+{
+  "nate_2288": {
+    "id": "nate_2288",
+    "sender": "Nate from Nate's Substack <newsletter@substack.com>",
+    "first_name": "Nate",
+    "display_name": "Nate from Nate's Substack <newsletter@substack.com>",
+    "email_count": 2,
+    "first_seen": "2025-06-25T15:44:33.790093",
+    "last_seen": "2025-06-25T15:44:33.792523",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education",
+      "News"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "ami_1045": {
+    "id": "ami_1045",
+    "sender": "Ami Vora <amivora@substack.com>",
+    "first_name": "Ami",
+    "display_name": "Ami Vora <amivora@substack.com>",
+    "email_count": 2,
+    "first_seen": "2025-06-25T15:44:33.790308",
+    "last_seen": "2025-06-25T15:44:33.792715",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education",
+      "News"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "ethan_3040": {
+    "id": "ethan_3040",
+    "sender": "Ethan Evans <ethan@example.com>",
+    "first_name": "Ethan",
+    "display_name": "Ethan Evans <ethan@example.com>",
+    "email_count": 2,
+    "first_seen": "2025-06-25T15:44:33.790438",
+    "last_seen": "2025-06-25T15:44:33.792907",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education",
+      "News"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "wes_7406": {
+    "id": "wes_7406",
+    "sender": "Wes Kao <wes@example.com>",
+    "first_name": "Wes",
+    "display_name": "Wes Kao <wes@example.com>",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.790560",
+    "last_seen": "2025-06-25T15:44:33.790561",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "noah_3902": {
+    "id": "noah_3902",
+    "sender": "Noah Smith <noah@example.com>",
+    "first_name": "Noah",
+    "display_name": "Noah Smith <noah@example.com>",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.790668",
+    "last_seen": "2025-06-25T15:44:33.790669",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "john_8625": {
+    "id": "john_8625",
+    "sender": "john.doe@example.com",
+    "first_name": "john",
+    "display_name": "john.doe@example.com",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.790786",
+    "last_seen": "2025-06-25T15:44:33.790787",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "jane_3939": {
+    "id": "jane_3939",
+    "sender": "jane_smith@company.com",
+    "first_name": "jane",
+    "display_name": "jane_smith@company.com",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.790904",
+    "last_seen": "2025-06-25T15:44:33.790904",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "bob_8553": {
+    "id": "bob_8553",
+    "sender": "bob-wilson@startup.io",
+    "first_name": "bob",
+    "display_name": "bob-wilson@startup.io",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.791035",
+    "last_seen": "2025-06-25T15:44:33.791036",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "dr_4093": {
+    "id": "dr_4093",
+    "sender": "Dr. Sarah Johnson via LinkedIn <sarah@linkedin.com>",
+    "first_name": "Dr",
+    "display_name": "Dr. Sarah Johnson via LinkedIn <sarah@linkedin.com>",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.791169",
+    "last_seen": "2025-06-25T15:44:33.791170",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "unknown_5961": {
+    "id": "unknown_5961",
+    "sender": "Team Newsletter <newsletter@company.com>",
+    "first_name": "Unknown",
+    "display_name": "Team Newsletter <newsletter@company.com>",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.791533",
+    "last_seen": "2025-06-25T15:44:33.791534",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "unknown"
+  },
+  "unknown_8634": {
+    "id": "unknown_8634",
+    "sender": "Support Team <support@service.com>",
+    "first_name": "Unknown",
+    "display_name": "Support Team <support@service.com>",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.791766",
+    "last_seen": "2025-06-25T15:44:33.791767",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "unknown"
+  },
+  "com_8904": {
+    "id": "com_8904",
+    "sender": "newsletter@substack.com",
+    "first_name": "com",
+    "display_name": "newsletter@substack.com",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.791957",
+    "last_seen": "2025-06-25T15:44:33.791958",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "com_3650": {
+    "id": "com_3650",
+    "sender": "noreply@example.com",
+    "first_name": "com",
+    "display_name": "noreply@example.com",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.792147",
+    "last_seen": "2025-06-25T15:44:33.792148",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  },
+  "com_7166": {
+    "id": "com_7166",
+    "sender": "admin@company.com",
+    "first_name": "com",
+    "display_name": "admin@company.com",
+    "email_count": 1,
+    "first_seen": "2025-06-25T15:44:33.792337",
+    "last_seen": "2025-06-25T15:44:33.792338",
+    "topics": [
+      "AI",
+      "Tech",
+      "Business",
+      "Education"
+    ],
+    "labels": [],
+    "persona_type": "individual"
+  }
+}

@@ -1,0 +1,71 @@
+Subject: The exact AI playbook (using MCPs, custom GPTs, Granola) that saved ElevenLabs $100k+ and helps them ship daily | …
+From: Lenny's Newsletter <lenny+how-i-ai@substack.com>
+Date: 2025-06-02T11:03:13+00:00
+Label: AI
+ID: 2bf87836-d192-421d-a2d0-7d2d50033c22
+--------------------------------------------------------------------------------
+
+View this post on the web at https://www.lennysnewsletter.com/p/the-ai-marketing-stack
+
+Watch or listen now:
+YouTube [ https://substack.com/redirect/4caf0ccf-7055-413c-adc6-7b95d043deaa?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]  //  Spotify [ https://substack.com/redirect/ffa4705d-f478-4c1f-af7f-2ff7c1ed25ad?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]  //  Apple [ https://substack.com/redirect/f494ce86-6212-4ded-9047-3dcbb0ec668b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Brought to you by:
+Orkes [ https://substack.com/redirect/b3ccc55c-d190-45f4-8871-a47d0beb1e54?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]—The enterprise platform for reliable applications and agentic workflows
+Retool [ https://substack.com/redirect/c2d20a3c-f14a-466e-9eee-2564a424f290?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]—AI that’s designed for developers, and built for the enterprise
+Luke Harries, Head of Growth at ElevenLabs, the leading AI voice technology company, shares how he’s automating marketing workflows with AI—from case studies to translations to WhatsApp integrations—saving his company over $140,000 while making everything a launch.
+What you’ll learn:
+1. How to create polished case studies in minutes using AI transcription and a custom GPT
+2. How ElevenLabs built a custom AI translation system that saved them $140,000 annually and eliminated agency headaches
+3. How to use Model Context Protocols (MCPs) to connect AI assistants to your WhatsApp messages
+4. The “everything is a launch” philosophy that helps ElevenLabs maintain consistent marketing momentum
+5. Why marketers should learn to code with AI tools like Cursor
+6. How to create effective custom GPTs by focusing on prompt engineering rather than output editing
+Where to find Luke Harries:
+Website: https://harries.co/ [ https://substack.com/redirect/61494e72-bdb3-49c8-9eb7-77b35ea2bb97?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+LinkedIn: https://www.linkedin.com/in/luke-harries/ [ https://substack.com/redirect/a7bb0c86-ab90-4898-92e4-a1669a3401f5?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+GitHub: https://github.com/lharries [ https://substack.com/redirect/8978715f-72de-4fa3-85a5-91b06cc4ea68?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+X: https://x.com/lukeharries [ https://substack.com/redirect/15eb92b9-d6c4-4a24-b8a6-767c1f3cc4b1?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Where to find Claire Vo:
+ChatPRD: https://www.chatprd.ai/ [ https://substack.com/redirect/bf31a701-6b97-4fe3-b4ee-ed135b6c559a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Website: https://clairevo.com/ [ https://substack.com/redirect/1ff36f89-725c-4bda-9afe-cff4de8fb25c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+LinkedIn: https://www.linkedin.com/in/clairevo/ [ https://substack.com/redirect/e192dd08-0a98-4d5a-80f6-53141444b4e9?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+X: https://x.com/clairevo [ https://substack.com/redirect/e716ea25-4e80-4557-b778-3114f524c580?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+In this episode, we cover:
+(00:00 [ https://substack.com/redirect/738c30f9-11f6-498f-93f8-83d4dc80c733?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Intro
+(02:41 [ https://substack.com/redirect/58d4e6ef-956f-442c-b597-33671ff61753?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) The future of AI in marketing
+(04:22 [ https://substack.com/redirect/3de33798-7403-489d-8f08-687ed7757aac?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Using Granola and custom GPTs to write case studies
+(12:10 [ https://substack.com/redirect/72b76120-7221-4f3e-9be7-933ccc532e1b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Generating tweet threads using ChatGPT
+(13:58 [ https://substack.com/redirect/e7fabf7c-d935-44e4-85c0-bbe1e790d603?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Building case studies into a systematic workflow
+(15:14 [ https://substack.com/redirect/db70a6f1-a7bc-4430-98d4-ad4617ce3dae?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Best practices for prompt engineering
+(19:39 [ https://substack.com/redirect/201842cc-4e17-4d68-847c-99fbd726198d?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Building a custom translation system that saved $140k
+(25:10 [ https://substack.com/redirect/47f2b48f-4fe2-45ad-9a9b-f0e876160965?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Open sourcing the translation solution
+(29:47 [ https://substack.com/redirect/d4c92af0-237c-4057-9b71-bcef3c6a1820?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Building a WhatsApp MCP
+(38:07 [ https://substack.com/redirect/ccf1be83-8625-4630-a5cb-cdfd4be47d3e?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Creating specialized AI agents on demand
+(41:08 [ https://substack.com/redirect/0f086c49-1950-475e-8e53-101e5b9791b7?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]) Lightning round and final thoughts
+Tools referenced:
+• Granola: https://www.granola.ai/ [ https://substack.com/redirect/621f1723-07b9-42f2-9eaf-9e6a35e6a8aa?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• ChatGPT: https://chat.openai.com/ [ https://substack.com/redirect/d19e0db5-3de5-4294-805e-6d872bc6213c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Cursor: https://www.cursor.com/ [ https://substack.com/redirect/70eaf000-1a6b-4a3d-a8aa-e3e7ae8b3ee2?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Claude: https://claude.ai/ [ https://substack.com/redirect/995306a8-abef-4fb0-8b28-77517d9af2b6?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• ElevenLabs: https://elevenlabs.io/ [ https://substack.com/redirect/9ba0669b-6356-4b1c-a59b-64cc4bfebf2a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• WhatsApp: https://www.whatsapp.com/ [ https://substack.com/redirect/38fe7e30-cd5c-46c9-ad6f-d116d4a14b40?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• GitHub: https://github.com/ [ https://substack.com/redirect/88db091e-5090-48da-821c-d2c02fffed03?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Zapier: https://zapier.com/ [ https://substack.com/redirect/d2a12d51-b181-4674-88f5-2dd972970b6c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Calendly: https://calendly.com/ [ https://substack.com/redirect/dfa1a054-1626-4c10-a614-995805123b95?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Salesforce: https://www.salesforce.com/ [ https://substack.com/redirect/f2d1872e-79d0-4725-8b46-4f0a0c458ea3?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Other references:
+• MCP (Model Context Protocol): https://www.anthropic.com/news/model-context-protocol [ https://substack.com/redirect/3ceed44f-4778-44b2-b126-abb814e09146?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• WhatsApp MCP repo: https://github.com/lharries/whatsapp-mcp [ https://substack.com/redirect/cf153741-2d8a-45eb-9615-20ad93835f87?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Whatsmeow library: https://github.com/tulir/whatsmeow [ https://substack.com/redirect/a20c1dbe-e3ca-425e-925c-f8dc51e3a95b?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• LaunchDarkly: https://launchdarkly.com/ [ https://substack.com/redirect/de07b35f-97c9-4735-afbd-e776dc8dca77?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Introducing ElevenLabs MCP: https://elevenlabs.io/blog/introducing-elevenlabs-mcp [ https://substack.com/redirect/c5105a64-bcfe-4a61-9a8f-1efac04632c2?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Ordering a pizza using the ElevenLabs MCP server: https://x.com/elevenlabsio/status/1909300782673101265 [ https://substack.com/redirect/f4159642-e252-4328-acf3-15caef92cafd?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Chess.com: https://www.chess.com/ [ https://substack.com/redirect/f29b5445-4e6f-4b2c-85f2-12ab4c92295e?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Lovable: https://lovable.ai/ [ https://substack.com/redirect/ddfef300-0085-47d7-a11b-b41012a42d7a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• v0: https://v0.dev/ [ https://substack.com/redirect/e141e189-27c7-4fcb-9f19-e8355b7d294a?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Figma: https://www.figma.com/ [ https://substack.com/redirect/ef4cd96b-1b44-44f2-867c-aae1e5ffe973?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Launch and launch again — how to launch your products: https://harries.co/launch-your-product [ https://substack.com/redirect/46729be6-3529-4502-a90b-ab8a32516ff5?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+• Your first growth hire: https://harries.co/first-growth-hire [ https://substack.com/redirect/35b5a3e3-42a8-45b5-8584-da5f54b4d9d2?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]
+Production and marketing by https://penname.co/ [ https://substack.com/redirect/b61cc00f-6698-46d7-8f93-618217af270c?j=eyJ1IjoiYXpucmUifQ.-8uBcpk8-HDATmkL0LtRV3v-RBLbqZCsv5EbXeOlA6M ]. For inquiries about sponsoring the podcast, email jordan@penname.co.
+
+Unsubscribe https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly93d3cubGVubnlzbmV3c2xldHRlci5jb20vYWN0aW9uL2Rpc2FibGVfZW1haWw_dG9rZW49ZXlKMWMyVnlYMmxrSWpveE9EUTFPVGt4TkN3aWNHOXpkRjlwWkNJNk1UWTBPREk0T0RBNUxDSnBZWFFpT2pFM05EZzROak01Tmpnc0ltVjRjQ0k2TVRjNE1ETTVPVGsyT0N3aWFYTnpJam9pY0hWaUxURXdPRFExSWl3aWMzVmlJam9pWkdsellXSnNaVjlsYldGcGJDSjkuUzk3bkF0Z25sMEdLM292NXJoY2x4cWFqY0l5YzNpTS1qenZtMEJiczlRayIsInAiOjE2NDgyODgwOSwicyI6MTA4NDUsImYiOnRydWUsInUiOjE4NDU5OTE0LCJpYXQiOjE3NDg4NjM5NjgsImV4cCI6MTc1MTQ1NTk2OCwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.yajdiTWLyIZ6ZruPm3q9bIC4BLBe2NkIatGDDnMHmm4?
