@@ -147,18 +147,22 @@ async def get_email_status(
     label: Optional[str] = Query(None, description="Filter by label"),
     max_age_days: Optional[int] = Query(settings.MAX_AGE_DAYS, description="Maximum age in days")
 ):
-    """Get email status and metadata."""
+    """Get email status and metadata - filtered to substack.com only."""
     try:
+        # Always filter to substack.com unless explicitly overridden
+        if not label:
+            label = "substack.com"
+        
         if label:
             emails = db.get_emails_by_label(label, max_age_days)
         else:
             emails = db.get_all_emails(max_age_days)
         
-        # Get all labels for frontend
-        all_labels = db.get_labels()
+        # Get all labels for frontend (but only substack.com)
+        all_labels = ["substack.com"]
         
-        # Get total email count
-        total_emails = len(db.get_all_emails(max_age_days))
+        # Get total email count (only substack.com)
+        total_emails = len(db.get_emails_by_label("substack.com", max_age_days))
         
         return EmailStatusResponse(
             emails=emails,
@@ -217,13 +221,18 @@ async def get_email_content(email_id: str):
 
 @app.get("/labels")
 async def get_available_labels():
-    """Get all available email labels."""
+    """Get available email labels - filtered to substack.com only."""
     try:
         labels = db.get_labels()
-        return {"labels": labels, "count": len(labels)}
+        # Filter to only show substack.com
+        filtered_labels = [label for label in labels if label == "substack.com"]
+        return {
+            "labels": filtered_labels,
+            "count": len(filtered_labels)
+        }
     except Exception as e:
         print(f"Error getting labels: {e}")
-        raise HTTPException(status_code=500, detail=f"Error retrieving labels: {str(e)}")
+        return {"labels": ["substack.com"], "count": 1}
 
 @app.get("/emails")
 async def get_emails(
@@ -231,30 +240,38 @@ async def get_emails(
     since: Optional[str] = Query(None, description="Filter emails since this date (ISO format)"),
     max_age_days: Optional[int] = Query(30, description="Maximum age in days")
 ):
-    """Get emails with optional filtering."""
+    """Get emails with optional filtering - defaults to substack.com only."""
     try:
-        # Parse since date if provided
-        since_date = None
-        if since:
-            try:
-                since_date = datetime.fromisoformat(since.replace('Z', '+00:00'))
-            except ValueError:
-                raise HTTPException(status_code=400, detail="Invalid date format. Use ISO format.")
+        # Default to substack.com if no label specified
+        if not label:
+            label = "substack.com"
         
-        # Get emails from database
+        # Get emails by label
         if label:
             emails = db.get_emails_by_label(label, max_age_days)
         else:
             emails = db.get_all_emails(max_age_days)
         
-        # Filter by since date if provided
-        if since_date:
-            emails = [email for email in emails if email.date >= since_date]
+        # Apply date filtering if since parameter is provided
+        if since:
+            try:
+                since_date = datetime.fromisoformat(since.replace('Z', '+00:00'))
+                filtered_emails = []
+                for email in emails:
+                    if email.date >= since_date:
+                        filtered_emails.append(email)
+                emails = filtered_emails
+            except ValueError:
+                print(f"Invalid date format: {since}")
         
-        return {"emails": emails, "count": len(emails)}
+        return {
+            "emails": emails,
+            "total_count": len(emails),
+            "label": label,
+            "since": since,
+            "max_age_days": max_age_days
+        }
         
-    except HTTPException:
-        raise
     except Exception as e:
         print(f"Error getting emails: {e}")
         raise HTTPException(status_code=500, detail=f"Error retrieving emails: {str(e)}")

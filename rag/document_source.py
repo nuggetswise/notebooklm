@@ -12,6 +12,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 from ingestion_api.database import db
 from ingestion_api.models import EmailMetadata
 from .config import settings
+from ingestion_api.parser import clean_email_address
 
 class Document:
     """Simple document class for RAG processing."""
@@ -27,9 +28,13 @@ class EmailDocumentSource:
         self.chunk_size = settings.CHUNK_SIZE
         self.chunk_overlap = settings.CHUNK_OVERLAP
     
-    def load_documents(self, label: str = None, max_age_days: int = None) -> List[Document]:
+    def load_documents(self, label: str = None, max_age_days: int = None, sender: str = None) -> List[Document]:
         """Load email documents from parsed files."""
         try:
+            # Default to substack.com if no label specified
+            if not label:
+                label = "substack.com"
+            
             # Get email metadata from database
             if label:
                 emails = db.get_emails_by_label(label, max_age_days)
@@ -39,6 +44,34 @@ class EmailDocumentSource:
             documents = []
             
             for email in emails:
+                # Filter by sender if specified
+                if sender:
+                    # Extract first name from sender and compare
+                    sender_str = str(email.sender)
+                    
+                    # Try to extract from display name first (e.g., "Aakash Gupta from Product Growth <email@domain.com>")
+                    if '<' in sender_str and '>' in sender_str:
+                        display_name = sender_str.split('<')[0].strip()
+                        if display_name:
+                            # Get first word as first name
+                            display_first_name = display_name.split()[0].title()
+                            if display_first_name == sender:
+                                # This email matches the sender filter
+                                pass
+                            else:
+                                continue
+                    else:
+                        # Try to extract from email address
+                        sender_email = clean_email_address(sender_str)
+                        if sender_email:
+                            # Extract first name from email
+                            email_first_name = sender_email.split('@')[0].replace('+', '.').split('.')[0].title()
+                            if email_first_name != sender:
+                                continue
+                        else:
+                            # If we can't parse it, skip this email
+                            continue
+                
                 # Read email content from file
                 if not os.path.exists(email.parsed_path):
                     print(f"Warning: Email file not found: {email.parsed_path}")
@@ -167,10 +200,10 @@ class EmailDocumentSource:
                 'error': str(e)
             }
     
-    def search_documents(self, query: str, label: str = None, max_age_days: int = None) -> List[Document]:
+    def search_documents(self, query: str, label: str = None, max_age_days: int = None, sender: str = None) -> List[Document]:
         """Simple text search in documents (fallback when embeddings not available)."""
         try:
-            documents = self.load_documents(label, max_age_days)
+            documents = self.load_documents(label, max_age_days, sender)
             chunked_docs = self.chunk_documents(documents)
             
             # Simple keyword search
@@ -195,6 +228,10 @@ class EmailDocumentSource:
         except Exception as e:
             print(f"Error searching documents: {e}")
             return []
+    
+    def simple_search(self, query: str, label: str = None, max_age_days: int = None, sender: str = None) -> List[Document]:
+        """Simple search method for RAG pipeline fallback."""
+        return self.search_documents(query, label, max_age_days, sender)
 
 class NotebookDocumentSource:
     """Load and process notebook documents for RAG."""

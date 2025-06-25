@@ -80,6 +80,11 @@ class EmailRAGPipeline:
                     'processing_time': time.time() - start_time,
                     'error': 'Pipeline not initialized'
                 }
+            
+            # Default to substack.com if no label specified
+            if not label:
+                label = "substack.com"
+            
             # Detect if the question is addressed to a persona (e.g., "Nate, ...")
             persona_name = None
             # Improved regex to handle greetings and better name detection
@@ -125,7 +130,7 @@ class EmailRAGPipeline:
                     # Convert Document to dict for downstream compatibility
                     context_docs.append({'content': doc.content, 'metadata': doc.metadata, 'score': score})
             else:
-                context_docs = document_source.simple_search(question_body, label, max_age_days)
+                context_docs = document_source.simple_search(question_body, label, max_age_days, sender)
                 # If not already dicts, wrap as needed
                 context_docs = [{'content': doc.content, 'metadata': doc.metadata, 'score': 1.0} for doc in context_docs]
             # If persona_name is found, try to generate first-person answer

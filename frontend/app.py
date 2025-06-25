@@ -102,55 +102,63 @@ API_BASE_URL = "http://localhost:8000"
 
 @st.cache_data
 def get_available_labels():
-    """Get available email labels from the API - now hardcoded to substack.com only"""
-    # Hardcode to only show substack.com
-    return ["substack.com"]
+    """Get available email labels from the API - filtered to substack.com only"""
+    try:
+        response = requests.get(f"{API_BASE_URL}/labels")
+        if response.status_code == 200:
+            labels = response.json()["labels"]
+            # Filter to only show substack.com
+            return [label for label in labels if label == "substack.com"]
+        return ["substack.com"]  # Fallback
+    except Exception as e:
+        st.error(f"Error fetching labels: {e}")
+        return ["substack.com"]  # Fallback
 
 @st.cache_data
 def get_emails_by_label(label: str, days_back: int = 30):
-    """Get emails by label and date range - simplified for substack.com only"""
+    """Get emails by label and date range"""
     try:
-        # For substack.com, return a mock response since backend might not be available
-        if label == "substack.com":
-            return [
-                {
-                    "id": "mock_1",
-                    "subject": "Sample Substack Email 1",
-                    "sender": "natesnewsletter@substack.com",
-                    "label": "substack.com",
-                    "date": "2025-06-25T10:00:00Z"
-                },
-                {
-                    "id": "mock_2", 
-                    "subject": "Sample Substack Email 2",
-                    "sender": "lenny@substack.com",
-                    "label": "substack.com",
-                    "date": "2025-06-25T09:00:00Z"
-                }
-            ]
+        cutoff_date = (datetime.now() - timedelta(days=days_back)).isoformat()
+        response = requests.get(
+            f"{API_BASE_URL}/emails",
+            params={"label": label, "since": cutoff_date}
+        )
+        if response.status_code == 200:
+            return response.json()["emails"]
         return []
     except Exception as e:
         st.error(f"Error fetching emails: {e}")
         return []
 
-def query_rag(question: str, label: str = None, days_back: int = 30):
-    """Query the RAG system - simplified for substack.com only"""
+def query_rag(question: str, label: str = None, days_back: int = 30, sender_filter: str = None):
+    """Query the RAG system"""
     try:
-        # Mock response for substack.com queries
-        if label == "substack.com" or label is None:
-            return {
-                "answer": f"Based on your substack.com emails, here's what I found: {question}. This is a mock response since the backend is not connected.",
-                "context": [
-                    {
-                        "subject": "Sample Substack Email",
-                        "sender": "natesnewsletter@substack.com",
-                        "content": "This is a sample email content from substack.com",
-                        "score": 0.95
-                    }
-                ],
-                "processing_time": 0.1
-            }
-        return None
+        # Ensure label is a string or None
+        if isinstance(label, list):
+            label = label[0] if label else None
+        if label == "All":
+            label = None
+        
+        # For substack.com only, always use substack.com label
+        if label is None or label == "substack.com":
+            label = "substack.com"
+        
+        payload = {
+            "question": question,
+            "label": label,
+            "days_back": days_back
+        }
+        
+        # Add sender filter if specified
+        if sender_filter:
+            payload["sender"] = sender_filter
+        
+        response = requests.post(f"{API_BASE_URL}/query", json=payload)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            st.error(f"Error querying RAG: {response.text}\nPayload: {payload}")
+            return None
     except Exception as e:
         st.error(f"Error querying RAG: {e}")
         return None
@@ -197,10 +205,50 @@ def display_email_source_card(label: str, email_count: int, is_selected: bool = 
         </style>
         """, unsafe_allow_html=True)
 
+def extract_first_name(sender: str) -> str:
+    """Extract first name from sender email or display name."""
+    try:
+        # Handle "Display Name <email@domain.com>" format
+        if '<' in sender and '>' in sender:
+            display_name = sender.split('<')[0].strip()
+            # Extract first name from display name
+            if display_name:
+                first_name = display_name.split()[0]
+                return first_name.title()
+        
+        # Handle "email@domain.com" format
+        if '@' in sender:
+            email_part = sender.split('@')[0]
+            # Remove common prefixes and get first name
+            email_part = email_part.replace('+', '.').split('.')[0]
+            return email_part.title()
+        
+        return "Unknown"
+    except:
+        return "Unknown"
+
+def get_sender_first_names(label: str, days_back: int = 30) -> List[str]:
+    """Get unique first names of senders for a given label."""
+    try:
+        emails = get_emails_by_label(label, days_back)
+        first_names = []
+        for email in emails:
+            sender = email.get('sender', '')
+            first_name = extract_first_name(sender)
+            if first_name not in first_names and first_name != "Unknown":
+                first_names.append(first_name)
+        return sorted(first_names)
+    except Exception as e:
+        return []
+
 def main():
     # Initialize selected label if not set
     if 'selected_label' not in st.session_state:
         st.session_state.selected_label = 'All'
+    
+    # Initialize selected sender if not set
+    if 'selected_sender' not in st.session_state:
+        st.session_state.selected_sender = None
     
     # Top bar with workspace info and controls
     st.markdown("""
@@ -237,6 +285,39 @@ def main():
             is_selected = st.session_state.selected_label == label
             
             display_email_source_card(label, email_count, is_selected)
+            
+            # Show sender first names for substack.com
+            if label == "substack.com":
+                first_names = get_sender_first_names(label, 30)
+                if first_names:
+                    st.markdown("**📝 Senders:**")
+                    
+                    # Show "All Senders" option
+                    if st.button("👥 All Senders", key="all_senders", use_container_width=True):
+                        st.session_state.selected_sender = None
+                        st.rerun()
+                    
+                    # Show individual sender buttons
+                    for name in first_names[:10]:  # Show first 10 names
+                        is_selected = st.session_state.selected_sender == name
+                        button_text = f"👤 {name}"
+                        if is_selected:
+                            button_text = f"✅ {name}"
+                        
+                        if st.button(button_text, key=f"sender_{name}", use_container_width=True):
+                            st.session_state.selected_sender = name
+                            st.rerun()
+                    
+                    if len(first_names) > 10:
+                        st.markdown(f"<div style='font-size: 0.8rem; color: #999; text-align: center;'>+{len(first_names) - 10} more senders</div>", unsafe_allow_html=True)
+                    
+                    # Clear filter button
+                    if st.session_state.selected_sender:
+                        if st.button("🗑️ Clear Filter", key="clear_sender_filter", use_container_width=True):
+                            st.session_state.selected_sender = None
+                            st.rerun()
+                    
+                    st.divider()
         
         # Quick filters
         st.subheader("🔍 Quick Filters")
@@ -248,17 +329,30 @@ def main():
             help="Filter emails from the last N days"
         )
         
-        # System status - simplified for substack.com only
+        # System status
         st.subheader("📊 System Status")
-        st.success("✅ Substack.com Emails Only")
-        st.metric("Substack Emails", 50)
-        st.metric("Sender Domain", "substack.com")
+        try:
+            status_response = requests.get(f"{API_BASE_URL}/status")
+            if status_response.status_code == 200:
+                status = status_response.json()
+                st.success("✅ Connected")
+                # Only show substack.com metrics
+                substack_emails = len([e for e in status.get("emails", []) if e.get("label") == "substack.com"])
+                st.metric("Substack Emails", substack_emails)
+                st.metric("Sender Domain", "substack.com")
+            else:
+                st.error("❌ Connection Failed")
+        except Exception as e:
+            st.error(f"❌ Error: {e}")
     
     with col2:
         st.markdown('<h2 class="email-header">💬 Chat with Your Emails</h2>', unsafe_allow_html=True)
         
         # Show selected email source
-        st.info(f"📧 Chatting with emails from: **substack.com**")
+        if st.session_state.selected_sender:
+            st.info(f"📧 Chatting with emails from: **substack.com** → **{st.session_state.selected_sender}**")
+        else:
+            st.info(f"📧 Chatting with emails from: **substack.com**")
         
         # Initialize chat history
         if "messages" not in st.session_state:
@@ -300,7 +394,8 @@ def main():
                             result = query_rag(
                                 question, 
                                 st.session_state.selected_label if st.session_state.selected_label != 'All' else None,
-                                days_back
+                                days_back,
+                                st.session_state.selected_sender
                             )
                         
                         if result:
