@@ -38,6 +38,7 @@ class LLMGenerator:
             
             # Test with a simple prompt
             response = self.client.generate(
+                model=self.model,
                 prompt="Hello, this is a test.",
                 max_tokens=10,
                 temperature=0.1,
@@ -71,6 +72,8 @@ class LLMGenerator:
             for i, doc_info in enumerate(context_docs, 1):
                 metadata = doc_info.get('metadata', {})
                 content = doc_info.get('content', '')
+                
+                # Handle different metadata structures safely
                 sender_name = metadata.get('sender', 'Unknown')
                 subject = metadata.get('subject', 'No Subject')
                 
@@ -89,6 +92,7 @@ class LLMGenerator:
             
             # Generate response
             response = self.client.generate(
+                model=self.model,
                 prompt=prompt,
                 max_tokens=settings.MAX_TOKENS,
                 temperature=settings.TEMPERATURE,
@@ -121,6 +125,7 @@ class LLMGenerator:
             prompt = prompt_manager.get_email_summary_prompt(sender, subject, date, content)
             
             response = self.client.generate(
+                model=self.model,
                 prompt=prompt,
                 max_tokens=200,
                 temperature=0.3,
@@ -144,6 +149,7 @@ class LLMGenerator:
             prompt = prompt_manager.get_topic_extraction_prompt(subject, content)
             
             response = self.client.generate(
+                model=self.model,
                 prompt=prompt,
                 max_tokens=100,
                 temperature=0.1,
@@ -171,6 +177,7 @@ class LLMGenerator:
             prompt = prompt_manager.get_sentiment_analysis_prompt(subject, content)
             
             response = self.client.generate(
+                model=self.model,
                 prompt=prompt,
                 max_tokens=150,
                 temperature=0.1,
@@ -223,6 +230,7 @@ class LLMGenerator:
             )
             prompt = prompt.format(persona_name=persona_name, sample_text=sample_text)
             response = self.client.generate(
+                model=self.model,
                 prompt=prompt,
                 max_tokens=100,
                 temperature=0.2,
@@ -263,6 +271,7 @@ class LLMGenerator:
             )
             
             response = self.client.generate(
+                model=self.model,
                 prompt=prompt,
                 max_tokens=self.max_tokens,
                 temperature=self.temperature,

@@ -8,14 +8,21 @@ from .config import settings
 
 def get_db():
     """Get a database connection for the Streamlit app."""
-    db_path = str(Path("data") / "email_index.db")
+    # Fix path to work from any directory
+    current_dir = Path(__file__).parent
+    db_path = str(current_dir.parent / "data" / "email_index.db")
     return sqlite3.connect(db_path)
 
 class EmailDatabase:
     """SQLite database operations for email metadata."""
     
     def __init__(self, db_path: str = None):
-        self.db_path = db_path or str(settings.DATA_DIR / "email_index.db")
+        if db_path is None:
+            # Fix path to work from any directory
+            current_dir = Path(__file__).parent
+            self.db_path = str(current_dir.parent / "data" / "email_index.db")
+        else:
+            self.db_path = db_path
         self._init_database()
     
     def _init_database(self):

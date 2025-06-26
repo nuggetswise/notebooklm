@@ -6,7 +6,6 @@ from typing import List, Dict, Any
 import os
 import sys
 import sqlite3
-import requests
 
 # Add the parent directory to the path so we can import the backend modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -142,7 +141,7 @@ def get_emails_by_label(label: str, days_back: int = 30):
         cutoff_date = (datetime.now() - timedelta(days=days_back)).isoformat()
         
         cursor.execute("""
-            SELECT id, subject, sender, date, label, parsed_path, has_attachments, attachment_count
+            SELECT id, subject, sender, date, content, label 
             FROM emails 
             WHERE label = ? AND date >= ?
             ORDER BY date DESC
@@ -154,12 +153,10 @@ def get_emails_by_label(label: str, days_back: int = 30):
             emails.append({
                 "id": row[0],
                 "subject": row[1],
-                "sender": row[2],
+                "from": row[2],
                 "date": row[3],
-                "label": row[4],
-                "parsed_path": row[5],
-                "has_attachments": row[6],
-                "attachment_count": row[7]
+                "content": row[4],
+                "label": row[5]
             })
         return emails
     except Exception as e:
@@ -167,30 +164,30 @@ def get_emails_by_label(label: str, days_back: int = 30):
         return []
 
 def query_rag(question: str, label: str = None, days_back: int = 30, sender_filter: str = None):
-    """Query the RAG system via backend API"""
+    """Query the RAG system directly"""
     try:
-        # Use the backend API instead of direct RAG pipeline
-        api_url = "http://localhost:8001/query"
+        # Initialize RAG pipeline
+        rag_pipeline = EmailRAGPipeline()
         
-        # Prepare the request payload
-        payload = {
-            "question": question,
-            "label": label if label and label != "All" else "substack.com",
-            "sender": sender_filter
-        }
+        # Ensure label is a string or None
+        if isinstance(label, list):
+            label = label[0] if label else None
+        if label == "All":
+            label = None
         
-        # Make the API request
-        response = requests.post(api_url, json=payload, timeout=30)
+        # For substack.com only, always use substack.com label
+        if label is None or label == "substack.com":
+            label = "substack.com"
         
-        if response.status_code == 200:
-            return response.json()
-        else:
-            st.error(f"API request failed with status {response.status_code}")
-            return None
-            
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error connecting to backend API: {e}")
-        return None
+        # Query the RAG pipeline
+        result = rag_pipeline.query(
+            question=question,
+            label=label,
+            days_back=days_back,
+            sender_filter=sender_filter
+        )
+        
+        return result
     except Exception as e:
         st.error(f"Error querying RAG: {e}")
         return None
@@ -201,7 +198,7 @@ def display_document_card(doc: Dict[str, Any]):
         st.markdown(f"""
         <div class="document-card">
             <h4>📄 {doc.get('subject', 'No Subject')}</h4>
-            <div class="metadata-item">📧 From: {doc.get('sender', 'Unknown')}</div>
+            <div class="metadata-item">📧 From: {doc.get('from', 'Unknown')}</div>
             <div class="metadata-item">📅 Date: {doc.get('date', 'Unknown')}</div>
             <div class="metadata-item">🏷️ Label: {doc.get('label', 'Unknown')}</div>
             <div class="metadata-item">📊 Score: <span class="score-badge">{doc.get('score', 0):.3f}</span></div>
@@ -364,13 +361,16 @@ def main():
         # System status
         st.subheader("📊 System Status")
         try:
-            # Get email count directly from database instead of API call
-            emails = get_emails_by_label("substack.com", 30)
-            email_count = len(emails)
-            
-            st.success("✅ Connected")
-            st.metric("Substack Emails", email_count)
-            st.metric("Sender Domain", "substack.com")
+            status_response = requests.get(f"{API_BASE_URL}/status")
+            if status_response.status_code == 200:
+                status = status_response.json()
+                st.success("✅ Connected")
+                # Only show substack.com metrics
+                substack_emails = len([e for e in status.get("emails", []) if e.get("label") == "substack.com"])
+                st.metric("Substack Emails", substack_emails)
+                st.metric("Sender Domain", "substack.com")
+            else:
+                st.error("❌ Connection Failed")
         except Exception as e:
             st.error(f"❌ Error: {e}")
     

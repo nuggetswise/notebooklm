@@ -1,7 +1,7 @@
 import time
 import re
 from typing import List, Dict, Any, Optional, Tuple
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from .document_source import document_source, notebook_source, Document
 from .embedder import embedder
@@ -25,7 +25,7 @@ class EmailRAGPipeline:
             embedder_status = embedder.test_connection()
             generator_status = generator.test_connection()
             
-            print(f"Embedder status: {embedder_status['status']}")
+            print(f"Embedder status: {embedder_status['overall_status']}")
             print(f"Generator status: {generator_status['status']}")
             
             # Try to load documents from notebooks first, fallback to email files
@@ -264,9 +264,15 @@ class EmailRAGPipeline:
                     continue
                 
                 if max_age_days:
-                    doc_date = datetime.fromisoformat(doc.metadata.get('date', ''))
-                    if doc_date < datetime.utcnow() - timedelta(days=max_age_days):
-                        continue
+                    doc_date_str = doc.metadata.get('date', '')
+                    if doc_date_str:
+                        try:
+                            doc_date = datetime.fromisoformat(doc_date_str)
+                            if doc_date < datetime.utcnow() - timedelta(days=max_age_days):
+                                continue
+                        except (ValueError, TypeError):
+                            # Skip documents with invalid dates
+                            continue
                 
                 filtered_results.append({
                     'content': doc.content,

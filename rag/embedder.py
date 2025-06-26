@@ -104,9 +104,9 @@ class CohereEmbedder:
             for i in range(0, len(texts), batch_size):
                 batch = texts[i:i + batch_size]
                 
+                # Use the correct method signature for Cohere v4.37
                 response = self.client.embed(
                     texts=batch,
-                    model=self.model,
                     input_type="search_document"
                 )
                 
@@ -127,9 +127,9 @@ class CohereEmbedder:
             return [0.0] * self.dimension
         
         try:
+            # Use the correct method signature for Cohere v4.37
             response = self.client.embed(
                 texts=[query],
-                model=self.model,
                 input_type="search_query"
             )
             

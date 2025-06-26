@@ -267,9 +267,9 @@ class NotebookDocumentSource:
                     metadata = {
                         'notebook_id': notebook_data.get('id'),
                         'title': notebook_data.get('title'),
-                        'sender': notebook_data.get('metadata', {}).get('sender'),
+                        'sender': notebook_data.get('metadata', {}).get('sender', 'Unknown'),
                         'date': notebook_data.get('metadata', {}).get('date'),
-                        'label': notebook_data.get('metadata', {}).get('label'),
+                        'label': notebook_data.get('metadata', {}).get('label', 'Unknown'),
                         'source': 'notebook',
                         'source_file': str(notebook_file)
                     }

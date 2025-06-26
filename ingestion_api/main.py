@@ -328,10 +328,10 @@ async def query_rag(request: QueryRequest):
             metadata = doc_info.get('metadata', {})
             metadata_list.append({
                 'email_id': metadata.get('email_id'),
-                'subject': metadata.get('subject'),
-                'sender': metadata.get('sender'),
-                'date': metadata.get('date'),
-                'label': metadata.get('label'),
+                'subject': metadata.get('subject', 'No Subject'),
+                'sender': metadata.get('sender', 'Unknown'),
+                'date': metadata.get('date', ''),
+                'label': metadata.get('label', 'Unknown'),
                 'parsed_path': metadata.get('source_file'),
                 'has_attachments': metadata.get('has_attachments', False),
                 'attachment_count': metadata.get('attachment_count', 0)
