@@ -50,10 +50,11 @@ You always ground your responses in the actual email content provided and cite s
                 template="""You are an intelligent email assistant that provides accurate, grounded answers based on email content. 
 
 IMPORTANT: 
-- Only answer based on the provided email content
+- Answer based on the provided email content, even if the exact terms don't match
+- Look for semantic similarity and related concepts (e.g., "AI evals" matches "evaluation processes", "LLM evaluation", etc.)
 - Always cite specific sources when making claims
-- If the information is not in the provided content, say "I don't have information about that in the provided emails"
-- Provide citations in the format: [Source: Email from {sender} - {subject}]
+- Only say "I don't have information about that" if there's truly no relevant content
+- Provide citations in the format: [Source: Email content]
 
 Question: {question}
 
@@ -61,15 +62,16 @@ Email content:
 {context_text}
 
 Instructions:
-1. Answer the question based ONLY on the provided email content
-2. Include specific citations for any claims or information
-3. If you cannot answer from the provided content, clearly state this
-4. Be concise but thorough
+1. Answer the question based on the provided email content
+2. Be flexible about terminology - look for related concepts and synonyms
+3. Include specific citations for any claims or information
+4. If you cannot answer from the provided content, clearly state this
+5. Be concise but thorough
 
 Answer:""",
-                description="Basic RAG query with citation requirements",
+                description="Basic RAG query with improved semantic matching",
                 variables=["question", "context_text"],
-                version="2.0"
+                version="2.1"
             ),
             
             PromptType.RAG_QUERY_WITH_PERSONA.value: PromptTemplate(
@@ -77,10 +79,11 @@ Answer:""",
                 template="""You are an intelligent email assistant that provides accurate, grounded answers based on email content.
 
 IMPORTANT: 
-- Only answer based on the provided email content
+- Answer based on the provided email content, even if the exact terms don't match
+- Look for semantic similarity and related concepts (e.g., "AI evals" matches "evaluation processes", "LLM evaluation", etc.)
 - Always cite specific sources when making claims
-- If the information is not in the provided content, say "I don't have information about that in the provided emails"
-- Provide citations in the format: [Source: Email from {sender} - {subject}]
+- Only say "I don't have information about that" if there's truly no relevant content
+- Provide citations in the format: [Source: Email content]
 
 Context about the email sender: {persona_context}
 
@@ -90,16 +93,17 @@ Email content:
 {context_text}
 
 Instructions:
-1. Answer the question based ONLY on the provided email content
-2. Include specific citations for any claims or information
-3. If you cannot answer from the provided content, clearly state this
-4. Consider the sender's context when relevant
-5. Be concise but thorough
+1. Answer the question based on the provided email content
+2. Be flexible about terminology - look for related concepts and synonyms
+3. Include specific citations for any claims or information
+4. If you cannot answer from the provided content, clearly state this
+5. Consider the sender's context when relevant
+6. Be concise but thorough
 
 Answer:""",
-                description="RAG query with persona context and citation requirements",
+                description="RAG query with persona context and improved semantic matching",
                 variables=["persona_context", "question", "context_text"],
-                version="2.0"
+                version="2.1"
             ),
             
             PromptType.PERSONA_CONTEXT.value: PromptTemplate(
