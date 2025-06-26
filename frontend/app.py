@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import backend functionality
 from ingestion_api.database import get_db
-from ingestion_api.models import Email
+from ingestion_api.models import EmailMetadata
 from rag.email_pipeline import EmailRAGPipeline
 from rag.document_source import EmailDocumentSource
 import sqlite3
