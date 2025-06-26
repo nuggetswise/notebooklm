@@ -33,11 +33,11 @@ psutil==5.9.8
 tqdm==4.67.1
 
 # LangChain ecosystem (compatible versions)
-langchain==0.1.0
-langchain-core==0.1.8
-langchain-community==0.0.10
+langchain==0.1.16
+langchain-core==0.1.52
+langchain-community==0.0.38
 langchain-text-splitters==0.0.1
-langchain-openai==0.0.5
+langchain-openai==0.0.8
 
 # Frontend
 streamlit==1.46.0 
