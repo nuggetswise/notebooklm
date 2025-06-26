@@ -5,16 +5,27 @@ import pandas as pd
 from typing import List, Dict, Any
 import os
 import sys
+import sqlite3
 
 # Add the parent directory to the path so we can import the backend modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Import backend functionality
-from ingestion_api.database import get_db
-from ingestion_api.models import EmailMetadata
-from rag.email_pipeline import EmailRAGPipeline
-from rag.document_source import EmailDocumentSource
-import sqlite3
+# Import backend functionality with fallback
+try:
+    from ingestion_api.database import get_db
+    from ingestion_api.models import EmailMetadata
+    from rag.email_pipeline import EmailRAGPipeline
+    from rag.document_source import EmailDocumentSource
+    BACKEND_AVAILABLE = True
+except ImportError as e:
+    st.error(f"Backend modules not available: {e}")
+    BACKEND_AVAILABLE = False
+    
+    # Fallback get_db function
+    def get_db():
+        """Fallback database connection for the Streamlit app."""
+        db_path = str(os.path.join("data", "email_index.db"))
+        return sqlite3.connect(db_path)
 
 # Page configuration
 st.set_page_config(

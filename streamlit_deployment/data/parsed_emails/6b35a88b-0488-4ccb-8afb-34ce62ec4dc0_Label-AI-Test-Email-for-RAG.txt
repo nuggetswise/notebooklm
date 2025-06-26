@@ -1,8 +1,0 @@
-Subject: Label: AI - Test Email for RAG
-From: test@example.com
-Date: 2025-06-25T10:00:00+00:00
-Label: AI
-ID: 6b35a88b-0488-4ccb-8afb-34ce62ec4dc0
---------------------------------------------------------------------------------
-
-This is a test email about AI and machine learning. It contains important information about neural networks and deep learning advancements. 
