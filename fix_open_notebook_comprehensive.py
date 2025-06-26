@@ -47,7 +47,7 @@ def fix_numpy_compatibility():
     
     # Step 3: Install compatible versions of other packages
     compatible_packages = [
-        "pandas==1.5.3",
+        "pandas==2.2.2",
         "scipy==1.7.3", 
         "scikit-learn==1.0.2",
         "faiss-cpu==1.7.4",

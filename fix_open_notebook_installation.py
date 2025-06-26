@@ -42,7 +42,7 @@ def fix_numpy_pandas_compatibility():
     compatible_versions = [
         "numpy==1.21.6",  # More stable version
         "scipy==1.7.3",   # Compatible with numpy 1.21.6
-        "pandas==1.5.3",  # Compatible with numpy 1.21.6
+        "pandas==2.2.2",  # Compatible with numpy 1.21.6
         "scikit-learn==1.0.2",  # Compatible with numpy 1.21.6
         "faiss-cpu==1.7.4",
         "sentence-transformers==2.2.2",
@@ -66,7 +66,7 @@ def install_open_notebook_with_fixes():
     # Step 2: Create a constraints file with compatible versions
     constraints_content = """# Compatible versions for open-notebook
 numpy==1.24.3
-pandas==2.0.3
+pandas==2.2.2
 langchain==0.3.26
 langchain-core==0.3.66
 langchain-community==0.3.26

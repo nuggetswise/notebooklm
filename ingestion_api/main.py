@@ -11,6 +11,7 @@ import os
 import sys
 from pathlib import Path
 import json
+import psutil
 
 from .models import (
     EmailProcessingResponse, EmailStatusResponse, EmailContent,
@@ -528,6 +529,189 @@ async def test_prompt_template(prompt_type: str, request: Request):
     except Exception as e:
         print(f"Error testing prompt template: {e}")
         raise HTTPException(status_code=500, detail=f"Error testing prompt template: {str(e)}")
+
+@app.get("/stats")
+async def get_system_stats():
+    """Get comprehensive system statistics and performance metrics."""
+    try:
+        # Get RAG pipeline stats
+        rag_stats = get_rag_pipeline().get_stats() if get_rag_pipeline() else {}
+        
+        # Get document counts
+        email_files = list(Path("data/parsed_emails").glob("*.txt"))
+        total_emails = len(email_files)
+        
+        # Get database stats
+        db_stats = {}
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            
+            # Email stats
+            cursor.execute("SELECT COUNT(*) FROM emails")
+            db_emails = cursor.fetchone()[0]
+            
+            # Label stats
+            cursor.execute("SELECT label, COUNT(*) FROM emails GROUP BY label")
+            label_counts = dict(cursor.fetchall())
+            
+            # Date range
+            cursor.execute("SELECT MIN(date), MAX(date) FROM emails")
+            date_range = cursor.fetchone()
+            
+            db_stats = {
+                'total_emails': db_emails,
+                'label_distribution': label_counts,
+                'date_range': {
+                    'earliest': date_range[0] if date_range[0] else None,
+                    'latest': date_range[1] if date_range[1] else None
+                }
+            }
+            
+            conn.close()
+        except Exception as e:
+            db_stats = {'error': str(e)}
+        
+        # Get file system stats
+        vector_store_size = 0
+        if Path("data/vector_store/faiss_index.bin").exists():
+            vector_store_size = Path("data/vector_store/faiss_index.bin").stat().st_size
+        
+        parsed_emails_size = sum(f.stat().st_size for f in email_files)
+        
+        # Get memory usage
+        process = psutil.Process()
+        memory_usage = process.memory_info().rss / 1024 / 1024  # MB
+        
+        # Calculate performance metrics
+        performance_metrics = {
+            'avg_query_time': rag_stats.get('avg_search_time', 0),
+            'cache_hit_rate': (
+                rag_stats.get('cache_hits', 0) / max(rag_stats.get('queries_processed', 1), 1) * 100
+            ),
+            'fallback_usage_rate': (
+                rag_stats.get('fallback_used', 0) / max(rag_stats.get('queries_processed', 1), 1) * 100
+            )
+        }
+        
+        return {
+            'system_status': 'healthy',
+            'timestamp': datetime.now().isoformat(),
+            'email_stats': {
+                'total_emails': total_emails,
+                'parsed_files_size_mb': round(parsed_emails_size / 1024 / 1024, 2),
+                'vector_store_size_mb': round(vector_store_size / 1024 / 1024, 2)
+            },
+            'database_stats': db_stats,
+            'rag_pipeline_stats': rag_stats,
+            'performance_metrics': performance_metrics,
+            'system_resources': {
+                'memory_usage_mb': round(memory_usage, 2),
+                'cpu_percent': psutil.cpu_percent(),
+                'disk_usage_percent': psutil.disk_usage('/').percent
+            }
+        }
+        
+    except Exception as e:
+        return {
+            'system_status': 'error',
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }
+
+@app.get("/performance")
+async def get_performance_metrics():
+    """Get detailed performance metrics for monitoring."""
+    try:
+        # Get RAG pipeline performance
+        rag_stats = get_rag_pipeline().get_stats() if get_rag_pipeline() else {}
+        
+        # Calculate efficiency metrics
+        total_queries = rag_stats.get('queries_processed', 0)
+        cache_hits = rag_stats.get('cache_hits', 0)
+        fallback_used = rag_stats.get('fallback_used', 0)
+        
+        efficiency_metrics = {
+            'cache_efficiency': round(cache_hits / max(total_queries, 1) * 100, 2),
+            'fallback_rate': round(fallback_used / max(total_queries, 1) * 100, 2),
+            'avg_query_time_ms': round(rag_stats.get('avg_search_time', 0) * 1000, 2),
+            'total_embeddings_generated': rag_stats.get('embeddings_generated', 0)
+        }
+        
+        # Get embedding provider stats
+        embedder_stats = {}
+        if hasattr(get_rag_pipeline(), 'embedder') and get_rag_pipeline().embedder:
+            embedder_stats = get_rag_pipeline().embedder.get_stats()
+        
+        return {
+            'efficiency_metrics': efficiency_metrics,
+            'embedding_stats': embedder_stats,
+            'rag_pipeline_stats': rag_stats,
+            'recommendations': _get_performance_recommendations(efficiency_metrics, embedder_stats)
+        }
+        
+    except Exception as e:
+        return {'error': str(e)}
+
+def _get_performance_recommendations(efficiency_metrics: dict, embedder_stats: dict) -> List[str]:
+    """Generate performance recommendations based on metrics."""
+    recommendations = []
+    
+    # Cache efficiency recommendations
+    if efficiency_metrics['cache_efficiency'] < 20:
+        recommendations.append("Consider increasing cache size for better performance")
+    
+    # Fallback rate recommendations
+    if efficiency_metrics['fallback_rate'] > 10:
+        recommendations.append("High fallback usage detected - check embedding provider status")
+    
+    # Query time recommendations
+    if efficiency_metrics['avg_query_time_ms'] > 2000:
+        recommendations.append("Query times are high - consider optimizing FAISS index")
+    
+    # Embedding provider recommendations
+    if embedder_stats.get('fallback_used', 0) > 0:
+        recommendations.append("Using fallback embedding provider - check primary provider")
+    
+    if not recommendations:
+        recommendations.append("System performance is optimal")
+    
+    return recommendations
+
+@app.post("/optimize")
+async def optimize_system():
+    """Run system optimization tasks."""
+    try:
+        optimizations = []
+        
+        # Clear caches
+        if get_rag_pipeline():
+            get_rag_pipeline().clear_cache()
+            optimizations.append("Cleared RAG pipeline cache")
+        
+        # Optimize FAISS index if needed
+        if hasattr(get_rag_pipeline(), 'retriever') and get_rag_pipeline().retriever:
+            get_rag_pipeline().retriever.clear_cache()
+            optimizations.append("Cleared FAISS retriever cache")
+        
+        # Check for index optimization opportunities
+        if hasattr(get_rag_pipeline(), 'retriever') and get_rag_pipeline().retriever:
+            index_stats = get_rag_pipeline().retriever.get_index_stats()
+            if index_stats.get('total_documents', 0) > 1000:
+                optimizations.append("Consider rebuilding FAISS index with IVF for better performance")
+        
+        return {
+            'status': 'optimization_complete',
+            'optimizations_applied': optimizations,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        return {
+            'status': 'optimization_failed',
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }
 
 # Error handlers
 @app.exception_handler(HTTPException)

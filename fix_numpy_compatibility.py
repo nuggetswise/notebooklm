@@ -44,7 +44,7 @@ def fix_numpy_crisis():
     # Step 3: Install compatible versions in correct order
     compatible_packages = [
         "scipy==1.7.3",
-        "pandas==1.3.5", 
+        "pandas==2.2.2", 
         "scikit-learn==1.0.2",
         "faiss-cpu==1.7.4",
         "sentence-transformers==2.2.2",
