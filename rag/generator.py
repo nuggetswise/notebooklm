@@ -78,14 +78,33 @@ class MultiProviderGenerator:
             return None
         
         try:
-            response = self.groq_client.chat.completions.create(
-                messages=[{"role": "user", "content": prompt}],
-                model="llama3-8b-8192",
-                max_tokens=max_tokens,
-                temperature=temperature
-            )
-            self.current_provider = "groq"
-            return response.choices[0].message.content.strip()
+            # Try different Groq models in order of preference
+            models = [
+                "gemma2-9b-it",  # Primary: Gemma2 9B
+                "meta-llama/llama-4-scout-17b-16e-instruct",  # Llama 4 Scout
+                "llama-3.3-70b-versatile",  # Llama 3.3 70B
+                "llama3-8b-8192"  # Fallback
+            ]
+            
+            for model in models:
+                try:
+                    response = self.groq_client.chat.completions.create(
+                        messages=[{"role": "user", "content": prompt}],
+                        model=model,
+                        max_tokens=max_tokens,
+                        temperature=temperature,
+                        top_p=1,
+                        stream=False
+                    )
+                    self.current_provider = f"groq-{model}"
+                    return response.choices[0].message.content.strip()
+                except Exception as model_error:
+                    print(f"Groq model {model} failed: {model_error}")
+                    continue
+            
+            print("All Groq models failed")
+            return None
+            
         except Exception as e:
             print(f"Groq generation failed: {e}")
             return None
@@ -109,10 +128,15 @@ class MultiProviderGenerator:
             print(f"Gemini generation failed: {e}")
             return None
     
-    def generate_response(self, query: str, context_docs: List[Dict[str, Any]], sender: str = None) -> str:
-        """Generate response using fallback chain: Cohere → Groq → Gemini."""
+    def generate_response(self, query: str, context_docs: List[Dict[str, Any]], sender: str = None) -> Dict[str, Any]:
+        """Generate response using fallback chain: Groq → Gemini → Cohere."""
         if not self.is_available():
-            return self._fallback_response(query, context_docs)
+            fallback_response = self._fallback_response(query, context_docs)
+            return {
+                "response": fallback_response,
+                "provider": "fallback",
+                "model": "none"
+            }
         
         try:
             # Import prompt manager here to avoid circular imports
@@ -150,34 +174,58 @@ class MultiProviderGenerator:
                 persona_context=persona_context
             )
             
-            # Try providers in fallback order: Cohere → Groq → Gemini
+            # Try providers in new fallback order: Groq → Gemini → Cohere
             response = None
+            provider_info = "unknown"
             
-            # Try Cohere first
-            response = self._try_cohere(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
-            if response:
-                print(f"✅ Generated response using Cohere")
-                return response
-            
-            # Try Groq second
+            # Try Groq first (primary)
             response = self._try_groq(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
             if response:
                 print(f"✅ Generated response using Groq")
-                return response
+                return {
+                    "response": response,
+                    "provider": "groq",
+                    "model": self.current_provider.replace("groq-", "")
+                }
             
-            # Try Gemini third
+            # Try Gemini second
             response = self._try_gemini(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
             if response:
                 print(f"✅ Generated response using Gemini")
-                return response
+                return {
+                    "response": response,
+                    "provider": "gemini",
+                    "model": "gemini-2.0-flash"
+                }
+            
+            # Try Cohere third (last resort)
+            response = self._try_cohere(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
+            if response:
+                print(f"✅ Generated response using Cohere")
+                provider_info = "cohere"
+                return {
+                    "response": response,
+                    "provider": provider_info,
+                    "model": "command-r-plus"
+                }
             
             # If all providers fail, use fallback
             print("❌ All LLM providers failed, using fallback response")
-            return self._fallback_response(query, context_docs)
+            fallback_response = self._fallback_response(query, context_docs)
+            return {
+                "response": fallback_response,
+                "provider": "fallback",
+                "model": "none"
+            }
             
         except Exception as e:
             print(f"Error generating response: {e}")
-            return self._fallback_response(query, context_docs)
+            fallback_response = self._fallback_response(query, context_docs)
+            return {
+                "response": fallback_response,
+                "provider": "error",
+                "model": "none"
+            }
     
     def _fallback_response(self, query: str, context_docs: List[Dict[str, Any]]) -> str:
         """Fallback response when all LLM providers are unavailable."""
