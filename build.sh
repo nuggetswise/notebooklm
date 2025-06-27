@@ -21,8 +21,12 @@ apt-get install -y --no-install-recommends \
 echo "⬆️ Upgrading pip..."
 pip install --upgrade pip
 
+# Install pandas first (to avoid compilation issues)
+echo "📦 Installing pandas (compatible version)..."
+pip install --no-cache-dir pandas==2.1.4
+
 # Install Python dependencies with optimizations
-echo "📦 Installing Python dependencies..."
+echo "📦 Installing remaining Python dependencies..."
 pip install --no-cache-dir -r requirements_render.txt
 
 # Create necessary directories
@@ -35,5 +39,32 @@ mkdir -p logs
 # Set proper permissions
 chmod 755 data
 chmod 755 logs
+
+# Test critical imports
+echo "🧪 Testing critical imports..."
+python -c "
+try:
+    import pandas
+    print(f'✅ Pandas {pandas.__version__} imported successfully')
+except Exception as e:
+    print(f'❌ Pandas import failed: {e}')
+    exit(1)
+
+try:
+    import fastapi
+    print('✅ FastAPI imported successfully')
+except Exception as e:
+    print(f'❌ FastAPI import failed: {e}')
+    exit(1)
+
+try:
+    import groq
+    print('✅ Groq imported successfully')
+except Exception as e:
+    print(f'❌ Groq import failed: {e}')
+    exit(1)
+
+print('🎉 All critical imports successful!')
+"
 
 echo "✅ Build completed successfully!" 
