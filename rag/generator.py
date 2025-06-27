@@ -51,12 +51,25 @@ class MultiProviderGenerator:
         """Check if any LLM provider is available."""
         return any([self.cohere_client, self.groq_client, self.gemini_client])
     
-    def _try_cohere(self, prompt: str, max_tokens: int = 1000, temperature: float = 0.7) -> Optional[str]:
+    def _try_cohere(self, prompt: str, max_tokens: int = None, temperature: float = 0.7) -> Optional[str]:
         """Try to generate response using Cohere."""
         if not self.cohere_client:
             return None
         
+        # Use provider-specific token limit
+        if max_tokens is None:
+            max_tokens = min(settings.MAX_TOKENS, settings.COHERE_MAX_TOKENS)
+        
         try:
+            # Check prompt length and truncate if needed
+            estimated_tokens = len(prompt.split()) * 1.3  # Rough estimation
+            if estimated_tokens > settings.COHERE_MAX_TOKENS:
+                print(f"⚠️ Cohere prompt too long ({estimated_tokens:.0f} tokens), truncating...")
+                # Truncate prompt to fit within limits
+                words = prompt.split()
+                max_words = int(settings.COHERE_MAX_TOKENS / 1.3)
+                prompt = " ".join(words[:max_words])
+            
             # Use the correct Cohere API parameters
             response = self.cohere_client.generate(
                 prompt=prompt,
@@ -72,12 +85,25 @@ class MultiProviderGenerator:
             print(f"Cohere generation failed: {e}")
             return None
     
-    def _try_groq(self, prompt: str, max_tokens: int = 1000, temperature: float = 0.7) -> Optional[str]:
+    def _try_groq(self, prompt: str, max_tokens: int = None, temperature: float = 0.7) -> Optional[str]:
         """Try to generate response using Groq."""
         if not self.groq_client:
             return None
         
+        # Use provider-specific token limit
+        if max_tokens is None:
+            max_tokens = min(settings.MAX_TOKENS, settings.GROQ_MAX_TOKENS)
+        
         try:
+            # Check prompt length and truncate if needed
+            estimated_tokens = len(prompt.split()) * 1.3  # Rough estimation
+            if estimated_tokens > settings.GROQ_MAX_TOKENS:
+                print(f"⚠️ Groq prompt too long ({estimated_tokens:.0f} tokens), truncating...")
+                # Truncate prompt to fit within limits
+                words = prompt.split()
+                max_words = int(settings.GROQ_MAX_TOKENS / 1.3)
+                prompt = " ".join(words[:max_words])
+            
             # Try different Groq models in order of preference
             models = [
                 "gemma2-9b-it",  # Primary: Gemma2 9B
@@ -109,10 +135,14 @@ class MultiProviderGenerator:
             print(f"Groq generation failed: {e}")
             return None
     
-    def _try_gemini(self, prompt: str, max_tokens: int = 1000, temperature: float = 0.7) -> Optional[str]:
+    def _try_gemini(self, prompt: str, max_tokens: int = None, temperature: float = 0.7) -> Optional[str]:
         """Try to generate response using Gemini."""
         if not self.gemini_client:
             return None
+        
+        # Use provider-specific token limit
+        if max_tokens is None:
+            max_tokens = min(settings.MAX_TOKENS, settings.GEMINI_MAX_TOKENS)
         
         try:
             response = self.gemini_client.generate_content(

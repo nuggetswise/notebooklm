@@ -16,9 +16,9 @@ class RAGSettings:
     OPENAI_API_KEY: Optional[str] = os.getenv("OPENAI_API_KEY")
     
     # RAG Settings
-    CHUNK_SIZE: int = int(os.getenv("CHUNK_SIZE", "2000"))
-    CHUNK_OVERLAP: int = int(os.getenv("CHUNK_OVERLAP", "200"))
-    TOP_K_RETRIEVAL: int = int(os.getenv("TOP_K_RETRIEVAL", "5"))
+    CHUNK_SIZE: int = int(os.getenv("CHUNK_SIZE", "1000"))
+    CHUNK_OVERLAP: int = int(os.getenv("CHUNK_OVERLAP", "100"))
+    TOP_K_RETRIEVAL: int = int(os.getenv("TOP_K_RETRIEVAL", "3"))
     
     # Embedding Settings
     EMBEDDING_MODEL: str = "embed-english-v3.0"
@@ -26,8 +26,13 @@ class RAGSettings:
     
     # Generation Settings
     GENERATION_MODEL: str = "command"
-    MAX_TOKENS: int = 1000
+    MAX_TOKENS: int = int(os.getenv("MAX_TOKENS", "800"))
     TEMPERATURE: float = 0.7
+    
+    # Provider-specific limits
+    COHERE_MAX_TOKENS: int = 4000
+    GROQ_MAX_TOKENS: int = 8000
+    GEMINI_MAX_TOKENS: int = 1000000
     
     # Storage Paths
     DATA_DIR: Path = Path(os.getenv("DATA_DIR", "./data"))
