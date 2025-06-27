@@ -1,63 +1,123 @@
 import cohere
+import groq
+import google.generativeai as genai
 from typing import List, Dict, Any, Optional
 from .config import settings
-from .prompts import prompt_manager, PromptType
 
-class LLMGenerator:
-    """Generate responses using Cohere's generation API."""
+class MultiProviderGenerator:
+    """Generate responses using multiple LLM providers with fallback chain."""
     
     def __init__(self):
-        self.client = None
-        self.model = settings.GENERATION_MODEL
-        self.max_tokens = settings.MAX_TOKENS
-        self.temperature = settings.TEMPERATURE
-        self._initialize_client()
+        self.cohere_client = None
+        self.groq_client = None
+        self.gemini_client = None
+        self.current_provider = None
+        self._initialize_clients()
     
-    def _initialize_client(self):
-        """Initialize Cohere client."""
+    def _initialize_clients(self):
+        """Initialize all available LLM clients."""
+        # Initialize Cohere
         try:
             if settings.COHERE_API_KEY:
-                self.client = cohere.Client(settings.COHERE_API_KEY)
-                print(f"✅ Cohere generation client initialized with model: {self.model}")
+                self.cohere_client = cohere.Client(settings.COHERE_API_KEY)
+                print(f"✅ Cohere client initialized")
             else:
-                print("⚠️ COHERE_API_KEY not set. Generation will use fallback responses.")
-                self.client = None
+                print("⚠️ COHERE_API_KEY not set")
         except Exception as e:
             print(f"❌ Error initializing Cohere client: {e}")
-            self.client = None
+        
+        # Initialize Groq
+        try:
+            if hasattr(settings, 'GROQ_API_KEY') and settings.GROQ_API_KEY:
+                self.groq_client = groq.Groq(api_key=settings.GROQ_API_KEY)
+                print(f"✅ Groq client initialized")
+            else:
+                print("⚠️ GROQ_API_KEY not set")
+        except Exception as e:
+            print(f"❌ Error initializing Groq client: {e}")
+        
+        # Initialize Gemini
+        try:
+            if settings.GEMINI_API_KEY:
+                genai.configure(api_key=settings.GEMINI_API_KEY)
+                self.gemini_client = genai.GenerativeModel('gemini-2.0-flash')
+                print(f"✅ Gemini client initialized")
+            else:
+                print("⚠️ GEMINI_API_KEY not set")
+        except Exception as e:
+            print(f"❌ Error initializing Gemini client: {e}")
     
     def is_available(self) -> bool:
-        """Check if Cohere generation is available."""
-        return self.client is not None
+        """Check if any LLM provider is available."""
+        return any([self.cohere_client, self.groq_client, self.gemini_client])
     
-    def test_connection(self) -> Dict[str, Any]:
-        """Test Cohere generation connection."""
+    def _try_cohere(self, prompt: str, max_tokens: int = 1000, temperature: float = 0.7) -> Optional[str]:
+        """Try to generate response using Cohere."""
+        if not self.cohere_client:
+            return None
+        
         try:
-            if not self.client:
-                return {'status': 'error', 'message': 'Client not initialized'}
-            
-            # Test with a simple prompt
-            response = self.client.generate(
-                model=self.model,
-                prompt="Hello, this is a test.",
-                max_tokens=10,
-                temperature=0.1,
+            # Use the correct Cohere API parameters
+            response = self.cohere_client.generate(
+                prompt=prompt,
+                max_tokens=max_tokens,
+                temperature=temperature,
                 k=0,
                 stop_sequences=[],
                 return_likelihoods='NONE'
             )
-            
-            return {'status': 'success', 'message': 'Connection successful'}
-            
+            self.current_provider = "cohere"
+            return response.generations[0].text.strip()
         except Exception as e:
-            return {'status': 'error', 'message': str(e)}
+            print(f"Cohere generation failed: {e}")
+            return None
+    
+    def _try_groq(self, prompt: str, max_tokens: int = 1000, temperature: float = 0.7) -> Optional[str]:
+        """Try to generate response using Groq."""
+        if not self.groq_client:
+            return None
+        
+        try:
+            response = self.groq_client.chat.completions.create(
+                messages=[{"role": "user", "content": prompt}],
+                model="llama3-8b-8192",
+                max_tokens=max_tokens,
+                temperature=temperature
+            )
+            self.current_provider = "groq"
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            print(f"Groq generation failed: {e}")
+            return None
+    
+    def _try_gemini(self, prompt: str, max_tokens: int = 1000, temperature: float = 0.7) -> Optional[str]:
+        """Try to generate response using Gemini."""
+        if not self.gemini_client:
+            return None
+        
+        try:
+            response = self.gemini_client.generate_content(
+                prompt,
+                generation_config=genai.types.GenerationConfig(
+                    max_output_tokens=max_tokens,
+                    temperature=temperature
+                )
+            )
+            self.current_provider = "gemini"
+            return response.text.strip()
+        except Exception as e:
+            print(f"Gemini generation failed: {e}")
+            return None
     
     def generate_response(self, query: str, context_docs: List[Dict[str, Any]], sender: str = None) -> str:
-        """Generate response using centralized prompt management with proper citations."""
+        """Generate response using fallback chain: Cohere → Groq → Gemini."""
         if not self.is_available():
             return self._fallback_response(query, context_docs)
         
         try:
+            # Import prompt manager here to avoid circular imports
+            from .prompts import prompt_manager
+            
             # Get persona context if sender is provided
             persona_context = ""
             if sender:
@@ -90,201 +150,198 @@ class LLMGenerator:
                 persona_context=persona_context
             )
             
-            # Generate response
-            response = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                max_tokens=settings.MAX_TOKENS,
-                temperature=settings.TEMPERATURE,
-                k=0,
-                stop_sequences=[],
-                return_likelihoods='NONE'
-            )
+            # Try providers in fallback order: Cohere → Groq → Gemini
+            response = None
             
-            return response.generations[0].text.strip()
+            # Try Cohere first
+            response = self._try_cohere(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
+            if response:
+                print(f"✅ Generated response using Cohere")
+                return response
+            
+            # Try Groq second
+            response = self._try_groq(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
+            if response:
+                print(f"✅ Generated response using Groq")
+                return response
+            
+            # Try Gemini third
+            response = self._try_gemini(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
+            if response:
+                print(f"✅ Generated response using Gemini")
+                return response
+            
+            # If all providers fail, use fallback
+            print("❌ All LLM providers failed, using fallback response")
+            return self._fallback_response(query, context_docs)
             
         except Exception as e:
             print(f"Error generating response: {e}")
             return self._fallback_response(query, context_docs)
     
     def _fallback_response(self, query: str, context_docs: List[Dict[str, Any]]) -> str:
-        """Fallback response when Cohere is not available."""
-        # Use centralized fallback prompt
-        fallback_prompt = prompt_manager.get_fallback_prompt(query, context_docs)
-        
-        # For fallback, we return the prompt text as-is since we don't have generation
-        # In a real implementation, you might use a different LLM or template system
-        return fallback_prompt
+        """Fallback response when all LLM providers are unavailable."""
+        try:
+            # Import prompt manager here to avoid circular imports
+            from .prompts import prompt_manager
+            # Use centralized fallback prompt
+            fallback_prompt = prompt_manager.get_fallback_prompt(query, context_docs)
+            
+            # For fallback, we return the prompt text as-is since we don't have generation
+            return fallback_prompt
+        except Exception as e:
+            print(f"Error in fallback response: {e}")
+            return f"I don't have information about that."
     
     def generate_email_summary(self, sender: str, subject: str, date: str, content: str) -> str:
-        """Generate email summary using centralized prompts."""
+        """Generate email summary using fallback chain."""
         if not self.is_available():
             return f"Summary unavailable. Email from {sender}: {subject}"
         
         try:
+            # Import prompt manager here to avoid circular imports
+            from .prompts import prompt_manager
             prompt = prompt_manager.get_email_summary_prompt(sender, subject, date, content)
             
-            response = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                max_tokens=200,
-                temperature=0.3,
-                k=0,
-                stop_sequences=[],
-                return_likelihoods='NONE'
-            )
+            # Try providers in fallback order
+            response = self._try_cohere(prompt, 200, 0.3)
+            if response:
+                return response
             
-            return response.generations[0].text.strip()
+            response = self._try_groq(prompt, 200, 0.3)
+            if response:
+                return response
+            
+            response = self._try_gemini(prompt, 200, 0.3)
+            if response:
+                return response
+            
+            return f"Summary unavailable. Email from {sender}: {subject}"
             
         except Exception as e:
             print(f"Error generating email summary: {e}")
             return f"Summary unavailable. Email from {sender}: {subject}"
     
     def extract_topics(self, subject: str, content: str) -> List[str]:
-        """Extract topics from email content using centralized prompts."""
+        """Extract topics using fallback chain."""
         if not self.is_available():
             return []
         
         try:
+            # Import prompt manager here to avoid circular imports
+            from .prompts import prompt_manager
             prompt = prompt_manager.get_topic_extraction_prompt(subject, content)
             
-            response = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                max_tokens=100,
-                temperature=0.1,
-                k=0,
-                stop_sequences=[],
-                return_likelihoods='NONE'
-            )
+            # Try providers in fallback order
+            response = self._try_cohere(prompt, 100, 0.1)
+            if response:
+                topics = [topic.strip() for topic in response.split(',') if topic.strip()]
+                return topics
             
-            # Parse the response to extract topics
-            response_text = response.generations[0].text.strip()
-            topics = [topic.strip() for topic in response_text.split(',') if topic.strip()]
+            response = self._try_groq(prompt, 100, 0.1)
+            if response:
+                topics = [topic.strip() for topic in response.split(',') if topic.strip()]
+                return topics
             
-            return topics
+            response = self._try_gemini(prompt, 100, 0.1)
+            if response:
+                topics = [topic.strip() for topic in response.split(',') if topic.strip()]
+                return topics
+            
+            return []
             
         except Exception as e:
             print(f"Error extracting topics: {e}")
             return []
     
     def analyze_sentiment(self, subject: str, content: str) -> Dict[str, str]:
-        """Analyze sentiment using centralized prompts."""
+        """Analyze sentiment using fallback chain."""
         if not self.is_available():
             return {'sentiment': 'unknown', 'explanation': 'Analysis unavailable'}
         
         try:
+            # Import prompt manager here to avoid circular imports
+            from .prompts import prompt_manager
             prompt = prompt_manager.get_sentiment_analysis_prompt(subject, content)
             
-            response = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                max_tokens=150,
-                temperature=0.1,
-                k=0,
-                stop_sequences=[],
-                return_likelihoods='NONE'
-            )
+            # Try providers in fallback order
+            response = self._try_cohere(prompt, 150, 0.1)
+            if response:
+                return self._parse_sentiment(response)
             
-            response_text = response.generations[0].text.strip()
+            response = self._try_groq(prompt, 150, 0.1)
+            if response:
+                return self._parse_sentiment(response)
             
-            # Simple parsing of sentiment and explanation
-            lines = response_text.split('\n')
-            sentiment = 'neutral'
-            explanation = response_text
+            response = self._try_gemini(prompt, 150, 0.1)
+            if response:
+                return self._parse_sentiment(response)
             
-            for line in lines:
-                line_lower = line.lower()
-                if 'positive' in line_lower:
-                    sentiment = 'positive'
-                elif 'negative' in line_lower:
-                    sentiment = 'negative'
-                elif 'neutral' in line_lower:
-                    sentiment = 'neutral'
-            
-            return {
-                'sentiment': sentiment,
-                'explanation': explanation
-            }
+            return {'sentiment': 'unknown', 'explanation': 'Analysis failed'}
             
         except Exception as e:
             print(f"Error analyzing sentiment: {e}")
             return {'sentiment': 'unknown', 'explanation': 'Analysis failed'}
-
-    def derive_persona_traits(self, persona_name: str, context_docs: List[Dict]) -> str:
-        """Derive persona traits and style from email chunks using the LLM."""
-        if not self.is_available() or not context_docs:
-            return "No specific style."
-        try:
-            # Concatenate up to 3 representative chunks
-            sample_texts = []
-            for doc in context_docs[:3]:
-                content = doc.get('content', '')
-                if content:
-                    sample_texts.append(content)
-            sample_text = '\n---\n'.join(sample_texts)
-            prompt = (
-                f"""Analyze the following email samples written by {persona_name}. "
-                "Summarize their writing style, tone, and any common phrases or traits. "
-                "Be concise.\n\nSamples:\n{sample_text}\n\nTraits:"""
-            )
-            prompt = prompt.format(persona_name=persona_name, sample_text=sample_text)
-            response = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                max_tokens=100,
-                temperature=0.2,
-                k=0,
-                stop_sequences=[],
-                return_likelihoods='NONE'
-            )
-            return response.generations[0].text.strip()
-        except Exception as e:
-            print(f"Error deriving persona traits: {e}")
-            return "No specific style."
-
-    def generate_first_person_persona_response(self, persona_name: str, persona_traits: str, question: str, context_docs: List[Dict]) -> str:
-        """Generate a first-person answer as the persona using derived traits with proper citations."""
-        if not self.is_available():
-            return f"I'm {persona_name}, but I can't answer right now."
-        try:
-            # Build context text with proper source attribution
-            context_parts = []
-            for i, doc_info in enumerate(context_docs, 1):
-                metadata = doc_info.get('metadata', {})
-                content = doc_info.get('content', '')
-                sender_name = metadata.get('sender', 'Unknown')
-                subject = metadata.get('subject', 'No Subject')
-                
-                context_parts.append(f"Source {i}: My email about {subject}")
-                context_parts.append(f"Content: {content}")
-                context_parts.append("---")
-            
-            context_text = "\n".join(context_parts)
-            
-            prompt = prompt_manager.get_prompt(
-                PromptType.PERSONA_FIRST_PERSON_RESPONSE,
-                persona_name=persona_name,
-                persona_traits=persona_traits,
-                question=question,
-                context_text=context_text
-            )
-            
-            response = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                max_tokens=self.max_tokens,
-                temperature=self.temperature,
-                k=0,
-                stop_sequences=[],
-                return_likelihoods='NONE'
-            )
-            
-            return response.generations[0].text.strip()
-            
-        except Exception as e:
-            print(f"Error generating first-person persona response: {e}")
-            return f"I'm {persona_name}, but I can't answer right now."
+    
+    def _parse_sentiment(self, response_text: str) -> Dict[str, str]:
+        """Parse sentiment from response text."""
+        lines = response_text.split('\n')
+        sentiment = 'neutral'
+        explanation = response_text
+        
+        for line in lines:
+            line_lower = line.lower()
+            if 'positive' in line_lower:
+                sentiment = 'positive'
+            elif 'negative' in line_lower:
+                sentiment = 'negative'
+            elif 'neutral' in line_lower:
+                sentiment = 'neutral'
+        
+        return {
+            'sentiment': sentiment,
+            'explanation': explanation
+        }
+    
+    def get_current_provider(self) -> str:
+        """Get the current provider being used."""
+        return self.current_provider or "none"
+    
+    def test_connection(self) -> Dict[str, Any]:
+        """Test connections to all providers."""
+        results = {}
+        
+        # Test Cohere
+        if self.cohere_client:
+            try:
+                response = self._try_cohere("Hello, this is a test.", 10, 0.1)
+                results['cohere'] = {'status': 'success', 'response': response[:50] + '...' if response else 'No response'}
+            except Exception as e:
+                results['cohere'] = {'status': 'error', 'message': str(e)}
+        else:
+            results['cohere'] = {'status': 'not_configured'}
+        
+        # Test Groq
+        if self.groq_client:
+            try:
+                response = self._try_groq("Hello, this is a test.", 10, 0.1)
+                results['groq'] = {'status': 'success', 'response': response[:50] + '...' if response else 'No response'}
+            except Exception as e:
+                results['groq'] = {'status': 'error', 'message': str(e)}
+        else:
+            results['groq'] = {'status': 'not_configured'}
+        
+        # Test Gemini
+        if self.gemini_client:
+            try:
+                response = self._try_gemini("Hello, this is a test.", 10, 0.1)
+                results['gemini'] = {'status': 'success', 'response': response[:50] + '...' if response else 'No response'}
+            except Exception as e:
+                results['gemini'] = {'status': 'error', 'message': str(e)}
+        else:
+            results['gemini'] = {'status': 'not_configured'}
+        
+        return results
 
 # Global generator instance
-generator = LLMGenerator() 
+generator = MultiProviderGenerator() 

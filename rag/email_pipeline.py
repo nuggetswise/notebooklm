@@ -9,10 +9,10 @@ from pathlib import Path
 import logging
 from functools import lru_cache
 
-from .document_source import document_source, notebook_source, Document
+from .document_source import document_source, notebook_source, Document, EmailDocumentSource
 from .embedder import embedder, HybridEmbedder
 from .retriever import retriever, FAISSRetriever
-from .generator import generator, CohereGenerator
+from .generator import generator, MultiProviderGenerator
 from .config import settings
 from .prompts import prompt_manager
 
@@ -48,10 +48,10 @@ class EmailRAGPipeline:
         }
     
     @property
-    def document_source(self) -> DocumentSource:
+    def document_source(self) -> EmailDocumentSource:
         """Lazy load document source."""
         if self._document_source is None:
-            self._document_source = DocumentSource(self.data_dir)
+            self._document_source = EmailDocumentSource()
         return self._document_source
     
     @property
@@ -77,10 +77,10 @@ class EmailRAGPipeline:
         return self._retriever
     
     @property
-    def generator(self) -> CohereGenerator:
+    def generator(self) -> MultiProviderGenerator:
         """Lazy load generator."""
         if self._generator is None:
-            self._generator = CohereGenerator()
+            self._generator = MultiProviderGenerator()
         return self._generator
     
     @property
@@ -178,7 +178,7 @@ class EmailRAGPipeline:
             
             # Prepare result
             result = {
-                'answer': response['answer'],
+                'answer': response,
                 'context': search_results,
                 'metadata': self._extract_metadata(search_results),
                 'processing_time': (datetime.now() - start_time).total_seconds(),

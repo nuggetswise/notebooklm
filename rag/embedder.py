@@ -223,13 +223,13 @@ class HybridEmbedder:
         # Initialize Gemini
         if self.fallback_provider == "gemini":
             try:
-                api_key = os.getenv('GOOGLE_API_KEY')
+                api_key = os.getenv('GEMINI_API_KEY')
                 if api_key:
                     genai.configure(api_key=api_key)
                     self.gemini_client = genai.GenerativeModel('models/embedding-001')
                     logger.info("✅ Gemini client initialized with model: models/embedding-001")
                 else:
-                    logger.warning("⚠️ GOOGLE_API_KEY not found")
+                    logger.warning("⚠️ GEMINI_API_KEY not found")
             except Exception as e:
                 logger.error(f"❌ Failed to initialize Gemini client: {e}")
     

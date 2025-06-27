@@ -288,14 +288,14 @@ async def refresh_emails():
         
         # Refresh RAG index
         pipeline = get_rag_pipeline()
-        rag_success = pipeline.refresh_index()
+        pipeline.initialize(force_rebuild=True)
         
         processing_time = time.time() - start_time
         
         return RefreshResponse(
             success=True,
             processed_count=0,
-            errors=["Maildir reprocessing not yet implemented"] + ([] if rag_success else ["RAG index refresh failed"]),
+            errors=["Maildir reprocessing not yet implemented"],
             processing_time=processing_time
         )
         
@@ -313,14 +313,11 @@ async def query_rag(request: QueryRequest):
     """Query the RAG system with a question."""
     start_time = time.time()
     try:
-        # Get sender from request if provided
-        sender = getattr(request, 'sender', None)
-        
         # Query the RAG pipeline
         result = get_rag_pipeline().query(
             question=request.question,
             label=request.label,
-            sender=sender
+            max_age_days=getattr(request, 'max_age_days', None)
         )
         
         # Convert context to metadata format
@@ -354,7 +351,7 @@ async def get_rag_stats():
     """Get RAG pipeline statistics."""
     try:
         pipeline = get_rag_pipeline()
-        stats = pipeline.get_pipeline_stats()
+        stats = pipeline.get_stats()
         return stats
     except Exception as e:
         print(f"Error getting RAG stats: {e}")
@@ -365,7 +362,11 @@ async def health_check():
     """Health check endpoint."""
     try:
         pipeline = get_rag_pipeline()
-        rag_status = "initialized" if pipeline.is_initialized else "not_initialized"
+        # Check if retriever is properly initialized by testing its index
+        if hasattr(pipeline.retriever, 'index') and pipeline.retriever.index is not None:
+            rag_status = "initialized"
+        else:
+            rag_status = "not_initialized"
     except:
         rag_status = "error"
     

@@ -233,6 +233,33 @@ class EmailDocumentSource:
         """Simple search method for RAG pipeline fallback."""
         return self.search_documents(query, label, max_age_days, sender)
 
+    def load_email_documents(self, file_paths: list) -> list:
+        """Load email documents from a list of file paths."""
+        documents = []
+        for file_path in file_paths:
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                # Try to extract metadata from filename: <uuid>_<subject>.txt
+                file_name = os.path.basename(file_path)
+                email_id = file_name.split('_')[0]
+                subject = file_name[len(email_id)+1:-4] if file_name.endswith('.txt') else file_name[len(email_id)+1:]
+                metadata = {
+                    'email_id': email_id,
+                    'subject': subject,
+                    'sender': 'Unknown',
+                    'date': '',
+                    'label': 'Unknown',
+                    'has_attachments': False,
+                    'attachment_count': 0,
+                    'source_file': str(file_path)
+                }
+                documents.append(Document(content, metadata))
+            except Exception as e:
+                print(f"Error loading email document {file_path}: {e}")
+                continue
+        return documents
+
 class NotebookDocumentSource:
     """Load and process notebook documents for RAG."""
     

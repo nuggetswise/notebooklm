@@ -45,7 +45,6 @@ except ImportError:
     BEAUTIFULSOUP_AVAILABLE = False
 
 from .config import settings
-from .persona_extractor import persona_extractor
 
 
 def clean_email_address(email_str):
@@ -106,8 +105,13 @@ class EmailParser:
             # Combine all text content
             full_content = self._combine_content(body, attachments)
             
-            # Extract persona information
-            persona = persona_extractor.create_persona(sender, subject, full_content)
+            # Extract persona information - import here to avoid circular imports
+            try:
+                from .persona_extractor import persona_extractor
+                persona = persona_extractor.create_persona(sender, subject, full_content)
+            except Exception as e:
+                print(f"Error creating persona: {e}")
+                persona = None
             
             return {
                 'subject': subject,
