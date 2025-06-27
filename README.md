@@ -2,6 +2,32 @@
 
 A complete AI-powered system for processing auto-forwarded emails and running RAG-based Q&A via a modern Streamlit interface.
 
+## 🔒 CRITICAL SECURITY NOTICE
+
+**⚠️ IMPORTANT: API Key Security**
+
+This application requires API keys for AI services. To protect your credentials:
+
+1. **NEVER commit API keys to git** - The `.env` file is ignored by git
+2. **Use the template**: Copy `env.template` to `.env` and fill in your keys
+3. **Keep keys secure**: Don't share your `.env` file or expose keys in logs
+4. **Rotate keys regularly**: If keys are ever exposed, regenerate them immediately
+
+```bash
+# Safe setup (DO THIS)
+cp env.template .env
+# Edit .env with your real API keys
+
+# NEVER DO THIS
+git add .env  # ❌ This would expose your keys!
+```
+
+**Required API Keys:**
+- `COHERE_API_KEY` - For embeddings and generation
+- `GROQ_API_KEY` - For fast LLM responses  
+- `GEMINI_API_KEY` - For Google AI services
+- `OPENAI_API_KEY` - For OpenAI services (optional)
+
 ## 🏗️ System Architecture
 
 The system consists of three main components:
@@ -129,109 +155,4 @@ You can use services like:
 
 Run the test suite:
 
-```bash
-# Test email ingestion
-python -m pytest tests/test_ingestion.py -v
-
-# Test RAG pipeline
-python -m pytest tests/test_rag.py -v
 ```
-
-## 🔑 Configuration
-
-### Environment Variables
-
-```bash
-# Required
-COHERE_API_KEY=your_cohere_api_key  # Optional, enables enhanced embeddings
-
-# Optional (defaults shown)
-DATA_DIR=data
-PARSED_EMAILS_DIR=data/parsed_emails
-MAILDIR_DIR=data/maildir
-DATABASE_PATH=data/email_index.db
-```
-
-### Email Filtering
-
-The system supports filtering by:
-- **Labels**: Gmail-style labels (e.g., "AI", "Work", "Personal")
-- **Date Range**: Configurable time windows
-- **Content**: Full-text search across email content
-
-## 🎯 Usage Examples
-
-### 1. Basic Email Query
-```
-Question: "What emails did I receive about project updates?"
-Response: Lists relevant emails with context and metadata
-```
-
-### 2. Label-Specific Search
-```
-Question: "Show me all AI-related emails from the last week"
-Response: Filters by "AI" label and recent dates
-```
-
-### 3. Attachment Search
-```
-Question: "Find emails with PDF attachments about budgets"
-Response: Searches content and attachment metadata
-```
-
-## 🔧 Development
-
-### Running Components Individually
-
-**Backend only:**
-```bash
-uvicorn ingestion_api.main:app --host 0.0.0.0 --port 8001 --reload
-```
-
-**Frontend only:**
-```bash
-python run_frontend.py
-```
-
-### Adding New Features
-
-1. **New Email Processors**: Extend `ingestion_api/parser.py`
-2. **Custom RAG Components**: Modify `rag/` modules
-3. **UI Enhancements**: Update `frontend/app.py`
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **Port conflicts**: Change ports in startup scripts
-2. **API key errors**: Check `.env` file configuration
-3. **Email parsing issues**: Verify MIME format compliance
-4. **RAG fallback mode**: Normal when Cohere API key is missing
-
-### Logs
-
-- Backend logs: Check terminal output
-- Frontend logs: Streamlit debug mode
-- Database: SQLite file in `data/email_index.db`
-
-## 📈 Performance
-
-- **Email Processing**: ~100ms per email
-- **RAG Queries**: 1-3 seconds (with Cohere), 0.5-1 second (fallback)
-- **UI Response**: Real-time updates
-- **Storage**: Efficient SQLite + file-based storage
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Submit a pull request
-
-## 📄 License
-
-MIT License - see LICENSE file for details
-
----
-
-**🎉 The Email RAG Assistant is now complete and ready for production use!** 
