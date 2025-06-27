@@ -1,24 +1,39 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Render build script for Email RAG System
-
-set -e  # Exit on any error
 
 echo "🚀 Starting Render build process..."
 
-# Install dependencies using our optimized requirements
-echo "📦 Installing dependencies..."
-pip install -r requirements_render.txt
+# Exit on any error
+set -e
 
-# Verify critical packages
-echo "🔍 Verifying installation..."
-python -c "import numpy, pandas, fastapi, uvicorn, streamlit, sentence_transformers, faiss, cohere, openai; print('✅ All critical packages imported successfully')"
+# Install system dependencies for faster builds
+echo "📦 Installing system dependencies..."
+apt-get update -qq
+apt-get install -y --no-install-recommends \
+    build-essential \
+    python3-dev \
+    libffi-dev \
+    libssl-dev \
+    pkg-config \
+    > /dev/null 2>&1
+
+# Upgrade pip for better dependency resolution
+echo "⬆️ Upgrading pip..."
+pip install --upgrade pip
+
+# Install Python dependencies with optimizations
+echo "📦 Installing Python dependencies..."
+pip install --no-cache-dir -r requirements_render.txt
 
 # Create necessary directories
-echo "📁 Setting up directories..."
-mkdir -p data/vector_store
+echo "📁 Creating data directories..."
 mkdir -p data/parsed_emails
+mkdir -p data/maildir
+mkdir -p data/vector_store
+mkdir -p logs
 
-# Set permissions
-chmod +x deploy_to_render.py
+# Set proper permissions
+chmod 755 data
+chmod 755 logs
 
 echo "✅ Build completed successfully!" 
