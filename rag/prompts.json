@@ -1,0 +1,24 @@
+{
+  "version": "2.0",
+  "description": "Simplified prompt system with two core prompts",
+  "prompts": {
+    "retrieval": {
+      "name": "Retrieval Prompt",
+      "description": "Extract persona, tone, and theme from user query for context-aware retrieval",
+      "template": "You are an AI assistant helping to retrieve relevant email content. Analyze the user's query and extract key information for context-aware retrieval.\n\nUser Query: {query}\n\nPlease extract:\n1. Persona/role context (if mentioned)\n2. Tone/emotion indicators\n3. Main theme/topic\n4. Specific requirements or constraints\n\nFormat your response as a structured analysis that can be used to find the most relevant email content.",
+      "parameters": ["query"],
+      "category": "retrieval",
+      "created": "2024-01-01T00:00:00Z",
+      "updated": "2024-01-01T00:00:00Z"
+    },
+    "generation": {
+      "name": "Generation Prompt", 
+      "description": "Generate first-person, cited responses without hallucination based on retrieved content",
+      "template": "You are an AI assistant responding to user queries based on retrieved email content. Generate a helpful, accurate response that:\n\n1. Uses first-person perspective when appropriate\n2. Cites specific sources from the retrieved content\n3. Avoids hallucination - only use information from the provided context\n4. Maintains a conversational, helpful tone\n\nUser Query: {query}\n\nRetrieved Context:\n{context}\n\nGenerate a response that directly addresses the user's query using only the information provided in the context. If the context doesn't contain relevant information, acknowledge this clearly.",
+      "parameters": ["query", "context"],
+      "category": "generation", 
+      "created": "2024-01-01T00:00:00Z",
+      "updated": "2024-01-01T00:00:00Z"
+    }
+  }
+} 

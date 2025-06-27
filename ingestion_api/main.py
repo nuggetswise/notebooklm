@@ -339,7 +339,9 @@ async def query_rag(request: QueryRequest):
             answer=result['answer'],
             context=result.get('context', []),
             metadata=metadata_list,
-            processing_time=result.get('processing_time', 0)
+            processing_time=result.get('processing_time', 0),
+            provider=result.get('provider', 'unknown'),
+            model=result.get('model', 'unknown')
         )
         
     except Exception as e:
@@ -433,34 +435,46 @@ async def get_all_prompts():
     """Get all available prompts with their metadata."""
     try:
         from rag.prompts import prompt_manager
-        return prompt_manager.list_prompts()
+        
+        # Get all prompts with full metadata
+        prompts = {}
+        for prompt_id in ["retrieval", "generation"]:
+            prompt_info = prompt_manager.get_prompt_info(prompt_id)
+            if prompt_info:
+                prompts[prompt_id] = {
+                    'name': prompt_info.get('name', ''),
+                    'description': prompt_info.get('description', ''),
+                    'parameters': prompt_info.get('parameters', []),
+                    'category': prompt_info.get('category', ''),
+                    'created': prompt_info.get('created', ''),
+                    'updated': prompt_info.get('updated', '')
+                }
+        
+        return prompts
     except Exception as e:
         print(f"Error getting prompts: {e}")
         raise HTTPException(status_code=500, detail=f"Error retrieving prompts: {str(e)}")
 
-@app.get("/prompts/{prompt_type}")
-async def get_prompt_template(prompt_type: str):
+@app.get("/prompts/{prompt_id}")
+async def get_prompt_template(prompt_id: str):
     """Get a specific prompt template."""
     try:
-        from rag.prompts import prompt_manager, PromptType
+        from rag.prompts import prompt_manager
         
-        # Validate prompt type
-        try:
-            prompt_enum = PromptType(prompt_type)
-        except ValueError:
-            raise HTTPException(status_code=400, detail=f"Invalid prompt type: {prompt_type}")
+        # Get prompt info
+        prompt_info = prompt_manager.get_prompt_info(prompt_id)
+        if not prompt_info:
+            raise HTTPException(status_code=404, detail=f"Prompt '{prompt_id}' not found")
         
-        # Get prompt template
-        if prompt_type not in prompt_manager.prompts:
-            raise HTTPException(status_code=404, detail="Prompt not found")
-        
-        template = prompt_manager.prompts[prompt_type]
         return {
-            'name': template.name,
-            'template': template.template,
-            'description': template.description,
-            'variables': template.variables,
-            'version': template.version
+            'id': prompt_id,
+            'name': prompt_info.get('name', ''),
+            'template': prompt_info.get('template', ''),
+            'description': prompt_info.get('description', ''),
+            'parameters': prompt_info.get('parameters', []),
+            'category': prompt_info.get('category', ''),
+            'created': prompt_info.get('created', ''),
+            'updated': prompt_info.get('updated', '')
         }
         
     except HTTPException:
@@ -469,31 +483,26 @@ async def get_prompt_template(prompt_type: str):
         print(f"Error getting prompt template: {e}")
         raise HTTPException(status_code=500, detail=f"Error retrieving prompt template: {str(e)}")
 
-@app.post("/prompts/{prompt_type}")
-async def update_prompt_template(prompt_type: str, request: Dict[str, str]):
+@app.post("/prompts/{prompt_id}")
+async def update_prompt_template(prompt_id: str, request: Dict[str, str]):
     """Update a prompt template."""
     try:
-        from rag.prompts import prompt_manager, PromptType
+        from rag.prompts import prompt_manager
         
-        # Validate prompt type
-        try:
-            prompt_enum = PromptType(prompt_type)
-        except ValueError:
-            raise HTTPException(status_code=400, detail=f"Invalid prompt type: {prompt_type}")
+        # Check if prompt exists
+        if not prompt_manager.get_prompt_info(prompt_id):
+            raise HTTPException(status_code=404, detail=f"Prompt '{prompt_id}' not found")
         
         # Validate request
         if 'template' not in request:
             raise HTTPException(status_code=400, detail="Template is required")
         
-        # Update prompt
-        prompt_manager.update_prompt(
-            prompt_enum,
-            new_template=request['template'],
-            new_description=request.get('description'),
-            new_version=request.get('version')
-        )
-        
-        return {"message": f"Prompt {prompt_type} updated successfully"}
+        # For now, we'll return a message that manual JSON editing is required
+        # In a full implementation, you'd want to update the JSON file
+        return {
+            "message": f"Prompt '{prompt_id}' update requested. Please edit rag/prompts.json manually to update the template.",
+            "note": "Automatic updates not yet implemented. Edit the JSON file directly."
+        }
         
     except HTTPException:
         raise
@@ -501,32 +510,32 @@ async def update_prompt_template(prompt_type: str, request: Dict[str, str]):
         print(f"Error updating prompt template: {e}")
         raise HTTPException(status_code=500, detail=f"Error updating prompt template: {str(e)}")
 
-@app.get("/prompts/test/{prompt_type}")
-async def test_prompt_template(prompt_type: str, request: Request):
+@app.get("/prompts/test/{prompt_id}")
+async def test_prompt_template(prompt_id: str, request: Request):
     """Test a prompt template with provided variables."""
     try:
-        from rag.prompts import prompt_manager, PromptType
+        from rag.prompts import prompt_manager
         
-        # Validate prompt type
-        try:
-            prompt_enum = PromptType(prompt_type)
-        except ValueError:
-            raise HTTPException(status_code=400, detail=f"Invalid prompt type: {prompt_type}")
+        # Check if prompt exists
+        if not prompt_manager.get_prompt_info(prompt_id):
+            raise HTTPException(status_code=404, detail=f"Prompt '{prompt_id}' not found")
         
         # Get query parameters
         query_params = dict(request.query_params)
         
         # Get formatted prompt
-        formatted_prompt = prompt_manager.get_prompt(prompt_enum, **query_params)
+        formatted_prompt = prompt_manager.format_prompt(prompt_id, **query_params)
+        if formatted_prompt is None:
+            raise HTTPException(status_code=400, detail="Failed to format prompt - check required parameters")
         
         return {
-            'prompt_type': prompt_type,
+            'prompt_id': prompt_id,
             'formatted_prompt': formatted_prompt,
             'variables_used': query_params
         }
         
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Error testing prompt template: {e}")
         raise HTTPException(status_code=500, detail=f"Error testing prompt template: {str(e)}")
