@@ -133,6 +133,8 @@ class QueryResponse(BaseModel):
     context: List[Dict[str, Any]]
     metadata: List[EmailMetadata]
     processing_time: float
+    provider: str = "unknown"
+    model: str = "unknown"
 
 class RefreshResponse(BaseModel):
     """Response model for refresh endpoint."""

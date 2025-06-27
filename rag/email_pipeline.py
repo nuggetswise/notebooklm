@@ -170,19 +170,32 @@ class EmailRAGPipeline:
             )
             
             # Generate response
-            response = self.generator.generate_response(
+            generator_result = self.generator.generate_response(
                 question, 
                 search_results, 
                 self._get_persona_context(question)
             )
             
+            # Handle new response format (dict with provider info)
+            if isinstance(generator_result, dict):
+                answer = generator_result.get('response', 'No response generated')
+                provider = generator_result.get('provider', 'unknown')
+                model = generator_result.get('model', 'unknown')
+            else:
+                # Handle legacy string response format
+                answer = generator_result
+                provider = 'unknown'
+                model = 'unknown'
+            
             # Prepare result
             result = {
-                'answer': response,
+                'answer': answer,
                 'context': search_results,
                 'metadata': self._extract_metadata(search_results),
                 'processing_time': (datetime.now() - start_time).total_seconds(),
-                'stats': self.stats.copy()
+                'stats': self.stats.copy(),
+                'provider': provider,
+                'model': model
             }
             
             # Cache result
