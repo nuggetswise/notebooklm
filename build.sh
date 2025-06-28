@@ -21,9 +21,9 @@ apt-get install -y --no-install-recommends \
 echo "⬆️ Upgrading pip..."
 pip install --upgrade pip
 
-# Install pandas first (to avoid compilation issues)
-echo "📦 Installing pandas (compatible version)..."
-pip install --no-cache-dir pandas==2.1.4
+# Install pandas first (Python 3.13 compatible version)
+echo "📦 Installing pandas (Python 3.13 compatible version)..."
+pip install --no-cache-dir pandas==2.2.2
 
 # Install Python dependencies with optimizations
 echo "📦 Installing remaining Python dependencies..."
@@ -58,10 +58,10 @@ except Exception as e:
     exit(1)
 
 try:
-    import groq
-    print('✅ Groq imported successfully')
+    import cohere
+    print('✅ Cohere imported successfully')
 except Exception as e:
-    print(f'❌ Groq import failed: {e}')
+    print(f'❌ Cohere import failed: {e}')
     exit(1)
 
 print('🎉 All critical imports successful!')
