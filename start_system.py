@@ -22,14 +22,14 @@ class SystemRunner:
         """Start the FastAPI backend"""
         print("🚀 Starting Email RAG Backend...")
         print("📁 Backend directory:", os.getcwd())
-        print("🌐 Backend will be available at: http://localhost:8001")
+        print("🌐 Backend will be available at: http://localhost:8002")
         print()
         
         try:
             self.backend_process = subprocess.Popen([
                 sys.executable, "-m", "uvicorn", "ingestion_api.main:app",
                 "--host", "0.0.0.0",
-                "--port", "8001",
+                "--port", "8002",
                 "--reload"
             ])
             print(f"✅ Backend started with PID: {self.backend_process.pid}")
@@ -48,13 +48,13 @@ class SystemRunner:
         
         print("🚀 Starting Email RAG Frontend...")
         print("📁 Frontend directory:", os.getcwd())
-        print("🌐 Frontend will be available at: http://localhost:8501")
+        print("🌐 Frontend will be available at: http://localhost:8502")
         print()
         
         try:
             self.frontend_process = subprocess.Popen([
                 sys.executable, "-m", "streamlit", "run", "app.py",
-                "--server.port", "8501",
+                "--server.port", "8502",
                 "--server.address", "0.0.0.0",
                 "--server.headless", "true"
             ])
@@ -116,9 +116,9 @@ class SystemRunner:
         print("=" * 60)
         print("🎉 Email RAG System is running!")
         print("=" * 60)
-        print("🌐 Backend API: http://localhost:8001")
-        print("🌐 Frontend UI: http://localhost:8501")
-        print("📚 API Docs: http://localhost:8001/docs")
+        print("🌐 Backend API: http://localhost:8002")
+        print("🌐 Frontend UI: http://localhost:8502")
+        print("📚 API Docs: http://localhost:8002/docs")
         print()
         print("Press Ctrl+C to stop the system")
         print("=" * 60)

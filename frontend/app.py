@@ -170,7 +170,7 @@ def query_rag(question: str, label: str = None, days_back: int = 30, sender_filt
     """Query the RAG system via backend API"""
     try:
         # Use the backend API instead of direct RAG pipeline
-        api_url = "http://localhost:8001/query"
+        api_url = "http://localhost:8002/query"
         
         # Prepare the request payload
         payload = {

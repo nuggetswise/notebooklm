@@ -17,15 +17,15 @@ def main():
     
     print("🚀 Starting Email RAG Frontend...")
     print(f"📁 Working directory: {os.getcwd()}")
-    print("🌐 Frontend will be available at: http://localhost:8501")
-    print("🔗 Make sure the backend API is running on http://localhost:8001")
+    print("🌐 Frontend will be available at: http://localhost:8502")
+    print("🔗 Make sure the backend API is running on http://localhost:8002")
     print()
     
     # Run Streamlit
     try:
         subprocess.run([
             sys.executable, "-m", "streamlit", "run", "app.py",
-            "--server.port", "8501",
+            "--server.port", "8502",
             "--server.address", "0.0.0.0",
             "--server.headless", "true"
         ], check=True)

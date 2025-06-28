@@ -69,8 +69,11 @@ class MultiProviderGenerator:
                 words = prompt.split()
                 max_words = int(settings.COHERE_MAX_TOKENS / 1.3)
                 prompt = " ".join(words[:max_words])
+            # Final check: if still too long, hard truncate
+            while len(prompt.split()) * 1.3 > settings.COHERE_MAX_TOKENS:
+                prompt = " ".join(prompt.split()[:-10])
             
-            # Use the correct Cohere API parameters
+            # Use the correct Cohere API parameters (no 'model' param for generate)
             response = self.cohere_client.generate(
                 prompt=prompt,
                 max_tokens=max_tokens,
@@ -236,7 +239,7 @@ class MultiProviderGenerator:
                 return {
                     "response": response,
                     "provider": provider_info,
-                    "model": "command-r-plus"
+                    "model": "command"
                 }
             
             # If all providers fail, use fallback
