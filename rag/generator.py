@@ -46,6 +46,11 @@ class MultiProviderGenerator:
                 print("⚠️ GEMINI_API_KEY not set")
         except Exception as e:
             print(f"❌ Error initializing Gemini client: {e}")
+        
+        # Groq models (in order of preference)
+        self.groq_models = [
+            "gemma2-9b-it"  # Only using Gemma model
+        ]
     
     def is_available(self) -> bool:
         """Check if any LLM provider is available."""
