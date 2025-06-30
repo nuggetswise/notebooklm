@@ -1,31 +1,25 @@
-# Minimal requirements for Email RAG System
-# Core dependencies only - install these first
-
-# FastAPI and server
-fastapi==0.115.9
-uvicorn[standard]==0.34.2
-pydantic==2.9.2
+# Minimal requirements for GCP deployment
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.3
+python-multipart==0.0.6
+python-dotenv==1.0.0
+requests==2.31.0
+numpy==1.24.4
+pandas==2.0.3
+python-dateutil==2.8.2
 
 # Email processing
 email-validator==2.2.0
 beautifulsoup4==4.12.3
-python-multipart==0.0.6
 
 # RAG and AI (already installed)
 cohere==4.37
 sentence-transformers==2.2.0
 faiss-cpu==1.7.4
 
-# Data processing
-numpy==1.24.0
-pandas==2.2.2
-
 # Frontend
 streamlit==1.28.0
-
-# Utilities
-python-dotenv==1.1.1
-requests==2.31.0
 
 # Note: Most dependencies are already installed and working
 # This file is for reference only - the system is functional

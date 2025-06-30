@@ -44,7 +44,7 @@ try:
 except ImportError:
     BEAUTIFULSOUP_AVAILABLE = False
 
-from .config import settings
+from .config import config
 
 
 def clean_email_address(email_str):
@@ -102,6 +102,9 @@ class EmailParser:
             # Process attachments
             attachments = self._process_attachments(msg)
             
+            # Extract media URLs from HTML content
+            media_urls = self._extract_media_from_email(msg)
+            
             # Combine all text content
             full_content = self._combine_content(body, attachments)
             
@@ -123,6 +126,8 @@ class EmailParser:
                 'full_content': full_content,
                 'has_attachments': len(attachments) > 0,
                 'attachment_count': len(attachments),
+                'media_urls': media_urls,
+                'has_media': any(len(urls) > 0 for urls in media_urls.values()),
                 'persona': persona
             }
             
@@ -138,6 +143,8 @@ class EmailParser:
                 'full_content': f'Error parsing email: {str(e)}',
                 'has_attachments': False,
                 'attachment_count': 0,
+                'media_urls': {'images': [], 'videos': [], 'iframes': []},
+                'has_media': False,
                 'persona': None
             }
     
@@ -213,16 +220,88 @@ class EmailParser:
             return ''
     
     def _strip_html(self, html_content: str) -> str:
-        """Strip HTML tags and extract text content."""
+        """Strip HTML tags and extract text content, preserving embedded media URLs."""
         if not BEAUTIFULSOUP_AVAILABLE:
             return html_content
         
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
-            return soup.get_text(separator='\n', strip=True)
+            
+            # Extract embedded media URLs before stripping HTML
+            media_urls = self._extract_media_urls(soup)
+            
+            # Get clean text content
+            text_content = soup.get_text(separator='\n', strip=True)
+            
+            # Append media URLs to the text content
+            if media_urls:
+                text_content += '\n\n--- EMBEDDED MEDIA ---\n'
+                for media_type, urls in media_urls.items():
+                    if urls:
+                        text_content += f'\n{media_type.upper()} URLs:\n'
+                        for url in urls:
+                            text_content += f'- {url}\n'
+            
+            return text_content
+            
         except Exception as e:
             print(f"Error stripping HTML: {e}")
             return html_content
+    
+    def _extract_media_urls(self, soup) -> Dict[str, List[str]]:
+        """Extract image and video URLs from HTML content."""
+        media_urls = {
+            'images': [],
+            'videos': [],
+            'iframes': []
+        }
+        
+        try:
+            # Extract image URLs
+            for img in soup.find_all('img'):
+                src = img.get('src', '')
+                if src and src.startswith(('http://', 'https://')):
+                    media_urls['images'].append(src)
+            
+            # Extract video URLs
+            for video in soup.find_all('video'):
+                src = video.get('src', '')
+                if src and src.startswith(('http://', 'https://')):
+                    media_urls['videos'].append(src)
+                
+                # Check for source tags inside video
+                for source in video.find_all('source'):
+                    src = source.get('src', '')
+                    if src and src.startswith(('http://', 'https://')):
+                        media_urls['videos'].append(src)
+            
+            # Extract iframe URLs (embedded content)
+            for iframe in soup.find_all('iframe'):
+                src = iframe.get('src', '')
+                if src and src.startswith(('http://', 'https://')):
+                    media_urls['iframes'].append(src)
+            
+            # Extract links that might be media (common in newsletters)
+            for link in soup.find_all('a'):
+                href = link.get('href', '')
+                if href and href.startswith(('http://', 'https://')):
+                    # Check if link points to media files
+                    if any(ext in href.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.mp4', '.mov', '.avi', '.webm']):
+                        media_urls['images'].append(href)
+                    # Check for common video platforms
+                    elif any(platform in href.lower() for platform in ['youtube.com', 'vimeo.com', 'dailymotion.com', 'twitch.tv']):
+                        media_urls['videos'].append(href)
+            
+            # Remove duplicates while preserving order
+            for media_type in media_urls:
+                seen = set()
+                media_urls[media_type] = [url for url in media_urls[media_type] if not (url in seen or seen.add(url))]
+            
+            return media_urls
+            
+        except Exception as e:
+            print(f"Error extracting media URLs: {e}")
+            return media_urls
     
     def _process_attachments(self, msg) -> List[Dict[str, Any]]:
         """Process email attachments and extract text content."""
@@ -325,7 +404,7 @@ class EmailParser:
             safe_subject = re.sub(r'[^\w\s-]', '', email_data['subject'])
             safe_subject = re.sub(r'[-\s]+', '-', safe_subject)
             filename = f"{email_id}_{safe_subject[:50]}.txt"
-            filepath = settings.PARSED_EMAILS_DIR / filename
+            filepath = config.PARSED_EMAILS_DIR / filename
             
             # Write content to file
             with open(filepath, 'w', encoding='utf-8') as f:
@@ -411,6 +490,45 @@ class EmailParser:
             
         except Exception as e:
             print(f"Error creating notebook: {e}")
+    
+    def _extract_media_from_email(self, msg) -> Dict[str, List[str]]:
+        """Extract media URLs from email HTML content."""
+        media_urls = {
+            'images': [],
+            'videos': [],
+            'iframes': []
+        }
+        
+        if not BEAUTIFULSOUP_AVAILABLE:
+            return media_urls
+        
+        try:
+            # Walk through all parts of the email
+            for part in msg.walk():
+                if part.get_content_maintype() == 'multipart':
+                    continue
+                
+                content_type = part.get_content_type()
+                if content_type == 'text/html':
+                    html_content = self._decode_part(part)
+                    if html_content:
+                        soup = BeautifulSoup(html_content, 'html.parser')
+                        part_media = self._extract_media_urls(soup)
+                        
+                        # Merge media URLs
+                        for media_type in media_urls:
+                            media_urls[media_type].extend(part_media[media_type])
+            
+            # Remove duplicates while preserving order
+            for media_type in media_urls:
+                seen = set()
+                media_urls[media_type] = [url for url in media_urls[media_type] if not (url in seen or seen.add(url))]
+            
+            return media_urls
+            
+        except Exception as e:
+            print(f"Error extracting media from email: {e}")
+            return media_urls
 
 # Global parser instance
 parser = EmailParser() 

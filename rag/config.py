@@ -21,8 +21,10 @@ class RAGSettings:
     TOP_K_RETRIEVAL: int = int(os.getenv("TOP_K_RETRIEVAL", "3"))
     
     # Embedding Settings
-    EMBEDDING_MODEL: str = "embed-english-v3.0"
-    EMBEDDING_DIMENSION: int = 1024
+    EMBEDDING_PROVIDER: str = os.getenv("EMBEDDING_PROVIDER", "openai")  # openai, sentence-transformers, cohere
+    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")  # OpenAI's best model
+    EMBEDDING_DIMENSION: int = int(os.getenv("EMBEDDING_DIMENSION", "1536"))  # OpenAI's dimension
+    USE_SENTENCE_TRANSFORMERS: bool = os.getenv("USE_SENTENCE_TRANSFORMERS", "false").lower() == "true"
     
     # Generation Settings
     GENERATION_MODEL: str = "command"
@@ -49,8 +51,14 @@ class RAGSettings:
     
     def validate_api_keys(self) -> bool:
         """Validate that required API keys are present."""
-        if not self.COHERE_API_KEY and not self.GEMINI_API_KEY:
-            print("Warning: Neither COHERE_API_KEY nor GEMINI_API_KEY set. RAG functionality will be limited.")
+        if self.EMBEDDING_PROVIDER == "nomic":
+            # Nomic is free, no API key needed
+            return True
+        elif self.EMBEDDING_PROVIDER == "openai" and not self.OPENAI_API_KEY:
+            print("Warning: OPENAI_API_KEY not set for OpenAI embeddings.")
+            return False
+        elif self.EMBEDDING_PROVIDER == "cohere" and not self.COHERE_API_KEY:
+            print("Warning: COHERE_API_KEY not set for Cohere embeddings.")
             return False
         return True
 

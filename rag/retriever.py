@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 from .document_source import Document
 from .embedder import embedder, HybridEmbedder
-from .config import settings
+from .config import config
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +69,7 @@ class FAISSRetriever:
             
             # Generate embeddings with fallback support
             logger.info("Generating embeddings...")
-            embeddings = self.embedder.embed_texts(texts, use_cache=True)
+            embeddings = self.embedder.embed_texts(texts)
             
             if not embeddings or len(embeddings) == 0:
                 logger.error("Failed to generate embeddings")
@@ -119,21 +119,44 @@ class FAISSRetriever:
             index_path = self.vector_store_dir / "faiss_index.bin"
             docs_path = self.vector_store_dir / "documents.pkl"
             
+            logger.info(f"🔍 Attempting to load existing index from {index_path}")
+            logger.info(f"🔍 Documents file path: {docs_path}")
+            
+            # Check if files exist
+            if not index_path.exists():
+                logger.error(f"❌ FAISS index file not found: {index_path}")
+                return False
+            
+            if not docs_path.exists():
+                logger.error(f"❌ Documents file not found: {docs_path}")
+                return False
+            
             # Load FAISS index
+            logger.info("📖 Loading FAISS index...")
             self.index = faiss.read_index(str(index_path))
+            logger.info(f"✅ FAISS index loaded successfully. Index type: {type(self.index).__name__}")
             
             # Load documents
+            logger.info("📖 Loading documents...")
             with open(docs_path, 'rb') as f:
                 self.documents = pickle.load(f)
+            logger.info(f"✅ Documents loaded successfully. Count: {len(self.documents)}")
             
             # Extract metadata
             self.document_metadata = [doc.metadata for doc in self.documents]
+            
+            # Verify index and documents match
+            if hasattr(self.index, 'ntotal') and self.index.ntotal != len(self.documents):
+                logger.warning(f"⚠️ Index count ({self.index.ntotal}) doesn't match document count ({len(self.documents)})")
             
             logger.info(f"✅ FAISS index loaded with {len(self.documents)} documents")
             return True
             
         except Exception as e:
-            logger.error(f"Error loading existing index: {e}")
+            logger.error(f"❌ Error loading existing index: {e}")
+            logger.error(f"❌ Error type: {type(e).__name__}")
+            import traceback
+            logger.error(f"❌ Full traceback: {traceback.format_exc()}")
             return False
     
     def _save_index(self):
@@ -171,7 +194,7 @@ class FAISSRetriever:
                 return self._fallback_search(query, k, label, max_age_days)
             
             # Generate query embedding
-            query_embedding = self.embedder.embed_single_text(query, use_cache=True)
+            query_embedding = self.embedder.embed_single_text(query)
             
             if not query_embedding or len(query_embedding) == 0:
                 logger.warning("Failed to generate query embedding, using fallback")
@@ -318,4 +341,11 @@ class LegacyRetriever:
         return [(Document(content=r['content'], metadata=r['metadata']), r['score']) for r in results]
 
 # Global instances
-retriever = LegacyRetriever("data/vector_store", None)  # Will be initialized properly 
+# Note: The global retriever is deprecated. Use the retriever from EmailRAGPipeline instead.
+# This is kept for backward compatibility but should not be used in new code.
+try:
+    from .embedder import HybridEmbedder
+    retriever = LegacyRetriever("data/vector_store", HybridEmbedder())
+except Exception as e:
+    logger.warning(f"Could not initialize global retriever: {e}")
+    retriever = None 

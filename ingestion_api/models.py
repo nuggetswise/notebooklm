@@ -51,6 +51,8 @@ class EmailMetadata(BaseModel):
     parsed_path: str
     has_attachments: bool = False
     attachment_count: int = 0
+    has_media: bool = False  # Whether email contains embedded media
+    media_urls: Dict[str, List[str]] = Field(default_factory=lambda: {'images': [], 'videos': [], 'iframes': []})
     persona: Optional[PersonaInfo] = None
     
     @validator('sender')

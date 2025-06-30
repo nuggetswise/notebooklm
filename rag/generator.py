@@ -1,8 +1,9 @@
-import cohere
+# import cohere  # Commented out for testing
+import cohere  # Uncommented since we have API key
 import groq
 import google.generativeai as genai
 from typing import List, Dict, Any, Optional
-from .config import settings
+from .config import config
 
 class MultiProviderGenerator:
     """Generate responses using multiple LLM providers with fallback chain."""
@@ -16,20 +17,21 @@ class MultiProviderGenerator:
     
     def _initialize_clients(self):
         """Initialize all available LLM clients."""
-        # Initialize Cohere
-        try:
-            if settings.COHERE_API_KEY:
-                self.cohere_client = cohere.Client(settings.COHERE_API_KEY)
-                print(f"✅ Cohere client initialized")
-            else:
-                print("⚠️ COHERE_API_KEY not set")
-        except Exception as e:
-            print(f"❌ Error initializing Cohere client: {e}")
+        # Initialize Cohere (disabled for testing)
+        # try:
+        #     if settings.COHERE_API_KEY:
+        #         self.cohere_client = cohere.Client(settings.COHERE_API_KEY)
+        #         print(f"✅ Cohere client initialized")
+        #     else:
+        #         print("⚠️ COHERE_API_KEY not set")
+        # except Exception as e:
+        #     print(f"❌ Error initializing Cohere client: {e}")
+        print("⚠️ Cohere disabled for testing")
         
         # Initialize Groq
         try:
-            if hasattr(settings, 'GROQ_API_KEY') and settings.GROQ_API_KEY:
-                self.groq_client = groq.Groq(api_key=settings.GROQ_API_KEY)
+            if hasattr(config, 'GROQ_API_KEY') and config.GROQ_API_KEY:
+                self.groq_client = groq.Groq(api_key=config.GROQ_API_KEY)
                 print(f"✅ Groq client initialized")
             else:
                 print("⚠️ GROQ_API_KEY not set")
@@ -38,8 +40,8 @@ class MultiProviderGenerator:
         
         # Initialize Gemini
         try:
-            if settings.GEMINI_API_KEY:
-                genai.configure(api_key=settings.GEMINI_API_KEY)
+            if config.GEMINI_API_KEY:
+                genai.configure(api_key=config.GEMINI_API_KEY)
                 self.gemini_client = genai.GenerativeModel('gemini-2.0-flash')
                 print(f"✅ Gemini client initialized")
             else:
@@ -57,41 +59,44 @@ class MultiProviderGenerator:
         return any([self.cohere_client, self.groq_client, self.gemini_client])
     
     def _try_cohere(self, prompt: str, max_tokens: int = None, temperature: float = 0.7) -> Optional[str]:
-        """Try to generate response using Cohere."""
-        if not self.cohere_client:
-            return None
+        """Try to generate response using Cohere (disabled for testing)."""
+        # Cohere disabled for testing
+        return None
         
-        # Use provider-specific token limit
-        if max_tokens is None:
-            max_tokens = min(settings.MAX_TOKENS, settings.COHERE_MAX_TOKENS)
+        # if not self.cohere_client:
+        #     return None
         
-        try:
-            # Check prompt length and truncate if needed
-            estimated_tokens = len(prompt.split()) * 1.3  # Rough estimation
-            if estimated_tokens > settings.COHERE_MAX_TOKENS:
-                print(f"⚠️ Cohere prompt too long ({estimated_tokens:.0f} tokens), truncating...")
-                # Truncate prompt to fit within limits
-                words = prompt.split()
-                max_words = int(settings.COHERE_MAX_TOKENS / 1.3)
-                prompt = " ".join(words[:max_words])
-            # Final check: if still too long, hard truncate
-            while len(prompt.split()) * 1.3 > settings.COHERE_MAX_TOKENS:
-                prompt = " ".join(prompt.split()[:-10])
+        # # Use provider-specific token limit
+        # if max_tokens is None:
+        #     max_tokens = min(settings.MAX_TOKENS, settings.COHERE_MAX_TOKENS)
+        
+        # try:
+        #     # Check prompt length and truncate if needed
+        #     estimated_tokens = len(prompt.split()) * 1.3  # Rough estimation
+        #     if estimated_tokens > settings.COHERE_MAX_TOKENS:
+        #         print(f"⚠️ Cohere prompt too long ({estimated_tokens:.0f} tokens), truncating...")
+        #         # Truncate prompt to fit within limits
+        #         words = prompt.split()
+        #         max_words = int(settings.COHERE_MAX_TOKENS / 1.3)
+        #         prompt = " ".join(words[:max_words])
+        #     # Final check: if still too long, hard truncate
+        #     while len(prompt.split()) * 1.3 > settings.COHERE_MAX_TOKENS:
+        #         prompt = " ".join(prompt.split()[:-10])
             
-            # Use the correct Cohere API parameters (no 'model' param for generate)
-            response = self.cohere_client.generate(
-                prompt=prompt,
-                max_tokens=max_tokens,
-                temperature=temperature,
-                k=0,
-                stop_sequences=[],
-                return_likelihoods='NONE'
-            )
-            self.current_provider = "cohere"
-            return response.generations[0].text.strip()
-        except Exception as e:
-            print(f"Cohere generation failed: {e}")
-            return None
+        #     # Use the correct Cohere API parameters (no 'model' param for generate)
+        #     response = self.cohere_client.generate(
+        #         prompt=prompt,
+        #         max_tokens=max_tokens,
+        #         temperature=temperature,
+        #         k=0,
+        #         stop_sequences=[],
+        #         return_likelihoods='NONE'
+        #     )
+        #     self.current_provider = "cohere"
+        #     return response.generations[0].text.strip()
+        # except Exception as e:
+        #     print(f"Cohere generation failed: {e}")
+        #     return None
     
     def _try_groq(self, prompt: str, max_tokens: int = None, temperature: float = 0.7) -> Optional[str]:
         """Try to generate response using Groq."""
@@ -100,16 +105,16 @@ class MultiProviderGenerator:
         
         # Use provider-specific token limit
         if max_tokens is None:
-            max_tokens = min(settings.MAX_TOKENS, settings.GROQ_MAX_TOKENS)
+            max_tokens = min(config.MAX_TOKENS, config.GROQ_MAX_TOKENS)
         
         try:
             # Check prompt length and truncate if needed
             estimated_tokens = len(prompt.split()) * 1.3  # Rough estimation
-            if estimated_tokens > settings.GROQ_MAX_TOKENS:
+            if estimated_tokens > config.GROQ_MAX_TOKENS:
                 print(f"⚠️ Groq prompt too long ({estimated_tokens:.0f} tokens), truncating...")
                 # Truncate prompt to fit within limits
                 words = prompt.split()
-                max_words = int(settings.GROQ_MAX_TOKENS / 1.3)
+                max_words = int(config.GROQ_MAX_TOKENS / 1.3)
                 prompt = " ".join(words[:max_words])
             
             # Try different Groq models in order of preference
@@ -150,7 +155,7 @@ class MultiProviderGenerator:
         
         # Use provider-specific token limit
         if max_tokens is None:
-            max_tokens = min(settings.MAX_TOKENS, settings.GEMINI_MAX_TOKENS)
+            max_tokens = min(config.MAX_TOKENS, config.GEMINI_MAX_TOKENS)
         
         try:
             response = self.gemini_client.generate_content(
@@ -217,7 +222,7 @@ class MultiProviderGenerator:
             provider_info = "unknown"
             
             # Try Groq first (primary)
-            response = self._try_groq(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
+            response = self._try_groq(prompt, config.MAX_TOKENS, config.TEMPERATURE)
             if response:
                 print(f"✅ Generated response using Groq")
                 return {
@@ -227,7 +232,7 @@ class MultiProviderGenerator:
                 }
             
             # Try Gemini second
-            response = self._try_gemini(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
+            response = self._try_gemini(prompt, config.MAX_TOKENS, config.TEMPERATURE)
             if response:
                 print(f"✅ Generated response using Gemini")
                 return {
@@ -237,7 +242,7 @@ class MultiProviderGenerator:
                 }
             
             # Try Cohere third (last resort)
-            response = self._try_cohere(prompt, settings.MAX_TOKENS, settings.TEMPERATURE)
+            response = self._try_cohere(prompt, config.MAX_TOKENS, config.TEMPERATURE)
             if response:
                 print(f"✅ Generated response using Cohere")
                 provider_info = "cohere"

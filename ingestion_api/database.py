@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from typing import List, Optional
 from pathlib import Path
 from .models import EmailMetadata
-from .config import settings
+from .config import config
 
 def get_db():
     """Get a database connection for the Streamlit app."""

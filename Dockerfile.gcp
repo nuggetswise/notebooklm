@@ -1,0 +1,35 @@
+# Use Python 3.9 slim image for smaller size
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for better caching
+COPY requirements_production.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements_production.txt
+
+# Copy application code
+COPY ingestion_api/ ./ingestion_api/
+COPY rag/ ./rag/
+COPY data/ ./data/
+
+# Create necessary directories
+RUN mkdir -p data/parsed_emails data/vector_store
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV NOMIC_INFERENCE_MODE=local
+
+# Expose port
+EXPOSE 8001
+
+# Run the application
+CMD ["uvicorn", "ingestion_api.main:app", "--host", "0.0.0.0", "--port", "8001"] 

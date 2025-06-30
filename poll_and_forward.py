@@ -23,7 +23,7 @@ load_dotenv()
 GMAIL_EMAIL = os.getenv('GMAIL_EMAIL', 'mandipinder@gmail.com')
 GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
 GMAIL_LABEL = os.getenv('GMAIL_LABEL', 'substackrag')
-RAG_API_URL = os.getenv('RAG_API_URL', 'http://localhost:8001/inbound-email')
+RAG_API_URL = os.getenv('RAG_API_URL', 'http://localhost:8002/inbound-email')
 IMAP_SERVER = 'imap.gmail.com'
 IMAP_PORT = 993
 

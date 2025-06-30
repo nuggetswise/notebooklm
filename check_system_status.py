@@ -63,7 +63,7 @@ def main():
         sys.path.append(str(Path(__file__).parent))
         
         # Test ingestion API
-        from ingestion_api.config import settings
+        from ingestion_api.config import config
         print("✅ Ingestion API config")
         
         from ingestion_api.database import db

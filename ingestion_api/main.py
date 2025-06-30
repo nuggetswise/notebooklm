@@ -19,7 +19,7 @@ from .models import (
 )
 from .parser import parser
 from .database import db
-from .config import settings
+from .config import config
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -53,14 +53,15 @@ def get_rag_pipeline():
 async def startup_event():
     """Initialize application on startup."""
     print("🚀 Email Processing & RAG API starting up...")
-    print(f"📁 Data directory: {settings.DATA_DIR}")
-    print(f"📧 Parsed emails directory: {settings.PARSED_EMAILS_DIR}")
-    print(f"📂 Maildir directory: {settings.MAILDIR_DIR}")
+    print(f"📁 Data directory: {config.DATA_DIR}")
+    print(f"📧 Parsed emails directory: {config.PARSED_EMAILS_DIR}")
+    print(f"📂 Maildir directory: {config.MAILDIR_DIR}")
     
     # Initialize RAG pipeline
     print("🧠 Initializing RAG pipeline...")
     pipeline = get_rag_pipeline()
     pipeline.initialize()
+    print("✅ RAG pipeline initialized successfully")
 
 @app.get("/")
 async def root():
@@ -95,11 +96,11 @@ async def process_inbound_email(request: Request):
         if email_date.tzinfo is None:
             email_date = email_date.replace(tzinfo=pytz.UTC)
         now_utc = datetime.utcnow().replace(tzinfo=email_date.tzinfo)
-        if email_date < now_utc - timedelta(days=settings.MAX_AGE_DAYS):
+        if email_date < now_utc - timedelta(days=config.MAX_AGE_DAYS):
             return EmailProcessingResponse(
                 success=False,
                 email_id="",
-                message=f"Email too old (received {email_date.date()}, max age: {settings.MAX_AGE_DAYS} days)",
+                message=f"Email too old (received {email_date.date()}, max age: {config.MAX_AGE_DAYS} days)",
                 processing_time=time.time() - start_time
             )
         # Generate email ID
@@ -118,6 +119,8 @@ async def process_inbound_email(request: Request):
             parsed_path=parsed_path,
             has_attachments=email_data['has_attachments'],
             attachment_count=email_data['attachment_count'],
+            has_media=email_data.get('has_media', False),
+            media_urls=email_data.get('media_urls', {'images': [], 'videos': [], 'iframes': []}),
             persona=PersonaInfo(**email_data['persona']) if email_data.get('persona') else None
         )
         # Save to database
@@ -146,7 +149,7 @@ async def process_inbound_email(request: Request):
 @app.get("/status", response_model=EmailStatusResponse)
 async def get_email_status(
     label: Optional[str] = Query(None, description="Filter by label"),
-    max_age_days: Optional[int] = Query(settings.MAX_AGE_DAYS, description="Maximum age in days")
+    max_age_days: Optional[int] = Query(config.MAX_AGE_DAYS, description="Maximum age in days")
 ):
     """Get email status and metadata - filtered to substack.com only."""
     try:
@@ -744,6 +747,6 @@ if __name__ == "__main__":
         "ingestion_api.main:app",
         host="0.0.0.0",
         port=8000,
-        reload=settings.DEBUG,
-        log_level=settings.LOG_LEVEL.lower()
+        reload=config.DEBUG,
+        log_level=config.LOG_LEVEL.lower()
     ) 

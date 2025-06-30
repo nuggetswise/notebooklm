@@ -10,10 +10,10 @@ import logging
 from functools import lru_cache
 
 from .document_source import document_source, notebook_source, Document, EmailDocumentSource
-from .embedder import embedder, HybridEmbedder
+from .embedder import embedder, HybridEmbedder, SentenceTransformersEmbedder
 from .retriever import retriever, FAISSRetriever
 from .generator import generator, MultiProviderGenerator
-from .config import settings
+from .config import config
 from .prompts import prompt_manager
 
 logger = logging.getLogger(__name__)
@@ -56,13 +56,10 @@ class EmailRAGPipeline:
     
     @property
     def embedder(self) -> HybridEmbedder:
-        """Lazy load embedder with Gemini fallback."""
+        """Lazy load Hybrid embedder with Nomic primary and fallbacks."""
         if self._embedder is None:
-            self._embedder = HybridEmbedder(
-                primary_provider="cohere",
-                fallback_provider="gemini",
-                cache_size=self.cache_size
-            )
+            from .embedder import HybridEmbedder
+            self._embedder = HybridEmbedder()
         return self._embedder
     
     @property
@@ -128,7 +125,13 @@ class EmailRAGPipeline:
             index_age = datetime.now() - datetime.fromtimestamp(faiss_index_path.stat().st_mtime)
             if index_age < timedelta(hours=24):
                 logger.info("✅ Using existing FAISS index (recent)")
-                return
+                # Load the existing index instead of just returning
+                if self.retriever._load_existing_index():
+                    logger.info(f"✅ FAISS index loaded successfully with {len(self.retriever.documents)} documents")
+                    self.stats['documents_loaded'] = len(self.retriever.documents)
+                    return
+                else:
+                    logger.warning("Failed to load existing index, will rebuild")
         
         # Load documents in batches
         documents = self._batch_load_documents(batch_size)

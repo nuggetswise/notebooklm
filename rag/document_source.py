@@ -11,7 +11,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from ingestion_api.database import db
 from ingestion_api.models import EmailMetadata
-from .config import settings
+from .config import config
 from ingestion_api.parser import clean_email_address
 
 class Document:
@@ -25,8 +25,8 @@ class EmailDocumentSource:
     """Load and process email documents for RAG."""
     
     def __init__(self):
-        self.chunk_size = settings.CHUNK_SIZE
-        self.chunk_overlap = settings.CHUNK_OVERLAP
+        self.chunk_size = config.CHUNK_SIZE
+        self.chunk_overlap = config.CHUNK_OVERLAP
     
     def load_documents(self, label: str = None, max_age_days: int = None, sender: str = None) -> List[Document]:
         """Load email documents from parsed files."""
@@ -223,7 +223,7 @@ class EmailDocumentSource:
             
             # Sort by score and return top results
             scored_docs.sort(key=lambda x: x[0], reverse=True)
-            return [doc for score, doc in scored_docs[:settings.TOP_K_RETRIEVAL]]
+            return [doc for score, doc in scored_docs[:config.TOP_K_RETRIEVAL]]
             
         except Exception as e:
             print(f"Error searching documents: {e}")
@@ -264,8 +264,8 @@ class NotebookDocumentSource:
     """Load and process notebook documents for RAG."""
     
     def __init__(self):
-        self.chunk_size = settings.CHUNK_SIZE
-        self.chunk_overlap = settings.CHUNK_OVERLAP
+        self.chunk_size = config.CHUNK_SIZE
+        self.chunk_overlap = config.CHUNK_OVERLAP
         self.notebooks_dir = Path("notebooks")
     
     def load_documents(self, label: str = None, max_age_days: int = None) -> List[Document]:
