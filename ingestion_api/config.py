@@ -57,9 +57,13 @@ class Config:
         """Validate configuration for production."""
         if cls.ENVIRONMENT == "production":
             try:
-                # Ensure data directories exist
-                cls.VECTOR_STORE_DIR.mkdir(parents=True, exist_ok=True)
-                cls.PARSED_EMAILS_DIR.mkdir(parents=True, exist_ok=True)
+                # Try to ensure data directories exist, but don't fail if we can't
+                try:
+                    cls.VECTOR_STORE_DIR.mkdir(parents=True, exist_ok=True)
+                    cls.PARSED_EMAILS_DIR.mkdir(parents=True, exist_ok=True)
+                except (PermissionError, OSError) as e:
+                    print(f"⚠️  Warning: Could not create directories (read-only filesystem): {e}")
+                    # Continue anyway - directories might already exist
                 
                 # Validate embedding provider
                 if cls.EMBEDDING_PROVIDER == "nomic":
@@ -71,6 +75,7 @@ class Config:
                     print("⚠️  Warning: OpenAI API key not set")
             except Exception as e:
                 print(f"⚠️  Warning: Could not validate production config: {e}")
+                # Don't fail validation for non-critical issues
         
         return True
 

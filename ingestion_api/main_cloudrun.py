@@ -41,38 +41,42 @@ app.add_middleware(
 _rag_pipeline = None
 
 def get_rag_pipeline():
-    """Get or create RAG pipeline instance."""
+    """Get or create RAG pipeline instance - LAZY LOADING for Cloud Run."""
     global _rag_pipeline
     if _rag_pipeline is None:
-        sys.path.append(str(Path(__file__).parent.parent))
-        from rag.email_pipeline import pipeline
-        _rag_pipeline = pipeline
+        try:
+            sys.path.append(str(Path(__file__).parent.parent))
+            from rag.email_pipeline import pipeline
+            _rag_pipeline = pipeline
+        except Exception as e:
+            print(f"⚠️  Warning: Could not initialize RAG pipeline: {e}")
+            return None
     return _rag_pipeline
 
 @app.on_event("startup")
 async def startup_event():
-    """Initialize application on startup."""
-    print("🚀 Email Processing & RAG API starting up...")
+    """Lightweight startup for Cloud Run - no heavy initialization."""
+    print("🚀 Email Processing & RAG API starting up (Cloud Run optimized)...")
     print(f"📁 Data directory: {config.DATA_DIR}")
     print(f"📧 Parsed emails directory: {config.PARSED_EMAILS_DIR}")
     print(f"📂 Maildir directory: {config.MAILDIR_DIR}")
     
-    # Initialize RAG pipeline with error handling
-    print("🧠 Initializing RAG pipeline...")
+    # Don't initialize RAG pipeline on startup - do it lazily on first use
+    print("🔄 RAG pipeline will be initialized on first use (lazy loading)")
+    
+    # Just ensure directories exist
     try:
-        pipeline = get_rag_pipeline()
-        pipeline.initialize()
-        print("✅ RAG pipeline initialized successfully")
+        config.VECTOR_STORE_DIR.mkdir(parents=True, exist_ok=True)
+        config.PARSED_EMAILS_DIR.mkdir(parents=True, exist_ok=True)
+        print("✅ Directories created successfully")
     except Exception as e:
-        print(f"⚠️  Warning: RAG pipeline initialization failed: {e}")
-        print("🔄 Continuing without RAG pipeline - will initialize on first use")
-        # Don't fail startup - the pipeline can be initialized later
+        print(f"⚠️  Warning: Could not create directories: {e}")
 
 @app.get("/")
 async def root():
     """Root endpoint with API information."""
     return {
-        "message": "Email Processing & RAG API",
+        "message": "Email Processing & RAG API (Cloud Run)",
         "version": "1.0.0",
         "endpoints": {
             "POST /inbound-email": "Process incoming MIME email",
@@ -93,11 +97,12 @@ async def process_inbound_email(request: Request):
         raw_email = await request.body()
         if not raw_email:
             raise HTTPException(status_code=400, detail="Empty email content")
+        
         # Parse email
         email_data = parser.parse_email(raw_email)
+        
         # Check if email is within age limit
         email_date = email_data['date']
-        # Ensure both datetimes are timezone-aware (UTC)
         if email_date.tzinfo is None:
             email_date = email_date.replace(tzinfo=pytz.UTC)
         now_utc = datetime.utcnow().replace(tzinfo=email_date.tzinfo)
@@ -108,12 +113,15 @@ async def process_inbound_email(request: Request):
                 message=f"Email too old (received {email_date.date()}, max age: {config.MAX_AGE_DAYS} days)",
                 processing_time=time.time() - start_time
             )
+        
         # Generate email ID
         email_id = str(uuid.uuid4())
-        # Save parsed email to file
+        
+        # Save parsed email to file (use /tmp for Cloud Run)
         parsed_path = parser.save_parsed_email(email_data, email_id)
         if not parsed_path:
             raise HTTPException(status_code=500, detail="Failed to save parsed email")
+        
         # Create email metadata
         email_metadata = EmailMetadata(
             id=email_id,
@@ -128,9 +136,11 @@ async def process_inbound_email(request: Request):
             media_urls=email_data.get('media_urls', {'images': [], 'videos': [], 'iframes': []}),
             persona=PersonaInfo(**email_data['persona']) if email_data.get('persona') else None
         )
+        
         # Save to database
         if not db.insert_email(email_metadata):
             raise HTTPException(status_code=500, detail="Failed to save email metadata")
+        
         processing_time = time.time() - start_time
         return EmailProcessingResponse(
             success=True,
@@ -249,111 +259,91 @@ async def get_emails(
     since: Optional[str] = Query(None, description="Filter emails since this date (ISO format)"),
     max_age_days: Optional[int] = Query(30, description="Maximum age in days")
 ):
-    """Get emails with optional filtering - defaults to substack.com only."""
+    """Get emails with optional filtering."""
     try:
-        # Default to substack.com if no label specified
-        if not label:
-            label = "substack.com"
-        
-        # Get emails by label
         if label:
             emails = db.get_emails_by_label(label, max_age_days)
         else:
             emails = db.get_all_emails(max_age_days)
         
-        # Apply date filtering if since parameter is provided
+        # Filter by date if specified
         if since:
             try:
                 since_date = datetime.fromisoformat(since.replace('Z', '+00:00'))
                 filtered_emails = []
                 for email in emails:
-                    if email.date >= since_date:
+                    email_date = email.date
+                    if isinstance(email_date, str):
+                        email_date = datetime.fromisoformat(email_date.replace('Z', '+00:00'))
+                    if email_date >= since_date:
                         filtered_emails.append(email)
                 emails = filtered_emails
             except ValueError:
-                print(f"Invalid date format: {since}")
+                raise HTTPException(status_code=400, detail="Invalid date format. Use ISO format (YYYY-MM-DDTHH:MM:SS)")
         
         return {
             "emails": emails,
-            "total_count": len(emails),
+            "count": len(emails),
             "label": label,
             "since": since,
             "max_age_days": max_age_days
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Error getting emails: {e}")
         raise HTTPException(status_code=500, detail=f"Error retrieving emails: {str(e)}")
 
 @app.post("/refresh", response_model=RefreshResponse)
 async def refresh_emails():
-    """Reprocess emails from maildir and refresh RAG index."""
-    start_time = time.time()
-    
+    """Reprocess emails from maildir - simplified for Cloud Run."""
     try:
-        # TODO: Implement maildir reprocessing
-        # This would scan the maildir directory and reprocess any unprocessed emails
-        
-        # Refresh RAG index
-        pipeline = get_rag_pipeline()
-        pipeline.initialize(force_rebuild=True)
-        
-        processing_time = time.time() - start_time
-        
+        # For Cloud Run, we'll just return a message since we can't access maildir
         return RefreshResponse(
             success=True,
+            message="Email refresh not available in Cloud Run (no persistent maildir access)",
             processed_count=0,
-            errors=["Maildir reprocessing not yet implemented"],
-            processing_time=processing_time
+            processing_time=0.0
         )
-        
     except Exception as e:
-        processing_time = time.time() - start_time
-        return RefreshResponse(
-            success=False,
-            processed_count=0,
-            errors=[f"Refresh failed: {str(e)}"],
-            processing_time=processing_time
-        )
+        print(f"Error refreshing emails: {e}")
+        raise HTTPException(status_code=500, detail=f"Error refreshing emails: {str(e)}")
 
 @app.post("/query", response_model=QueryResponse)
 async def query_rag(request: QueryRequest):
-    """Query the RAG system with a question."""
+    """Query emails using RAG - with lazy initialization for Cloud Run."""
     start_time = time.time()
     try:
-        # Query the RAG pipeline
-        result = get_rag_pipeline().query(
-            question=request.question,
+        # Get RAG pipeline (lazy initialization)
+        pipeline = get_rag_pipeline()
+        if pipeline is None:
+            raise HTTPException(status_code=500, detail="RAG pipeline not available")
+        
+        # Perform query
+        result = pipeline.query(
+            question=request.query,
             label=request.label,
-            max_age_days=getattr(request, 'max_age_days', None)
+            max_age_days=request.max_age_days,
+            use_cache=True
         )
         
-        # Convert context to metadata format
-        metadata_list = []
-        for doc_info in result.get('context', []):
-            metadata = doc_info.get('metadata', {})
-            metadata_list.append({
-                'email_id': metadata.get('email_id'),
-                'subject': metadata.get('subject', 'No Subject'),
-                'sender': metadata.get('sender', 'Unknown'),
-                'date': metadata.get('date', ''),
-                'label': metadata.get('label', 'Unknown'),
-                'parsed_path': metadata.get('source_file'),
-                'has_attachments': metadata.get('has_attachments', False),
-                'attachment_count': metadata.get('attachment_count', 0)
-            })
+        processing_time = time.time() - start_time
         
         return QueryResponse(
-            answer=result['answer'],
+            answer=result.get('answer', 'No answer generated'),
             context=result.get('context', []),
-            metadata=metadata_list,
-            processing_time=result.get('processing_time', 0),
+            metadata=result.get('metadata', {}),
+            processing_time=processing_time,
             provider=result.get('provider', 'unknown'),
             model=result.get('model', 'unknown')
         )
         
+    except HTTPException:
+        raise
     except Exception as e:
-        print(f"Error generating response: {e}")
+        processing_time = time.time() - start_time
+        print(f"Error processing query: {e}")
         raise HTTPException(status_code=500, detail=f"Error processing query: {str(e)}")
 
 @app.get("/rag/stats")
@@ -361,31 +351,37 @@ async def get_rag_stats():
     """Get RAG pipeline statistics."""
     try:
         pipeline = get_rag_pipeline()
+        if pipeline is None:
+            return {"error": "RAG pipeline not available"}
+        
         stats = pipeline.get_stats()
-        return stats
+        return {
+            "pipeline_stats": stats,
+            "memory_usage_mb": stats.get('memory_usage_mb', 0),
+            "documents_loaded": stats.get('documents_loaded', 0),
+            "queries_processed": stats.get('queries_processed', 0)
+        }
     except Exception as e:
         print(f"Error getting RAG stats: {e}")
-        raise HTTPException(status_code=500, detail=f"Error retrieving RAG stats: {str(e)}")
+        return {"error": f"Error retrieving RAG stats: {str(e)}"}
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint."""
+    """Lightweight health check for Cloud Run."""
     try:
-        pipeline = get_rag_pipeline()
-        # Check if retriever is properly initialized by testing its index
-        if hasattr(pipeline.retriever, 'index') and pipeline.retriever.index is not None:
-            rag_status = "initialized"
-        else:
-            rag_status = "not_initialized"
-    except:
-        rag_status = "error"
-    
-    return {
-        "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
-        "database": "connected" if db else "disconnected",
-        "rag_pipeline": rag_status
-    }
+        # Don't check RAG pipeline on health check - keep it simple
+        return {
+            "status": "healthy",
+            "timestamp": datetime.utcnow().isoformat(),
+            "environment": "cloud-run",
+            "database": "connected" if db else "disconnected"
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "error": str(e),
+            "timestamp": datetime.utcnow().isoformat()
+        }
 
 @app.get("/personas", response_model=List[Dict[str, Any]])
 async def get_all_personas():
@@ -506,7 +502,6 @@ async def update_prompt_template(prompt_id: str, request: Dict[str, str]):
             raise HTTPException(status_code=400, detail="Template is required")
         
         # For now, we'll return a message that manual JSON editing is required
-        # In a full implementation, you'd want to update the JSON file
         return {
             "message": f"Prompt '{prompt_id}' update requested. Please edit rag/prompts.json manually to update the template.",
             "note": "Automatic updates not yet implemented. Edit the JSON file directly."
@@ -553,16 +548,17 @@ async def get_system_stats():
     """Get comprehensive system statistics and performance metrics."""
     try:
         # Get RAG pipeline stats
-        rag_stats = get_rag_pipeline().get_stats() if get_rag_pipeline() else {}
+        pipeline = get_rag_pipeline()
+        rag_stats = pipeline.get_stats() if pipeline else {}
         
         # Get document counts
-        email_files = list(Path("data/parsed_emails").glob("*.txt"))
+        email_files = list(Path(config.PARSED_EMAILS_DIR).glob("*.txt"))
         total_emails = len(email_files)
         
         # Get database stats
         db_stats = {}
         try:
-            conn = get_db_connection()
+            conn = db.get_db_connection()
             cursor = conn.cursor()
             
             # Email stats
@@ -592,161 +588,137 @@ async def get_system_stats():
         
         # Get file system stats
         vector_store_size = 0
-        if Path("data/vector_store/faiss_index.bin").exists():
-            vector_store_size = Path("data/vector_store/faiss_index.bin").stat().st_size
+        if Path(config.VECTOR_STORE_DIR / "faiss_index.bin").exists():
+            vector_store_size = Path(config.VECTOR_STORE_DIR / "faiss_index.bin").stat().st_size
         
         parsed_emails_size = sum(f.stat().st_size for f in email_files)
         
         # Get memory usage
         process = psutil.Process()
-        memory_usage = process.memory_info().rss / 1024 / 1024  # MB
-        
-        # Calculate performance metrics
-        performance_metrics = {
-            'avg_query_time': rag_stats.get('avg_search_time', 0),
-            'cache_hit_rate': (
-                rag_stats.get('cache_hits', 0) / max(rag_stats.get('queries_processed', 1), 1) * 100
-            ),
-            'fallback_usage_rate': (
-                rag_stats.get('fallback_used', 0) / max(rag_stats.get('queries_processed', 1), 1) * 100
-            )
-        }
+        memory_usage = process.memory_info().rss / 1024 / 1024
         
         return {
-            'system_status': 'healthy',
-            'timestamp': datetime.now().isoformat(),
-            'email_stats': {
-                'total_emails': total_emails,
-                'parsed_files_size_mb': round(parsed_emails_size / 1024 / 1024, 2),
-                'vector_store_size_mb': round(vector_store_size / 1024 / 1024, 2)
+            "system": {
+                "memory_usage_mb": round(memory_usage, 2),
+                "cpu_percent": process.cpu_percent(),
+                "uptime_seconds": time.time() - process.create_time()
             },
-            'database_stats': db_stats,
-            'rag_pipeline_stats': rag_stats,
-            'performance_metrics': performance_metrics,
-            'system_resources': {
-                'memory_usage_mb': round(memory_usage, 2),
-                'cpu_percent': psutil.cpu_percent(),
-                'disk_usage_percent': psutil.disk_usage('/').percent
-            }
+            "rag_pipeline": rag_stats,
+            "database": db_stats,
+            "files": {
+                "total_emails": total_emails,
+                "vector_store_size_bytes": vector_store_size,
+                "parsed_emails_size_bytes": parsed_emails_size
+            },
+            "environment": "cloud-run"
         }
         
     except Exception as e:
-        return {
-            'system_status': 'error',
-            'error': str(e),
-            'timestamp': datetime.now().isoformat()
-        }
+        print(f"Error getting system stats: {e}")
+        return {"error": f"Error retrieving system stats: {str(e)}"}
 
 @app.get("/performance")
 async def get_performance_metrics():
-    """Get detailed performance metrics for monitoring."""
+    """Get performance metrics and recommendations."""
     try:
-        # Get RAG pipeline performance
-        rag_stats = get_rag_pipeline().get_stats() if get_rag_pipeline() else {}
+        # Get basic system metrics
+        process = psutil.Process()
+        memory_usage = process.memory_info().rss / 1024 / 1024
+        cpu_percent = process.cpu_percent()
+        
+        # Get RAG pipeline stats
+        pipeline = get_rag_pipeline()
+        rag_stats = pipeline.get_stats() if pipeline else {}
         
         # Calculate efficiency metrics
-        total_queries = rag_stats.get('queries_processed', 0)
-        cache_hits = rag_stats.get('cache_hits', 0)
-        fallback_used = rag_stats.get('fallback_used', 0)
-        
         efficiency_metrics = {
-            'cache_efficiency': round(cache_hits / max(total_queries, 1) * 100, 2),
-            'fallback_rate': round(fallback_used / max(total_queries, 1) * 100, 2),
-            'avg_query_time_ms': round(rag_stats.get('avg_search_time', 0) * 1000, 2),
-            'total_embeddings_generated': rag_stats.get('embeddings_generated', 0)
+            "memory_efficiency": "good" if memory_usage < 512 else "high",
+            "cpu_usage": "low" if cpu_percent < 10 else "moderate",
+            "cache_hit_rate": rag_stats.get('cache_hits', 0) / max(rag_stats.get('queries_processed', 1), 1) * 100
         }
         
-        # Get embedding provider stats
+        # Get embedder stats
         embedder_stats = {}
-        if hasattr(get_rag_pipeline(), 'embedder') and get_rag_pipeline().embedder:
-            embedder_stats = get_rag_pipeline().embedder.get_stats()
+        if pipeline and hasattr(pipeline, 'embedder'):
+            embedder_stats = {
+                "embeddings_generated": rag_stats.get('embeddings_generated', 0),
+                "provider": getattr(pipeline.embedder, 'current_provider', 'unknown')
+            }
+        
+        # Generate recommendations
+        recommendations = _get_performance_recommendations(efficiency_metrics, embedder_stats)
         
         return {
-            'efficiency_metrics': efficiency_metrics,
-            'embedding_stats': embedder_stats,
-            'rag_pipeline_stats': rag_stats,
-            'recommendations': _get_performance_recommendations(efficiency_metrics, embedder_stats)
+            "metrics": {
+                "memory_usage_mb": round(memory_usage, 2),
+                "cpu_percent": round(cpu_percent, 2),
+                "efficiency": efficiency_metrics
+            },
+            "rag_performance": rag_stats,
+            "embedder_stats": embedder_stats,
+            "recommendations": recommendations,
+            "environment": "cloud-run"
         }
         
     except Exception as e:
-        return {'error': str(e)}
+        print(f"Error getting performance metrics: {e}")
+        return {"error": f"Error retrieving performance metrics: {str(e)}"}
 
 def _get_performance_recommendations(efficiency_metrics: dict, embedder_stats: dict) -> List[str]:
-    """Generate performance recommendations based on metrics."""
+    """Generate performance recommendations."""
     recommendations = []
     
-    # Cache efficiency recommendations
-    if efficiency_metrics['cache_efficiency'] < 20:
-        recommendations.append("Consider increasing cache size for better performance")
+    if efficiency_metrics["memory_efficiency"] == "high":
+        recommendations.append("Consider reducing memory usage by optimizing document loading")
     
-    # Fallback rate recommendations
-    if efficiency_metrics['fallback_rate'] > 10:
-        recommendations.append("High fallback usage detected - check embedding provider status")
+    if efficiency_metrics["cpu_usage"] == "moderate":
+        recommendations.append("CPU usage is moderate - consider optimizing heavy operations")
     
-    # Query time recommendations
-    if efficiency_metrics['avg_query_time_ms'] > 2000:
-        recommendations.append("Query times are high - consider optimizing FAISS index")
+    if efficiency_metrics["cache_hit_rate"] < 50:
+        recommendations.append("Low cache hit rate - consider increasing cache size or optimizing queries")
     
-    # Embedding provider recommendations
-    if embedder_stats.get('fallback_used', 0) > 0:
-        recommendations.append("Using fallback embedding provider - check primary provider")
+    if embedder_stats.get("embeddings_generated", 0) > 1000:
+        recommendations.append("High number of embeddings generated - consider caching more aggressively")
     
     if not recommendations:
-        recommendations.append("System performance is optimal")
+        recommendations.append("Performance looks good! No immediate optimizations needed.")
     
     return recommendations
 
 @app.post("/optimize")
 async def optimize_system():
-    """Run system optimization tasks."""
+    """Optimize system performance."""
     try:
-        optimizations = []
-        
         # Clear caches
-        if get_rag_pipeline():
-            get_rag_pipeline().clear_cache()
-            optimizations.append("Cleared RAG pipeline cache")
-        
-        # Optimize FAISS index if needed
-        if hasattr(get_rag_pipeline(), 'retriever') and get_rag_pipeline().retriever:
-            get_rag_pipeline().retriever.clear_cache()
-            optimizations.append("Cleared FAISS retriever cache")
-        
-        # Check for index optimization opportunities
-        if hasattr(get_rag_pipeline(), 'retriever') and get_rag_pipeline().retriever:
-            index_stats = get_rag_pipeline().retriever.get_index_stats()
-            if index_stats.get('total_documents', 0) > 1000:
-                optimizations.append("Consider rebuilding FAISS index with IVF for better performance")
+        pipeline = get_rag_pipeline()
+        if pipeline:
+            pipeline.clear_cache()
         
         return {
-            'status': 'optimization_complete',
-            'optimizations_applied': optimizations,
-            'timestamp': datetime.now().isoformat()
+            "message": "System optimization completed",
+            "actions_taken": ["Cleared RAG pipeline cache"],
+            "timestamp": datetime.utcnow().isoformat()
         }
         
     except Exception as e:
-        return {
-            'status': 'optimization_failed',
-            'error': str(e),
-            'timestamp': datetime.now().isoformat()
-        }
+        print(f"Error optimizing system: {e}")
+        raise HTTPException(status_code=500, detail=f"Error optimizing system: {str(e)}")
 
-# Error handlers
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
+    """Handle HTTP exceptions."""
     return JSONResponse(
         status_code=exc.status_code,
-        content={"detail": exc.detail}
+        content={"detail": exc.detail, "timestamp": datetime.utcnow().isoformat()}
     )
 
 @app.exception_handler(Exception)
 async def general_exception_handler(request, exc):
-    print(f"Unhandled exception: {exc}")
+    """Handle general exceptions."""
     return JSONResponse(
         status_code=500,
-        content={"detail": "Internal server error"}
+        content={"detail": f"Internal server error: {str(exc)}", "timestamp": datetime.utcnow().isoformat()}
     )
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    uvicorn.run("ingestion_api.main:app", host="0.0.0.0", port=port) 
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", "8080"))) 

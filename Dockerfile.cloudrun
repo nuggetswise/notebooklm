@@ -1,0 +1,48 @@
+# Cloud Run Optimized Dockerfile for Email RAG Backend
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies (minimal for Cloud Run)
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libxml2-dev \
+    libxslt1-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Copy requirements first for better caching
+COPY requirements_production.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements_production.txt
+
+# Copy application code
+COPY ingestion_api/ ./ingestion_api/
+COPY rag/ ./rag/
+
+# Create data directories (Cloud Run has read-only filesystem, so we'll use /tmp)
+RUN mkdir -p /tmp/data/parsed_emails /tmp/data/vector_store /tmp/data/maildir
+
+# Set environment variables for Cloud Run
+ENV PYTHONPATH=/app
+ENV NOMIC_INFERENCE_MODE=local
+ENV ENVIRONMENT=production
+ENV PYTHONUNBUFFERED=1
+ENV DATA_DIR=/tmp/data
+ENV PARSED_EMAILS_DIR=/tmp/data/parsed_emails
+ENV VECTOR_STORE_DIR=/tmp/data/vector_store
+ENV MAILDIR_DIR=/tmp/data/maildir
+
+# Expose port (Cloud Run will set PORT environment variable)
+EXPOSE 8080
+
+# Simple health check that doesn't depend on heavy initialization
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8080}/health || exit 1
+
+# Run the application with proper port handling
+CMD exec uvicorn ingestion_api.main:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1 
