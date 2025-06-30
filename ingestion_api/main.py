@@ -743,10 +743,5 @@ async def general_exception_handler(request, exc):
     )
 
 if __name__ == "__main__":
-    uvicorn.run(
-        "ingestion_api.main:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=config.DEBUG,
-        log_level=config.LOG_LEVEL.lower()
-    ) 
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run("ingestion_api.main:app", host="0.0.0.0", port=port) 
