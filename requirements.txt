@@ -14,7 +14,7 @@ beautifulsoup4==4.12.2
 lxml==4.9.3
 
 # Vector Search and Embeddings
-numpy==1.24.4
+numpy>=1.26.0
 faiss-cpu==1.7.4
 sentence-transformers==2.2.2
 huggingface-hub==0.19.4
